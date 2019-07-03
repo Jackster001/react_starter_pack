@@ -1,0 +1,99 @@
+/* Header */
+.header{
+    background-color: black;
+    height: 100px;
+    padding-top: 10px;
+}
+.header > h1{
+    color:white;
+}
+
+/* Footer */
+.footer{
+    background-color: black;
+    padding: 5px 0px; 
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+.footer > p{
+    color: grey;
+}
+/* login page */
+.login{
+    border-radius: 10px;
+    width: 400px;
+    padding: 50px 0px;
+    background-color: #D4D3D3;
+    margin-top: -20px;
+}
+.loginForm > input{
+    width: 70%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+.signIn{
+    border: none;
+    padding: 12px 25px;
+    background-color: #008CBA;
+    font-size: 16px;
+    color: white;
+    border-radius: 15px;
+}
+.loginPage{
+    width: 100%;
+    display: flex;
+    margin-top: 200px;
+    
+}
+.loginPos{
+    margin: 0 auto;
+    display: flex;
+    margin-top: 0 auto;
+}
+
+/* navigation */
+.nav{
+    width: 100%;
+    margin: 0 auto;
+    background-color: #7D7D7D;
+    height: 55px;
+}
+.navMid{
+    display: table;
+    margin: 0 auto;
+}
+.nav > .navMid > ul > li{
+    list-style: none;
+    display: inline;
+    padding-right: 15px;
+}
+.nav > .navMid > ul > li > .links{
+    text-Decoration: none;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 30px;
+}
+.nav > .navMid > ul > li > .links:hover{
+    background-color: #6A6969;
+    
+}
+
+/* Home page */
+.dashboard{
+    margin-top: 100px;
+}
+
+/* User page */
+.userPage{
+    width: 100%;
+    height: auto;
+}
+.userTable{
+    width: 95%;
+    margin: 0 auto;
+}
+.dataGrid{
+    width:30%;
+}
