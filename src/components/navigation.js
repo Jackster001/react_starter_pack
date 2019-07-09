@@ -41,7 +41,7 @@ class Navigation extends React.Component {
                 <Link className="links" to={ROUTES.SETTINGS}>Settings</Link>
                 </li>
                 <li>
-               <SignOutButton/>
+                <Link to={ROUTES.LOGIN}><SignOutButton/></Link>
                 </li>
             </ul> 
             <br/></div>

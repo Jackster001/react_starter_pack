@@ -97,3 +97,18 @@
 .dataGrid{
     width:30%;
 }
+
+
+.signout{
+    background: none;
+    border: 1px solid white;
+    border-radius: 10px;
+	cursor: pointer;
+    color: white;
+    padding: 5px;
+}
+.signout:hover{
+    color: black;
+    background-color:white;
+}
+

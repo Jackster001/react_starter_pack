@@ -32,7 +32,7 @@ class SignInFormBase extends React.Component {
       
       this.props.firebase.doSignInWithEmailAndPassword(email, password)
       .then(() => {
-         console.log(this.props.firebase)
+        console.log(this.props.firebase)
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
       })
@@ -75,15 +75,15 @@ class SignInFormBase extends React.Component {
             <div className="login">
                <center>
                <h2>Admin Login</h2>
-               {/* <form className="loginForm" onSubmit={this.onSubmit}> */}
+               <form className="loginForm" onSubmit={this.onSubmit}>
                   <input type="text" name="email" value={email} onChange = {this.onChange} placeholder="Email"/>
                   <br/><br/>
                   <input type="text" name="password" value={password} onChange = {this.onChange} placeholder="Password"/>
                   <br/><br/>
                   {/* <p onClick={this.onSubmit}>Sign In</p> */}
-                  <button className="signIn" disabled={isInvalid} onClick={this.onSubmit} type="submit">Sign In</button>
+                  <button className="signIn" disabled={isInvalid}  type="submit">Sign In</button>
                   {error && <p>{error.message}</p>}
-               {/* </form> */}
+               </form>
                </center>
             </div>
          </div>
