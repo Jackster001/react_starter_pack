@@ -1,9 +1,9 @@
 import React from 'react';
 import './components.css';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
-import App from '../App';
-// import User from './Pages/user';
-import Home from './Pages/home';
+import { Link, BrowserRouter as Router } from 'react-router-dom'
+import SignOutButton from './Pages/signout';
+import * as ROUTES from '../constants/routes';
+
 class Navigation extends React.Component {
    render() {
       return (
@@ -11,34 +11,37 @@ class Navigation extends React.Component {
               <div className="navMid">
              <ul>
                 <li>
-                <Link className="links" to="/home">Home</Link>
+                <Link className="links" to={ROUTES.HOME}>Home</Link>
                 </li>
                 <li>
-                <Link className="links" to="/users">Users</Link>
+                <Link className="links" to={ROUTES.USERS}>Users</Link>
                 </li>
                 <li>
-                <Link className="links" to="/groups">Groups</Link>
+                <Link className="links" to={ROUTES.GROUPS}>Groups</Link>
                 </li>
                 <li>
-                <Link className="links" to="/itinerary">Itinerary</Link>
+                <Link className="links" to={ROUTES.ITINERARY}>Itinerary</Link>
                 </li>
                 <li>
-                <Link className="links" to="/notifications">Notifications</Link>
+                <Link className="links" to={ROUTES.NOTIFICATIONS}>Notifications</Link>
                 </li>
                 <li>
-                <Link className="links" to="/alarm">Alarm</Link>
+                <Link className="links" to={ROUTES.ALARM}>Alarm</Link>
                 </li>
                 <li>
-                <Link className="links" to="/lost">I am Lost</Link>
+                <Link className="links" to={ROUTES.LOST}>I am Lost</Link>
                 </li>
                 <li>
-                <Link className="links" to="/contact">Contact Info</Link>
+                <Link className="links" to={ROUTES.CONTACT}>Contact Info</Link>
                 </li>
                 <li>
-                <Link className="links" to="/content">Content</Link>
+                <Link className="links" to={ROUTES.CONTENT}>Content</Link>
                 </li>
                 <li>
-                <Link className="links" to="/settings">Settings</Link>
+                <Link className="links" to={ROUTES.SETTINGS}>Settings</Link>
+                </li>
+                <li>
+               <SignOutButton/>
                 </li>
             </ul> 
             <br/></div>

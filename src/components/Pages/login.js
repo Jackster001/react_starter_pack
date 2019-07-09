@@ -1,54 +1,99 @@
 import React from 'react';
 import '../components.css';
-import {Link} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import logo from '../images/SBNYC-logo.jpg'
-import withFirebaseAuth from 'react-with-firebase-auth'
-// import * as firebase from 'firebase/app';
+import * as ROUTES from '../../constants/routes'
+import { withFirebase } from '../Firebase';
+import { compose } from 'recompose';
 import 'firebase/auth';
-import firebaseConfig from './../../firebaseConfig';
-const firebase = require("firebase");
-require("firebase/firestore");
-
-firebase.initializeApp({
-   apiKey:"AIzaSyCY3WXhUaCOelSWUlrKEoIgQcsK_KPTf8s",
-   authDomain: "test-bcd7a.firebaseapp.com",
-   databaseURL: "https://test-bcd7a.firebaseio.com",
-   projectId: "test-bcd7a",
- });
-var db = firebase.firestore();
-var admin = db.collection("Admin Login").doc("JPPyO1iUyCA6sWAIulCd");
-admin.get().then(function(admin) {
-   if (admin.exists) {
-       console.log("Document data:", admin.data());
-   } else {
-       // doc.data() will be undefined in this case
-       console.log("No such document!");
+const INITIAL_STATE = {
+   email: '',
+   password: '',
+   error: null,
+   login: false
+ };
+ const Login = () => (
+   <div>
+      <SignInForm/>
+   </div>
+ );
+ 
+class SignInFormBase extends React.Component {
+   constructor(props){
+      super(props);
+      this.state = {...INITIAL_STATE};
    }
-}).catch(function(error) {
-   console.log("Error getting document:", error);
-});
-class Login extends React.Component {
+   onChange = event =>{
+      this.setState({[event.target.name]: event.target.value})
+   }
+   onSubmit = (event) => {
+      const {email, password} = this.state;
+      console.log("clicked");
+      
+      this.props.firebase.doSignInWithEmailAndPassword(email, password)
+      .then(() => {
+         console.log(this.props.firebase)
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.HOME);
+      })
+      .catch(error => {
+        this.setState({ error });
+        console.log(error);
+      });
+      event.preventDefault();
+      // admin.get().then(function(admin) {
+      //    if (admin.exists) {
+      //       let data= admin.data();
+      //       if(data.Username== username && data.password == password){
+      //          console.log("Success!")
+      //          this.props.login =true
+      //       }
+      //       else{
+      //          console.log("Did not match!");
+               
+      //       }
+      //    } else {
+      //        // doc.data() will be undefined in this case
+      //        console.log("No such document!");
+      //    }
+      // }).catch(function(error) {
+      //    console.log("Error getting document:", error);
+      // });
+   }
    render() {
+      const {
+         email,
+         password, 
+         error
+      } = this.state;
+      const isInvalid = password === '' || email === '';
       return (
+      <div className="App">
          <div className="loginPage">
             <div className="loginPos">
             <div><img src={logo} height="250px" width="650px"/></div>
             <div className="login">
                <center>
                <h2>Admin Login</h2>
-               <form className="loginForm">
-                  {/* Username: <br/> */}
-                  <input type="text" name="username" placeholder="Username"/>
+               {/* <form className="loginForm" onSubmit={this.onSubmit}> */}
+                  <input type="text" name="email" value={email} onChange = {this.onChange} placeholder="Email"/>
                   <br/><br/>
-                  {/* Password: <br/> */}
-                  <input type="text" name="password" placeholder="Password"/>
+                  <input type="text" name="password" value={password} onChange = {this.onChange} placeholder="Password"/>
                   <br/><br/>
-                  <Link to="/home" ><button className="signIn">Sign In</button></Link>
-               </form></center>
+                  {/* <p onClick={this.onSubmit}>Sign In</p> */}
+                  <button className="signIn" disabled={isInvalid} onClick={this.onSubmit} type="submit">Sign In</button>
+                  {error && <p>{error.message}</p>}
+               {/* </form> */}
+               </center>
             </div>
          </div>
          </div>
+      </div>
       );
    }
 }
+const SignInForm = compose (withFirebase, withRouter)(SignInFormBase);
+
 export default Login
+ 
+export {SignInForm};

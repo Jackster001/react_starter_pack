@@ -2,7 +2,8 @@ import React from 'react';
 import '../components.css';
 import Navigation from '../navigation'
 import DataTable from 'react-data-table-component';
-
+import Header from '../header';
+import Footer from '../footer';
 const data = [{sn:"1", groupName:"ThanksGiving 2020", date:"Friday November 27th, 2020" }]
 const columns = [
    {
@@ -39,13 +40,13 @@ class Groups extends React.Component {
 
    render() {
       return (
+         <div className="App">
          <div>
              <Navigation/>
              <div className="userTable">
             <center><h1>Group Management</h1></center>
             <br/><br/>
             <DataTable style={{'overflowX': 'hidden'}}
-               title="Users"
                columns={columns}
                data={data}
                selectableRows // add for checkbox selection
@@ -53,6 +54,7 @@ class Groups extends React.Component {
                onTableUpdate={handleChange} />
             </div>
          </div>
+      </div>
       );
    }
 }
