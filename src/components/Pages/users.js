@@ -9,7 +9,7 @@ import {withRouter} from 'react-router-dom'
 import { compose } from 'recompose';
 import db from "../Firebase/firebase"
 import 'firebase/auth';
-
+import UserTable from "../Tables/userTable"
 const columns = [
    
    {
@@ -83,6 +83,7 @@ class Users extends React.Component {
    };
    componentDidMount(){
       this.setState(data1);
+      this.table();
       console.log(data1)
    }
    componentDidUpdate(){
@@ -105,7 +106,6 @@ class Users extends React.Component {
          let users = doc.data();
          users= {id:doc.id,...users,profilePicture:"", Edit:<button className="editButton">Edit</button>}
          data1.push(users);
-         console.log(users.profilePicture);
          })
       })
       .catch(function(error){
@@ -114,6 +114,8 @@ class Users extends React.Component {
       console.log(data1);
       console.log("dataTransferred")
    }
+   table(){
+   }
    render() {
       console.log("called render")
       return (
@@ -121,7 +123,7 @@ class Users extends React.Component {
          <div className="userPage">
             <br/>
             <div className="userTable">
-               <center><h1 onClick={()=>this.refresh()}>User Management</h1></center>
+               <center><h1>User Management</h1></center>
                <DataTable style={{'overflowX': 'hidden'}}
                columns={columns}
                data={data1}
@@ -129,6 +131,11 @@ class Users extends React.Component {
                // onTableUpdate={handleChange} 
                />
             </div>
+         </div>
+         <div>
+            {/* {data1.map((user, index)=>(
+               <UserTable key={user.id} Group_Name={user.Group_Name}/>
+            ))} */}
          </div>
       </div>
       );
