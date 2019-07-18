@@ -4,9 +4,15 @@ import { Link, BrowserRouter as Router } from 'react-router-dom'
 import SignOutButton from './Pages/signout';
 import * as ROUTES from '../constants/routes';
 
-class Navigation extends React.Component {
-   render() {
-      return (
+const Navigation = ({ authUser }) => (
+   
+<div onClick={console.log(authUser)}>{authUser==true ? <NavigationAuth /> : <NavigationNonAuth />} </div>
+ );
+
+// class Navigation extends React.Component {
+//    render() {
+//       return (
+   const NavigationAuth = () => (
           <div className="nav">
               <div className="navMid">
              <ul>
@@ -48,6 +54,9 @@ class Navigation extends React.Component {
           </div>
         
       );
-   }
-}
+      const NavigationNonAuth = () => (
+         <div></div>
+      );
+   // }
+// }
 export default Navigation

@@ -1,19 +1,18 @@
 import React from 'react';
 import '../components.css';
-import Navigation from '../navigation'
-import Header from '../header';
-import Footer from '../footer';
+import { withAuthorization } from '../Session';
+import ItineraryTable from '../Tables/itineraryTable'
 class Itinerary extends React.Component {
    render() {
       return (
-         <div className="App"> <Header/>
+         <div className="App">
          <div>
-             <Navigation/>
             <center><h1>Itinerary</h1></center>
+            <center><ItineraryTable/></center>
          </div>
-         <Footer/>
       </div>
       );
    }
 }
-export default Itinerary
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(Itinerary)

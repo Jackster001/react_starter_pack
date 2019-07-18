@@ -16,6 +16,8 @@ import Settings from './components/Pages/settings';
 import * as ROUTES from '../src/constants/routes';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { withFirebase } from './components/Firebase';
+import { withAuthentication, AuthUserContext } from './components/Session';
+import Navigation from './components/navigation'
 // import SignUpPage,{ SignUpForm } from './components/Pages/signup';
 class App extends Component {
   constructor(props) {
@@ -28,7 +30,7 @@ class App extends Component {
     this.listener = this.props.firebase.auth.onAuthStateChanged(
     authUser => {
       authUser
-        ? this.setState({ authUser })
+        ? this.setState({ authUser: true })
         : this.setState({ authUser: null });
     });
   }
@@ -38,9 +40,11 @@ class App extends Component {
   render(){
   return (
     <div className="App">
-      <Header/>
+      <AuthUserContext.Provider value={this.state.authUser}>
+      <Header />
           <Router>
             <div>
+              <Navigation authUser={this.state.authUser}/>
               <Route exact path={ROUTES.LANDING} component={Login} />
               {/* <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} /> */}
               <Route path={ROUTES.LOGIN} component={Login} />
@@ -57,6 +61,7 @@ class App extends Component {
             </div>
           </Router>
         <Footer/>
+        </AuthUserContext.Provider>
     </div>
   );
 };

@@ -6,6 +6,8 @@ import * as ROUTES from '../../constants/routes'
 import { withFirebase } from '../Firebase';
 import { compose } from 'recompose';
 import 'firebase/auth';
+import Firebase from "../Firebase/firebase"
+import firebase from "firebase";
 const INITIAL_STATE = {
    email: '',
    password: '',
@@ -60,6 +62,7 @@ class SignInFormBase extends React.Component {
       //    console.log("Error getting document:", error);
       // });
    }
+
    render() {
       const {
          email,
@@ -74,16 +77,16 @@ class SignInFormBase extends React.Component {
             <div><img src={logo} height="250px" width="650px"/></div>
             <div className="login">
                <center>
-               <h2>Admin Login</h2>
-               <form className="loginForm" onSubmit={this.onSubmit}>
+               <h2 onClick={this.random}>Admin Login</h2>
+               {/* <form className="loginForm" > */}
                   <input type="text" name="email" value={email} onChange = {this.onChange} placeholder="Email"/>
                   <br/><br/>
                   <input type="text" name="password" value={password} onChange = {this.onChange} placeholder="Password"/>
                   <br/><br/>
                   {/* <p onClick={this.onSubmit}>Sign In</p> */}
-                  <button className="signIn" disabled={isInvalid}  type="submit">Sign In</button>
+                  <button className="signIn" disabled={isInvalid} onClick={this.onSubmit} type="submit">Sign In</button>
                   {error && <p>{error.message}</p>}
-               </form>
+               {/* </form> */}
                </center>
             </div>
          </div>
@@ -93,6 +96,8 @@ class SignInFormBase extends React.Component {
    }
 }
 const SignInForm = compose (withFirebase, withRouter)(SignInFormBase);
+// const SignInForm = withRouter(SignInFormBase);
+
 
 export default Login
  

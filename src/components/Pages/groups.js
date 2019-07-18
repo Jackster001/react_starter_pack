@@ -1,9 +1,7 @@
 import React from 'react';
 import '../components.css';
-import Navigation from '../navigation'
 import DataTable from 'react-data-table-component';
-import Header from '../header';
-import Footer from '../footer';
+import { withAuthorization } from '../Session';
 const data = [{sn:"1", groupName:"ThanksGiving 2020", date:"Friday November 27th, 2020" }]
 const columns = [
    {
@@ -42,7 +40,6 @@ class Groups extends React.Component {
       return (
          <div className="App">
          <div>
-             <Navigation/>
              <div className="userTable">
             <center><h1>Group Management</h1></center>
             <br/><br/>
@@ -58,4 +55,5 @@ class Groups extends React.Component {
       );
    }
 }
-export default Groups
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(Groups)

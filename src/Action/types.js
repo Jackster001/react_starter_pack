@@ -1,0 +1,2 @@
+const GET_USERS = "GET_USERS";
+const UPDATE_USER = "UPDATE_USER";
