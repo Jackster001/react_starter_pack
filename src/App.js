@@ -15,9 +15,10 @@ import Content from './components/Pages/content';
 import Settings from './components/Pages/settings';
 import * as ROUTES from '../src/constants/routes';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import { withFirebase } from './components/Firebase';
-import { withAuthentication, AuthUserContext } from './components/Session';
+// import { withFirebase } from './components/Firebase';
+import { withAuthentication } from './components/Session';
 import Navigation from './components/navigation'
+import {auth, db} from "./components/Firebase"
 // import SignUpPage,{ SignUpForm } from './components/Pages/signup';
 class App extends Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    this.listener = this.props.firebase.auth.onAuthStateChanged(
+    this.listener = auth.onAuthStateChanged(
     authUser => {
       authUser
         ? this.setState({ authUser: true })
@@ -40,7 +41,7 @@ class App extends Component {
   render(){
   return (
     <div className="App">
-      <AuthUserContext.Provider value={this.state.authUser}>
+      {/* <AuthUserContext.Provider value={this.state.authUser}> */}
       <Header />
           <Router>
             <div>
@@ -61,9 +62,9 @@ class App extends Component {
             </div>
           </Router>
         <Footer/>
-        </AuthUserContext.Provider>
+        {/* </AuthUserContext.Provider> */}
     </div>
   );
 };
 };
-export default withFirebase(App);
+export default App;

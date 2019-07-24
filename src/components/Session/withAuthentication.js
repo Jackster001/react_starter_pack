@@ -1,24 +1,37 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import AuthUserContext from './context';
-import { withFirebase } from '../Firebase';
+// import { withFirebase } from '../Firebase';
 import firebaseApp from "../Firebase/firebase"
+import {setUserAuth, setOffUserAuth} from "../../Action/sessionAction"
 const withAuthentication = Component => {
   class WithAuthentication extends React.Component {
     constructor(props) {
       super(props);
-
-      this.state = {
-        authUser: null,
-      };
+      // this.props.onSetAuthUser(
+      //   JSON.parse(localStorage.getItem('authUser')),
+      // );
     }
 
-    componentDidMount() {
-      this.listener = this.props.firebase.auth.onAuthStateChanged(
+    
+      // this.listener = this.props.firebase.auth.onAuthStateChanged(
+      //   authUser => {
+      //     authUser
+      //       ? this.setState({ authUser })
+      //       : this.setState({ authUser: null });
+      //   },
+      // );
+      componentDidMount() {
+      this.listener = this.props.firebase.onAuthUserListener(
         authUser => {
-          authUser
-            ? this.setState({ authUser })
-            : this.setState({ authUser: null });
+          localStorage.setItem('authUser', JSON.stringify(authUser));
+          this.props.setUserAuth();
+          console.log("this is the auth user")
+        },
+        () => {
+          localStorage.removeItem('authUser');
+          this.props.setOffUserAuth();
         },
       );
     }
@@ -28,15 +41,18 @@ const withAuthentication = Component => {
     }
 
     render() {
-      return (
-        <AuthUserContext.Provider value={this.state.authUser}>
-          <Component {...this.props} />
-        </AuthUserContext.Provider>
-      );
+      return (<Component {...this.props} />
+      // condition(this.props.authUser)?(
+          
+          // ) : null;
+        // <AuthUserContext.Provider value={this.state.authUser}>
+        
+        // </AuthUserContext.Provider>
+      )
     }
   }
 
-  return withFirebase(WithAuthentication);
+  return compose(connect(null, {setUserAuth, setOffUserAuth}),)(WithAuthentication);
 };
 
 export default withAuthentication;

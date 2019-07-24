@@ -25,7 +25,6 @@ const mapStateToProps = state => ({
  });
  
  export default compose(
-   withFirebase,
    connect(
      mapStateToProps,
      mapDispatchToProps,

@@ -3,15 +3,11 @@ import './components.css';
 import { Link, BrowserRouter as Router } from 'react-router-dom'
 import SignOutButton from './Pages/signout';
 import * as ROUTES from '../constants/routes';
-
+import { connect } from 'react-redux';
 const Navigation = ({ authUser }) => (
    
-<div onClick={console.log(authUser)}>{authUser==true ? <NavigationAuth /> : <NavigationNonAuth />} </div>
+<div onClick={console.log(authUser)}>{authUser ==true ? <NavigationAuth authUser={authUser} /> : <NavigationNonAuth />} </div>
  );
-
-// class Navigation extends React.Component {
-//    render() {
-//       return (
    const NavigationAuth = () => (
           <div className="nav">
               <div className="navMid">
@@ -57,6 +53,7 @@ const Navigation = ({ authUser }) => (
       const NavigationNonAuth = () => (
          <div></div>
       );
-   // }
-// }
-export default Navigation
+const mapStateToProps = state => ({
+   authUser: state.sessionState.authUser,
+ });
+export default connect(mapStateToProps)(Navigation);

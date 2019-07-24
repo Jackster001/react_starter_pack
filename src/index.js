@@ -8,14 +8,17 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
-
+import { PersistGate } from 'redux-persist/lib/integration/react';
 const store= createStore(reducers, {}, applyMiddleware(reduxThunk));
 
+// const token = localStorage.getItem('token');
+// if (token) {
+//     store.dispatch({ type: AUTHENTICATE_THE_USER });
+
 ReactDOM.render(
-  <FirebaseContext.Provider value={new Firebase()}>
-    <Provider store={store}>
+  <Provider store={store}>
       <App/>
-      </Provider>
-  </FirebaseContext.Provider>
+    {/* </FirebaseContext.Provider> */}
+  </Provider>
     , document.getElementById('root'));
 serviceWorker.unregister();
