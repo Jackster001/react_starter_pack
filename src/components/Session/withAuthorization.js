@@ -1,8 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import AuthUserContext from './context';
-// import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import { connect } from 'react-redux';
 import {auth} from '../Firebase'
@@ -17,7 +15,6 @@ const withAuthorization = condition => Component => {
         },
       );
     }
-
     componentWillUnmount() {
       this.listener();
     }
@@ -26,13 +23,6 @@ const withAuthorization = condition => Component => {
       return condition(this.props.authUser==true) ? (
         <Component {...this.props} />
       ) : null;
-      // return (
-      //   <AuthUserContext.Consumer>
-      //     {authUser =>
-      //       condition(authUser ==true) ? <Component {...this.props} /> : null
-      //     }
-      //   </AuthUserContext.Consumer>
-      // );
     }
   }
   const mapStateToProps = state => ({
@@ -43,5 +33,4 @@ const withAuthorization = condition => Component => {
     connect(mapStateToProps),
   )(WithAuthorization);
 };
-
 export default withAuthorization;

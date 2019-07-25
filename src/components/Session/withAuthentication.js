@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import AuthUserContext from './context';
-// import { withFirebase } from '../Firebase';
 import firebaseApp from "../Firebase/firebase"
 import {setUserAuth, setOffUserAuth} from "../../Action/sessionAction"
 const withAuthentication = Component => {

@@ -12,6 +12,7 @@ import 'firebase/auth';
 import UserTable from "../Tables/userTable"
 import {getUsers} from '../../Action'
 import {connect} from "react-redux"
+
 const columns = [
    
    {
@@ -59,40 +60,43 @@ const columns = [
    {
       name:"Edit",
       selector:"Edit",
-      left: true
+      left: true,
+      cell: row => <div><button>Edit</button></div>
    }
 ];
+const handleChange = (state) =>{
+   console.log(state.selectedRows);
+}
 class Users extends React.Component {
    constructor(props) {
       super(props);
-      // this.state= {data:this.props.users};
+      this.state= {data:this.props.users, once: false};
       // this.Data=this.Data.bind(this); 
-
    };
-   componentDidMount(){
-      this.props.getUsers();
-      console.log(this.data)
-      
+   componentWillUpdate(){
+      // this.props.getUsers()
    }
+
    render() {
+      
       return (
          <div className="App">
+
          <div className="userPage">
             <br/>
             <div className="userTable">
                <center><h1>User Management</h1></center>
-               <DataTable style={{'overflowX': 'hidden'}}
+               <div>
+                  <button>Add New</button>
+               </div>
+               {/* <DataTable style={{'overflowX': 'hidden'}}
                columns={columns}
                data={this.props.users}
-               // selectableRows // add for checkbox selection
-               // onTableUpdate={handleChange} 
-               />
+               selectableRows // add for checkbox selection
+               onTableUpdate={handleChange} 
+               /> */}
+               <UserTable/>
             </div>
-         </div>
-         <div>
-            {/* {data1.map((user, index)=>(
-               <UserTable key={user.id} Group_Name={user.Group_Name}/>
-            ))} */}
          </div>
       </div>
       );
@@ -100,12 +104,8 @@ class Users extends React.Component {
 
 }
 const condition = authUser => !!authUser;
-// const UserTable = compose(withFirebase, withAuthorization(condition), withRouter)(UserTableBase);
 const mapStateToProps = state => ({
    users: state.userState.users,
  });
 export default compose(withAuthorization(condition), connect(mapStateToProps, {getUsers}))(Users);
-// export default withAuthorization(condition)(Users)
-// export default withFirebase(Users);
-// export default Users
-// export {UserTable};
+

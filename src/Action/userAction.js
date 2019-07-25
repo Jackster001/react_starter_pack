@@ -10,6 +10,7 @@ const getSingleUser= ()=>{
 }
 
 const getUsers = () =>{
+    data=[];
     return (dispatch) => {
         db.collection("Students").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {

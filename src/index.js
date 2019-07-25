@@ -9,16 +9,22 @@ import { createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 import { PersistGate } from 'redux-persist/lib/integration/react';
-const store= createStore(reducers, {}, applyMiddleware(reduxThunk));
+import {persistStore, persistReducer} from "redux-persist";
+import storage from 'redux-persist/lib/storage';
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+};
 
-// const token = localStorage.getItem('token');
-// if (token) {
-//     store.dispatch({ type: AUTHENTICATE_THE_USER });
+const persistedReducer = persistReducer(persistConfig, reducers);
+const store= createStore(persistedReducer, {}, applyMiddleware(reduxThunk));
 
+const persistor = persistStore(store);
 ReactDOM.render(
   <Provider store={store}>
+    <PersistGate persistor={persistor}>
       <App/>
-    {/* </FirebaseContext.Provider> */}
+    </PersistGate>
   </Provider>
     , document.getElementById('root'));
 serviceWorker.unregister();

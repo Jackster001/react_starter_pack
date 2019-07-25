@@ -24,9 +24,15 @@ class SignInFormBase extends React.Component {
     }
     onSubmit = () => {
        const {email, password} = this.state;
-       console.log("clicked");
+       console.log("clicked");       
        this.props.login(email, password);
-       this.props.history.push(ROUTES.HOME);
+      //  this.props.history.push(ROUTES.HOME);
+       
+    }
+    componentDidUpdate(){
+      if(this.props.authUser){
+         this.props.history.push(ROUTES.HOME);
+      }
     }
     render() {
        const {
