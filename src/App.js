@@ -15,11 +15,9 @@ import Content from './components/Pages/content';
 import Settings from './components/Pages/settings';
 import * as ROUTES from '../src/constants/routes';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-// import { withFirebase } from './components/Firebase';
 import { withAuthentication } from './components/Session';
 import Navigation from './components/navigation'
 import {auth, db} from "./components/Firebase"
-// import SignUpPage,{ SignUpForm } from './components/Pages/signup';
 class App extends Component {
   constructor(props) {
     super(props);

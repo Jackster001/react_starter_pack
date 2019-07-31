@@ -76,7 +76,7 @@ class Users extends React.Component {
    componentWillUpdate(){
       // this.props.getUsers()
    }
-
+   
    render() {
       
       return (
@@ -89,6 +89,7 @@ class Users extends React.Component {
                <div>
                   <button>Add New</button>
                </div>
+               <br/><br/>
                {/* <DataTable style={{'overflowX': 'hidden'}}
                columns={columns}
                data={this.props.users}

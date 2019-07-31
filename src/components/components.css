@@ -122,23 +122,27 @@
 
 .table1> tbody> tr> td{
     text-align: left;
-    padding: 20px 50px;
+    padding: 10px 25px;
     /* border: 1px solid black; */
 
 }
 .table1> tbody> tr:nth-child(even)
 {
-    background-color: #B7B7B7;
+    background-color: #DCDCDC;
 }
 .basicTable{
-    width:90%;
+    width:100%;
+}
+table{
+    width: 95%;
+    margin: 0 auto;
     margin-bottom: 150px;
 }
 .notes>tr>th{
-    padding: 15px;
+    padding: 5px;
     text-align: left;
 }
 .notes>tr>td{
-    padding: 15px;
+    padding: 5px;
     text-align: left;
 }

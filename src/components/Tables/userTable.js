@@ -23,17 +23,19 @@ class UserTable extends React.Component {
                <th>Chaperone</th>
                <th>Edit</th>
              </thead>
+             <tbody>
               {this.props.users.map(function(user){
                 return(<UserRow 
-                        id={user.id} 
-                        Group_Type={user.Group_Type}
-                        Group_Name={user.Group_Name}
-                        Details={user.Details}
-                        profilePicture={user.profilePicture}
-                        Tour_Guide={user.Tour_Guide}
-                        Chaperone={user.Chaperone}
-                      />)
-              })}
+                  id={user.id} 
+                  Group_Type={user.Group_Type}
+                  Group_Name={user.Group_Name}
+                  Details={user.Details}
+                  profilePicture={user.profilePicture}
+                  Tour_Guide={user.Tour_Guide}
+                  Chaperone={user.Chaperone}
+                  />)
+                })}
+              </tbody>
             </table>
          </div>
       );

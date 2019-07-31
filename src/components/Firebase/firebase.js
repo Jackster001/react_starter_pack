@@ -12,27 +12,8 @@ const config = {
     appId: "1:687879184134:web:d2dee75e183a822e"
   };
 const firebaseApp = firebase.initializeApp(config);
-// var db= firebaseApp.firestore()
-// var auth =firebaseApp.auth();
-// class Firebase{
-//     constructor() {
-//         app.initializeApp(config);
-//         this.db = app.firestore();
-//         this.auth = app.auth();
 
-//     }
-//     doCreateUserWithEmailAndPassword = (email, password) =>
-//     this.auth.createUserWithEmailAndPassword(email, password);
-//     doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password);
-//     doSignOut = () => this.auth.signOut();
-//     getUserData = () => this.db;
-// }
-
-// const database = getUserData();
-// console.log(db)
-// const firebaseApp= firebase.initializeApp(config);
-// var db = this.firebaseApp;
-
+export const fb=firebaseApp;
 export const db= firebaseApp.firestore();
 export const auth =firebaseApp.auth(); 
 
