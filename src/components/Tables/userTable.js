@@ -12,20 +12,22 @@ class UserTable extends React.Component {
    render() {
       return (
          <div className="basicTable">
-           <table class="table1 table-dark" border="1" cellspacing="0">
+           <table className="table1 table-dark" border="1" cellSpacing="0">
              <thead>
-               <th>Id</th>
-               <th>Group Type</th>
-               <th>Group Name</th>
-               <th>Details</th>
-               <th>Profile Picture</th>
-               <th>Tour Guide</th>
-               <th>Chaperone</th>
-               <th>Edit</th>
+               <tr>
+                <th>Id</th>
+                <th>Group Type</th>
+                <th>Group Name</th>
+                <th>Details</th>
+                <th>Profile Picture</th>
+                <th>Tour Guide</th>
+                <th>Chaperone</th>
+                <th>Edit</th>
+               </tr>
              </thead>
              <tbody>
-              {this.props.users.map(function(user){
-                return(<UserRow 
+              {this.props.users.map(function(user, i){
+                return(<UserRow key={i}
                   id={user.id} 
                   Group_Type={user.Group_Type}
                   Group_Name={user.Group_Name}
@@ -45,13 +47,9 @@ const mapStateToProps = state => ({
   users: state.userState.users,
 });
  
- const mapDispatchToProps = dispatch => ({
-   onSetUsers: users => dispatch({ type: 'USERS_SET', users }),
- });
- 
- export default compose(
+export default compose(
    connect(
      mapStateToProps,
      {getUsers}
    ),
- )(UserTable);
+)(UserTable);

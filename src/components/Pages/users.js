@@ -12,7 +12,8 @@ import 'firebase/auth';
 import UserTable from "../Tables/userTable"
 import {getUsers} from '../../Action'
 import {connect} from "react-redux"
-
+import { Link, BrowserRouter as Router } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 const columns = [
    
    {
@@ -87,7 +88,7 @@ class Users extends React.Component {
             <div className="userTable">
                <center><h1>User Management</h1></center>
                <div>
-                  <button>Add New</button>
+                  <Link to={ROUTES.STUDENT_ADD}><button>Add New</button></Link>
                </div>
                <br/><br/>
                {/* <DataTable style={{'overflowX': 'hidden'}}
