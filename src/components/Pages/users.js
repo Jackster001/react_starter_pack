@@ -1,19 +1,15 @@
 import React from 'react';
 import '../components.css';
-// import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
-import DataTable from 'react-data-table-component';
-import profile from "../images/profile.jpg"
 import 'firebase/firestore';
-// import {withRouter} from 'react-router-dom'
 import { compose } from 'recompose';
-import db from "../Firebase/firebase"
 import 'firebase/auth';
 import UserTable from "../Tables/userTable"
 import {getUsers} from '../../Action'
 import {connect} from "react-redux"
-import { Link, BrowserRouter as Router } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
+import {CSVLink } from 'react-csv';
 const columns = [
    
    {
@@ -65,45 +61,28 @@ const columns = [
       cell: row => <div><button>Edit</button></div>
    }
 ];
-const handleChange = (state) =>{
-   console.log(state.selectedRows);
-}
 class Users extends React.Component {
    constructor(props) {
       super(props);
-      this.state= {data:this.props.users, once: false};
-      // this.Data=this.Data.bind(this); 
+      this.state= {data:this.props.users};
    };
-   componentWillUpdate(){
-      // this.props.getUsers()
-   }
-   
    render() {
-      
       return (
          <div className="App">
-
-         <div className="userPage">
-            <br/>
-            <div className="userTable">
-               <center><h1>User Management</h1></center>
-               <div>
-                  <Link to={ROUTES.STUDENT_ADD}><button>Add New</button></Link>
+            <div className="userPage">
+               <br/>
+               <div className="userTable">
+                  <center><h1>User Management</h1></center>
+                  <div>
+                  <Link to={ROUTES.STUDENT_ADD}><button className="addNewUser">Add New User</button></Link>
+                  <CSVLink data={this.state.data} ><button className="downloadCSV">Download CSV</button></CSVLink>
+                  </div><br/><br/>
+                  <UserTable/>
                </div>
-               <br/><br/>
-               {/* <DataTable style={{'overflowX': 'hidden'}}
-               columns={columns}
-               data={this.props.users}
-               selectableRows // add for checkbox selection
-               onTableUpdate={handleChange} 
-               /> */}
-               <UserTable/>
             </div>
          </div>
-      </div>
       );
    }
-
 }
 const condition = authUser => !!authUser;
 const mapStateToProps = state => ({

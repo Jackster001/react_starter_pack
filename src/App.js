@@ -6,7 +6,7 @@ import Login from './components/Pages/login';
 import Home from './components/Pages/home';
 import Users from './components/Pages/users';
 import addUser from "./components/Pages/add_User";
-import Student_Edit from "./components/Pages/student_Edit";
+import student_Edit from "./components/Pages/student_Edit";
 import Groups from './components/Pages/groups';
 import Itinerary from './components/Pages/itinerary';
 import Notifications from './components/Pages/notifications';
@@ -19,8 +19,7 @@ import * as ROUTES from '../src/constants/routes';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { withAuthentication } from './components/Session';
 import Navigation from './components/navigation';
-import {auth, db} from "./components/Firebase";
-import student_Edit from './components/Pages/student_Edit';
+import {auth} from "./components/Firebase";
 class App extends Component {
   constructor(props) {
     super(props);

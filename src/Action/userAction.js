@@ -1,17 +1,48 @@
-import {auth, db} from "../components/Firebase"
+import {db} from "../components/Firebase"
+// import {dbMain} from "../components/Firebase/firebaseMain";
 
-let data=[];
-
-const getSingleUser= ()=>{
-    return{
-        type: "USERS_GET",
-        payload: data
+const getSingleUser= (id)=>{
+    let user={}
+    let stringId=''+id+'';
+    return (dispatch)=>{
+        let docRef=db.collection("Students").doc(stringId)
+        docRef.get().then(function(doc){
+        if(doc.exists){
+            user=doc.data();
+            user={...user, id}
+        } else{
+            console.log("Something went wrong!")
+        }
+        console.log(user)
+        dispatch({
+            type: "USERS_SELECT",
+            payload: user,
+            id: id
+        })
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
     }
+    
 }
 
 const getUsers = () =>{
-    data=[];
+    let data=[];
     return (dispatch) => {
+        // dbMain.collection("users").get().then(function(querySnapshot) {
+        //     querySnapshot.forEach(function(doc) {
+        //     let user = doc.data();
+        //     user= {id:doc.id,...user}
+        //     data.push(user);
+        //     })
+        //     dispatch({
+        //         type: "USERS_GET",
+        //         payload: data
+        //     })
+        //  })
+        //  .catch(function(error){
+        //     console.log("Error getting document:", error);
+        //  })
         db.collection("Students").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
             let users = doc.data();
@@ -46,7 +77,6 @@ const addUser = (user)=>{
         type: 'USER_ADD',
         payload: user
     }
-    
 }
 const deleteUser = (id) =>{
     db.collection("Students").doc(id).delete().then(function(){
@@ -59,7 +89,24 @@ const deleteUser = (id) =>{
         id: id
     }
 }
-const setUser = (id) =>{
-
+const setUser = (user, id) =>{
+    db.collection("Students").doc(id).set({
+        Group_Name: user.Group_Name,
+        Group_Type: user.Group_Type,
+        Details: user.Details,
+        Tour_Guide: user.Tour_Guide,
+        Chaperone: user.Chaperone,
+        profilePicture: user.profilePicture
+    }).then(function() {
+        console.log("Document successfully written!");
+    })
+    .catch(function(error) {
+        console.error("Error writing document: ", error);
+    });
+    return{
+        type:"USER_SET",
+        payload: user
+    }
+    
 }
-export {getUsers, addUser, deleteUser, setUser};
+export {getUsers, addUser, deleteUser, getSingleUser, setUser};

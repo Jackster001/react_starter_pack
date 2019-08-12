@@ -3,7 +3,6 @@ import '../components.css';
 import {withRouter} from 'react-router-dom'
 import logo from '../images/SBNYC-logo.jpg'
 import * as ROUTES from '../../constants/routes'
-import { compose } from 'recompose';
 import 'firebase/auth';
 import {login} from "../../Action"
 import {connect} from "react-redux"

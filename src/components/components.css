@@ -166,24 +166,60 @@ table{
     padding: 5px;
     background: white;
 }
-
+    
 .add_User_Styles>.add_form>label{
     text-align: right;
     width:30%;
     display: inline-flex;
-    margin-right: 10px;}
+    margin-right: 10px;
+}
 .student_Submit{
     border: none;
     background-color: #017EEC;
     color: white;
     padding: 10px 20px;
-    width: 80%;
+    width: 75%;
 }
 .student_Submit:hover{
     cursor: pointer;
     background-color: #016CCA;
 }
-
+.student_Update{
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    width: 75%;
+}
+.student_Update:hover{
+    cursor: pointer;
+    background-color: #464646;
+}
+.addNewUser{
+    border: none;
+    padding: 5px 15px;
+    background-color: #0181D7;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.addNewUser:hover{
+    background-color: #016CCA;
+}
+.downloadCSV{
+    margin-left: 10px;
+    border: none;
+    padding: 5px 15px;
+    background-color: black;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.downloadCSV:hover{
+    background-color: #353535;
+}
 .edit_button{
     border: none; 
     background-color: black;

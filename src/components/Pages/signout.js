@@ -1,5 +1,4 @@
 import React from 'react';
-import { withFirebase } from '../Firebase';
 import '../components.css';
 import {signOut} from '../../Action'
 import {connect} from "react-redux"
