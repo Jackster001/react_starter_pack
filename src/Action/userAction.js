@@ -1,11 +1,11 @@
-import {db} from "../components/Firebase"
-// import {dbMain} from "../components/Firebase/firebaseMain";
+// import {db} from "../components/Firebase"
+import {db} from "../components/Firebase";
 
 const getSingleUser= (id)=>{
     let user={}
     let stringId=''+id+'';
     return (dispatch)=>{
-        let docRef=db.collection("Students").doc(stringId)
+        let docRef=db.collection("users").doc(stringId)
         docRef.get().then(function(doc){
         if(doc.exists){
             user=doc.data();
@@ -43,10 +43,10 @@ const getUsers = () =>{
         //  .catch(function(error){
         //     console.log("Error getting document:", error);
         //  })
-        db.collection("Students").get().then(function(querySnapshot) {
+        db.collection("users").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
             let users = doc.data();
-            users= {id:doc.id,...users,profilePicture:""}
+            users= {id:doc.id,...users}
             data.push(users);
             })
             dispatch({
@@ -60,7 +60,7 @@ const getUsers = () =>{
     }
 }
 const addUser = (user)=>{
-    db.collection("Students").add({
+    db.collection("users").add({
         Details: user.Details,
         Chaperone: user.Chaperone,
         Group_Name: user.Group_Name,
@@ -79,7 +79,7 @@ const addUser = (user)=>{
     }
 }
 const deleteUser = (id) =>{
-    db.collection("Students").doc(id).delete().then(function(){
+    db.collection("users").doc(id).delete().then(function(){
         console.log("Student successfully deleted!");
     }).catch(function(error) {
         console.error("Error removing document: ", error);
@@ -90,7 +90,7 @@ const deleteUser = (id) =>{
     }
 }
 const setUser = (user, id) =>{
-    db.collection("Students").doc(id).set({
+    db.collection("users").doc(id).set({
         Group_Name: user.Group_Name,
         Group_Type: user.Group_Type,
         Details: user.Details,

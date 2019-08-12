@@ -20,15 +20,21 @@ class UserRow extends React.Component{
     render(){
         return(
             <tr>
-                <td>{this.props.id}</td>
-                <td>{this.props.Group_Type}</td>
-                <td>{this.props.Group_Name}</td>
-                <td>Name: {this.props.Details}
-                    {/* Last Name: {this.props.lastName}
-                    Phone #: {this.props.phoneNumber} */}
+                <td><center>{this.props.id}</center></td>
+                <td><center>{this.props.Group_Type}</center></td>
+                <td><center>{this.props.Group_Name}</center></td>
+                <td>First Name: {this.props.firstName}<br/><br/>
+                    Last Name: {this.props.lastName}<br/><br/>
+                    Phone #: {this.props.phoneNumber}
                 </td>
-                <td>{this.props.emergencyContact}</td>
-                <td><img src='{this.props.profilePicture}' height="100px" width="100px;"/></td>
+                {/* <td></td> */}
+                <td>
+                    <br/>
+                    Name: {this.props.emergencyName}<br/><br/>
+                    Phone #: {this.props.emergencyNumber}<br/><br/>
+                    Relationship: {this.props.emergencyRelationship}<br/><br/>
+                </td>
+                <td><center><img src={this.props.profilePicture} height="120px" width="110px;"/></center></td>
                 <td>{this.props.Tour_Guide}</td>
                 <td>{this.props.Chaperone}</td>
                 <td><center>

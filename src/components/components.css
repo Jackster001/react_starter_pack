@@ -243,3 +243,6 @@ table{
     cursor: pointer;
     background-color: #FE3535;
 }
+.UserTableHead>tr>th{
+    padding: 10px 5px;
+}

@@ -8,7 +8,7 @@ const INITIAL_STATE = {
       case "OFF_AUTH_USER_SET":
         return {...state, authUser: action.payload};
       case 'LOGIN_SUCCESS':
-        return {...state, authUser:action.payload};
+        return {...state, authUser: action.payload};
       default:
         return state;
     }
