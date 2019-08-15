@@ -3,14 +3,10 @@ import '../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import UserRow from "./userRow"
-import {getUsers} from '../../Action'
+import {getUsers, userAddedChanged} from '../../Action'
 class UserTable extends React.Component {
   componentDidMount(){
     this.props.getUsers();
-    this.props.users.map(function(user, i){
-      // let data= Object.assign({},user.emergencyContact)
-      // console.log(data);
-    })
   }
    render() {
       return (
@@ -18,7 +14,7 @@ class UserTable extends React.Component {
            <table className="table1 table-dark" border="1" cellSpacing="0">
              <thead className="UserTableHead">
                <tr>
-                <th>Email Id</th>
+                {/* <th>Id</th> */}
                 <th>User Type</th>
                 <th>Group Name</th>
                 <th>Details</th>
@@ -32,28 +28,21 @@ class UserTable extends React.Component {
              <tbody>
               { this.props.users.map(function(user, i){
                 let data= Object.assign({},user.emergencyContact)
-                console.log(user.profilePicture)
+                let tourGuide =Object.assign({}, user.tourGuide)
+                let leadChaperone= Object.assign({}, user.leadChaperone)
                 return(<UserRow key={i}
                   id={user.id} 
                   Group_Type={user.userType}
-                  Group_Name={user.groupPin}
+                  Group_Name={user.GroupName}
                   firstName={user.firstName}
                   lastName={user.lastName}
                   emergencyName={data.name}
                   emergencyNumber={data.phoneNumber}
                   emergencyRelationship={data.relationship}
+                  tourGuide={tourGuide.firstName}
+                  leadChaperone={leadChaperone.firstName}
                   phoneNumber={user.phoneNumber}
                   profilePicture={user.profilePicture}
-                  // Tour_Guide={user.Tour_Guide}
-                  // Chaperone={user.Chaperone}
-                  // id={user.id} 
-                  // Group_Type={user.Group_Type}
-                  // Group_Name={user.Group_Name}
-                  // Details={user.Details}
-                  // phoneNumber={user.phoneNumber}
-                  // profilePicture={user.profilePicture}
-                  // Tour_Guide={user.Tour_Guide}
-                  // Chaperone={user.Chaperone}
                   />)
                 })}
               </tbody>
@@ -64,11 +53,12 @@ class UserTable extends React.Component {
 }
 const mapStateToProps = state => ({
   users: state.userState.users,
+  userAdded: state.userState.userAdded
 });
  
 export default compose(
    connect(
      mapStateToProps,
-     {getUsers}
+     {getUsers, userAddedChanged}
    ),
 )(UserTable);

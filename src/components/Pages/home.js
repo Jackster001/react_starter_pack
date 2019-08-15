@@ -4,6 +4,7 @@ import logo from '../images/SBNYC-logo.jpg'
 import { withAuthorization } from '../Session';
 
 class Home extends React.Component {
+
    render() {
       return (
       <div className="App">

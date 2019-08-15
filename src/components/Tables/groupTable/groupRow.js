@@ -2,29 +2,31 @@ import React from 'react';
 import '../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import {getUsers, getSingleUser, deleteUser, resetChanged} from '../../Action'
+import {} from '../../Action'
 import { withAuthorization } from '../Session';
 import { Link} from 'react-router-dom'
-class UserRow extends React.PureComponent{
+class groupRow extends React.PureComponent{
     constructor(props){
         super(props);
         this.state={selected : {}, done: false}
     
     }
-    componentDidUpdate(){
-        if(this.props.changed){
-            this.props.resetChanged()
+    // componentDidUpdate(){
+    //     if(this.props.changed){
+    //         this.props.resetChanged()
+    //         console.log(this.props.changed);
 
-            this.props.history.push('/student/'+this.props.id);
-        }
+    //         this.props.history.push('/student/'+this.props.id);
+    //     }
         
-    }
+    // }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");
         this.props.deleteUser(id);
     }
     selected(id){
         this.props.getSingleUser(id);
+        console.log("select was called");
     }
 
     
@@ -32,7 +34,7 @@ class UserRow extends React.PureComponent{
         return(
             <tr>
                 {/* <td><input className="checkbox" type="checkbox" value="Car" onClick={()=>this.selected(this.props.id)}/></td> */}
-                {/* <td className="UserId"><center>{this.props.id}</center></td> */}
+                <td><center>{this.props.id}</center></td>
                 <td><center>{this.props.Group_Type}</center></td>
                 <td><center>{this.props.Group_Name}</center></td>
                 <td>First Name: {this.props.firstName}<br/><br/>
@@ -62,13 +64,11 @@ class UserRow extends React.PureComponent{
 
 const mapStateToProps = state => ({
     users: state.userState.users,
-    selected: state.userState.selected,
-    changed: state.userState.changed
 });
 const condition = authUser => !!authUser;
 export default compose(
     connect(
       mapStateToProps,
-      {getUsers, getSingleUser, deleteUser, resetChanged}
+      {}
     ),withAuthorization(condition)
 )(UserRow);

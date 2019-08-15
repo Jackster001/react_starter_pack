@@ -66,6 +66,8 @@ class Users extends React.Component {
       super(props);
       this.state= {data:this.props.users};
    };
+   componentDidMount(){
+   }
    render() {
       return (
          <div className="App">

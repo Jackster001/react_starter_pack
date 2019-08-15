@@ -1,10 +1,26 @@
-// import {db} from "../components/Firebase"
-import {db} from "../components/Firebase";
-
+import {db,auth} from "../components/Firebase";
+const resetChanged =() =>{
+    return{
+        type: "RESET_CHANGED"
+    }
+}
+const userResetChanged =() =>{
+    return{
+        type: "USER_RESET_CHANGED"
+    }
+}
+const userAddedChanged =() =>{
+    return{
+        type: "USER_ADDED"
+    }
+}
 const getSingleUser= (id)=>{
     let user={}
     let stringId=''+id+'';
     return (dispatch)=>{
+        dispatch({
+            type: "CHANGE_LOADING"
+        })
         let docRef=db.collection("users").doc(stringId)
         docRef.get().then(function(doc){
         if(doc.exists){
@@ -25,30 +41,15 @@ const getSingleUser= (id)=>{
     }
     
 }
-
 const getUsers = () =>{
     let data=[];
     return (dispatch) => {
-        // dbMain.collection("users").get().then(function(querySnapshot) {
-        //     querySnapshot.forEach(function(doc) {
-        //     let user = doc.data();
-        //     user= {id:doc.id,...user}
-        //     data.push(user);
-        //     })
-        //     dispatch({
-        //         type: "USERS_GET",
-        //         payload: data
-        //     })
-        //  })
-        //  .catch(function(error){
-        //     console.log("Error getting document:", error);
-        //  })
         db.collection("users").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
             let users = doc.data();
             users= {id:doc.id,...users}
             data.push(users);
-            })
+            })           
             dispatch({
                 type: "USERS_GET",
                 payload: data
@@ -57,26 +58,38 @@ const getUsers = () =>{
          .catch(function(error){
             console.log("Error getting document:", error);
          })
+         
     }
 }
 const addUser = (user)=>{
-    db.collection("users").add({
-        Details: user.Details,
-        Chaperone: user.Chaperone,
-        Group_Name: user.Group_Name,
-        Group_Type: user.Group_Type,
-        Tour_Guide: user.Tour_Guide,
-        profilePicture: user.profilePicture
-    }).then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
+    return(dispatch)=>{
+    let email= user.userName + "@mail.com"
+    auth.createUserWithEmailAndPassword(email, user.password)
+    .then(response=>{
+        db.collection("users").doc(response.user.uid).set({
+            GroupName: user.GroupName,
+            userType: user.userType,
+            userName: user.userName,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            password: user.password,
+            tourGuide: user.tourGuide,
+            leadChaperone: user.leadChaperone,
+            profilePicture: user.profilePicture,
+            emergencyContact: user.emergencyContact
+            
+        })
+        dispatch({
+            type: 'USER_ADD',
+            payload: user
+        })
     })
-    .catch(function(error) {
-        console.error("Error adding document: ", error);
+    .catch(error => {
+        console.log({ error });
     });
-    return {
-        type: 'USER_ADD',
-        payload: user
+     
     }
+    
 }
 const deleteUser = (id) =>{
     db.collection("users").doc(id).delete().then(function(){
@@ -89,24 +102,22 @@ const deleteUser = (id) =>{
         id: id
     }
 }
-const setUser = (user, id) =>{
-    db.collection("users").doc(id).set({
-        Group_Name: user.Group_Name,
-        Group_Type: user.Group_Type,
-        Details: user.Details,
-        Tour_Guide: user.Tour_Guide,
-        Chaperone: user.Chaperone,
-        profilePicture: user.profilePicture
-    }).then(function() {
-        console.log("Document successfully written!");
-    })
-    .catch(function(error) {
-        console.error("Error writing document: ", error);
-    });
-    return{
-        type:"USER_SET",
-        payload: user
+const setUser = (user) =>{
+    
+    return(dispatch)=>{
+        db.collection("users").doc(user.id).set(user).then(function() {
+            dispatch({
+                type: "USER_CHANGE_LOADING"
+            })
+            dispatch({
+                type:"USER_SET",
+                payload: user
+            })
+        })
+        .catch(function(error) {
+            console.error("Error writing document: ", error);
+        });
     }
     
 }
-export {getUsers, addUser, deleteUser, getSingleUser, setUser};
+export {getUsers, addUser, deleteUser, getSingleUser, setUser, userAddedChanged, resetChanged, userResetChanged};
