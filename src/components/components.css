@@ -153,7 +153,7 @@ td.UserId{
     width:0px;
 }
 /* add_User_Styles */
-.add_User_Styles{
+.add_Table_Styles{
     width:50%;
     margin: 0 auto;
     background-color: #E6E6E6;
@@ -164,34 +164,45 @@ td.UserId{
     width:70%;
     margin: 0 auto;
 }
-.add_User_Styles>.add_form>input{
+.add_Table_Styles>.add_form>input{
     width: 40%;
     margin: 0px 0 12px 0;
     display: inline-flex;
     padding: 5px;
     background: white;
 }
-.add_User_Styles>.add_form>select{
+.add_Table_Styles>.add_form>div>textarea{
+    padding: 5px;
+    display: inline-flex;
+    background: white;
+}
+.add_Table_Styles>.add_form>select{
     width: 43%;
     margin: 0px 0 12px 0;
     display: inline-flex;
     padding: 5px;
     background: white;
 }    
-.add_User_Styles>.add_form>label{
+.add_Table_Styles>.add_form>label{
     text-align: right;
     width:30%;
     display: inline-flex;
     margin-right: 10px;
 }
-.student_Submit{
+.add_Table_Styles>.add_form>div>label{
+    text-align: right;
+    width:30%;
+    display: inline-flex;
+    margin-right: 10px;
+}
+.Submit_Button{
     border: none;
     background-color: #017EEC;
     color: white;
     padding: 10px 20px;
     width: 75%;
 }
-.student_Submit:hover{
+.Submit_Button:hover{
     cursor: pointer;
     background-color: #016CCA;
 }
@@ -206,7 +217,7 @@ td.UserId{
     cursor: pointer;
     background-color: #464646;
 }
-.addNewUser{
+.addNew{
     border: none;
     padding: 5px 15px;
     background-color: #0181D7;
@@ -215,7 +226,7 @@ td.UserId{
     border-radius: 5px;
     cursor: pointer;
 }
-.addNewUser:hover{
+.addNew:hover{
     background-color: #016CCA;
 }
 .downloadCSV{
@@ -237,6 +248,7 @@ td.UserId{
     border-radius: 20px;
     color: white;
     padding: 5px 15px; 
+    margin-bottom: 10px;
 }
 .edit_button:hover{
     cursor: pointer;
@@ -254,6 +266,22 @@ td.UserId{
     cursor: pointer;
     background-color: #FE3535;
 }
+.assignButton{
+    border: none; 
+    background-color: black;
+    border-radius: 20px;
+    color: white;
+    padding: 5px 15px; 
+}
+.assignButton:hover{
+    cursor: pointer;
+    background-color: #2D2D2D;
+}
+
 .UserTableHead>tr>th{
     padding: 10px 5px;
+}
+
+.groupTextField * {
+    vertical-align: top;
 }

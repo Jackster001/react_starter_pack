@@ -76,7 +76,7 @@ class Users extends React.Component {
                <div className="userTable">
                   <center><h1>User Management</h1></center>
                   <div>
-                  <Link to={ROUTES.STUDENT_ADD}><button className="addNewUser">Add New User</button></Link>
+                  <Link to={ROUTES.STUDENT_ADD}><button className="addNew">Add New User</button></Link>
                   <CSVLink data={this.state.data} ><button className="downloadCSV">Download CSV</button></CSVLink>
                   </div><br/><br/>
                   <UserTable/>

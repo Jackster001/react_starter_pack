@@ -39,7 +39,6 @@ const getSingleUser= (id)=>{
         console.log("Error getting document:", error);
     });
     }
-    
 }
 const getUsers = () =>{
     let data=[];
@@ -48,7 +47,7 @@ const getUsers = () =>{
             querySnapshot.forEach(function(doc) {
             let users = doc.data();
             users= {id:doc.id,...users}
-            data.push(users);
+            data=[users, ...data];
             })           
             dispatch({
                 type: "USERS_GET",
@@ -87,9 +86,7 @@ const addUser = (user)=>{
     .catch(error => {
         console.log({ error });
     });
-     
     }
-    
 }
 const deleteUser = (id) =>{
     db.collection("users").doc(id).delete().then(function(){
@@ -117,7 +114,6 @@ const setUser = (user) =>{
         .catch(function(error) {
             console.error("Error writing document: ", error);
         });
-    }
-    
+    } 
 }
 export {getUsers, addUser, deleteUser, getSingleUser, setUser, userAddedChanged, resetChanged, userResetChanged};

@@ -7,7 +7,9 @@ import Home from './components/Pages/home';
 import Users from './components/Pages/users';
 import addUser from "./components/Pages/add_User";
 import student_Edit from "./components/Pages/student_Edit";
-import Groups from './components/Pages/groups';
+import Groups from './components/Pages/Group_Pages/groups';
+import addGroup from './components/Pages/Group_Pages/add_Group';
+import groupEdit from './components/Pages/Group_Pages/groupEdit';
 import Itinerary from './components/Pages/itinerary';
 import Notifications from './components/Pages/notifications';
 import Alarm from './components/Pages/alarm';
@@ -41,19 +43,19 @@ class App extends Component {
   render(){
   return (
     <div className="App">
-      {/* <AuthUserContext.Provider value={this.state.authUser}> */}
       <Header />
           <Router>
             <div>
               <Navigation authUser={this.state.authUser}/>
               <Route exact path={ROUTES.LANDING} component={Login} />
-              {/* <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} /> */}
               <Route path={ROUTES.LOGIN} component={Login} />
               <Route path={ROUTES.HOME} component={Home} />
               <Route path={ROUTES.USERS} component={Users} />
               <Route path={ROUTES.STUDENT_ADD} component={addUser} />
               <Route path={ROUTES.STUDENT_EDIT} component={student_Edit} />
               <Route path={ROUTES.GROUPS} component={Groups} />
+              <Route path={ROUTES.GROUP_ADD} component={addGroup} />
+              <Route path={ROUTES.GROUP_EDIT} component={groupEdit} />
               <Route path={ROUTES.ITINERARY} component={Itinerary} />
               <Route path={ROUTES.NOTIFICATIONS} component={Notifications} />
               <Route path={ROUTES.ALARM} component={Alarm} />
@@ -64,7 +66,6 @@ class App extends Component {
             </div>
           </Router>
         <Footer/>
-        {/* </AuthUserContext.Provider> */}
     </div>
   );
 };

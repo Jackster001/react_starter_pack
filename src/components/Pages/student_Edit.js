@@ -131,7 +131,7 @@ class Student_Edit extends React.Component {
             <div>
                <center><h1>Edit Student User</h1></center>
             </div>
-            <div className="add_User_Styles">
+            <div className="add_Table_Styles">
                <form className="add_form">
                <center><h2>User Information</h2></center>
                   <label htmlFor="group_name"><b>Group Name: </b></label>

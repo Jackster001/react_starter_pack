@@ -31,15 +31,12 @@ class UserRow extends React.PureComponent{
     render(){
         return(
             <tr>
-                {/* <td><input className="checkbox" type="checkbox" value="Car" onClick={()=>this.selected(this.props.id)}/></td> */}
-                {/* <td className="UserId"><center>{this.props.id}</center></td> */}
                 <td><center>{this.props.Group_Type}</center></td>
                 <td><center>{this.props.Group_Name}</center></td>
                 <td>First Name: {this.props.firstName}<br/><br/>
                     Last Name: {this.props.lastName}<br/><br/>
                     Phone #: {this.props.phoneNumber}
                 </td>
-                {/* <td></td> */}
                 <td>
                     <br/>
                     Name: {this.props.emergencyName}<br/><br/>
@@ -50,9 +47,7 @@ class UserRow extends React.PureComponent{
                 <td>{this.props.tourGuide}</td>
                 <td>{this.props.leadChaperone}</td>
                 <td><center>
-                    {/* <Link to={'/student/'+this.props.id} >onClick={()=> this.selected(this.props.id)} */}
                         <button className="edit_button" onClick={()=> this.selected(this.props.id)}>Edit</button><br/>
-                        {/* </Link> */}
                     <button className="delete_button" id={this.props.id} onClick={()=>this.handleDelete(this.props.id)}>Delete</button></center>
                 </td>
             </tr>

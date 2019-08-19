@@ -131,7 +131,7 @@ class Add_User extends React.Component {
             <div>
                <center><h1>Add Student User</h1></center>
             </div>
-            <div className="add_User_Styles">
+            <div className="add_Table_Styles">
                <form className="add_form">
                   <center><h2>User Information</h2></center>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
@@ -170,7 +170,7 @@ class Add_User extends React.Component {
                   <input type="text" name="name" onChange={this.onChangePhoneNumber.bind(this)} required/><br/><br/>
                   <label htmlFor="name"><b>Relationship: </b></label>
                   <input type="text" name="name" onChange={this.onChangeRelationship.bind(this)} required/><br/><br/>
-                  <button type="button" className="student_Submit" onClick={()=>this.setUser()}>Add User</button>
+                  <button type="button" className="Submit_Button" onClick={()=>this.setUser()}>Add User</button>
                </form>
          </div></div>
       );

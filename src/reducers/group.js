@@ -1,54 +1,43 @@
 const INITIAL_STATE = {
     groups: [{}],
+    groupAdding: false,
     selectedGroup: {},
-    groupsListloading: false,
-    changed: false,
-    listLoading: false,
-    userChanged: false,
-    userAdded: false,
+    selectGroupChanged: false,
+    groupChanging: false
 };
 function groupReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
       case 'GROUPS_GET': {
         return {...state, groups: action.payload};
       }
+      case 'GROUP_ADD': {
+        return {...state, groups: [action.payload,...state.groups], groupAdding: true};
+      }
+      case 'GROUP_ADDED': {
+        return {...state, groupAdding: false}
+      }
       case 'GROUP_SELECT': {
         let newSelected=(action.payload);
         console.log(newSelected)
-        return {...state, selected: newSelected, groupListLoading: false, changed: true};
+        return {...state, selectedGroup: newSelected, selectGroupChanged: true};
       }
-      case 'RESET_CHANGED':{
-        return {...state, changed: false}
+      case 'GROUP_SELECT_CHANGED':{
+        return {...state, selectGroupChanged: false}
       }
-      case 'CHANGE_LOADING':{
-        return {...state, loading: true}
+      case 'EDIT_GROUP': {
+        const index= state.groups.findIndex(group => {return group.id == state.selected.id})
+        const newGroupSet = state.groups;
+        newGroupSet[index]= action.payload;
+        return {...state, groups: newGroupSet, groupChanging:true};
       }
-      case 'GROUP_RESET_CHANGED':{
-        return {...state, userChanged: false}
-      }
-      case 'GROUP_CHANGE_LOADING':{
-        return {...state, listLoading: true}
-      }
-      case 'GROUP_ADD':{
-        return {...state, users: [action.payload,...state.users], userAdded: true, userAddedLoading: true};
-      }
-      case 'GROUP_ADDED':{
-        return {...state, userAdded: false}
-      }
-      case 'GROUP_SET': {
-        const index= state.users.findIndex(user => {return user.id == state.selected.id})
-        const newUserSet = state.users;
-        newUserSet[index]= action.payload;
-        return {...state, users: newUserSet, userChanged:true};
+      case 'GROUP_CHANGED':{
+        return{...state, groupChanging:false}
       }
       case "GROUP_DELETE": {
-        const newUsers = Object.assign([],{...state.users});
-        console.log(newUsers)
-        const index= state.users.findIndex(user => {return user.id == action.id})
-        newUsers.splice(index, 1)
-        console.log(index);
-        console.log(newUsers)
-        return {...state, users: newUsers};
+        const newGroups = Object.assign([],{...state.groups});
+        const index= state.groups.findIndex(group => {return group.id == action.id})
+        newGroups.splice(index, 1)
+        return {...state, groups: newGroups, groupDeleting: true};
       }
       default:
         return state;
