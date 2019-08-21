@@ -157,8 +157,8 @@ td.UserId{
     width:50%;
     margin: 0 auto;
     background-color: #E6E6E6;
-    padding: 60px 0px;
-    margin-bottom: 150px;
+    padding: 0px 0px 80px 0px;
+    margin-bottom: 160px;
 }
 .add_form{
     width:70%;
@@ -173,6 +173,7 @@ td.UserId{
 }
 .add_Table_Styles>.add_form>div>textarea{
     padding: 5px;
+    width: 40%;
     display: inline-flex;
     background: white;
 }
@@ -206,14 +207,14 @@ td.UserId{
     cursor: pointer;
     background-color: #016CCA;
 }
-.student_Update{
+.update_Button{
     border: none;
     background-color: black;
     color: white;
     padding: 10px 20px;
     width: 75%;
 }
-.student_Update:hover{
+.update_Button:hover{
     cursor: pointer;
     background-color: #464646;
 }
@@ -284,4 +285,27 @@ td.UserId{
 
 .groupTextField * {
     vertical-align: top;
+}
+.addGroupTextArea{
+    width:50%
+}
+.addFormHeading{
+    width:100%;
+    background-color: #008CBA;
+    height: 30%;
+    padding: 20px 0px 10px 0px;
+    margin-bottom: 50px;
+}
+.addFormHeading>h1{
+    color:white
+}
+.editFormHeading{
+    width:100%;
+    background-color:black;
+    height: 30%;
+    padding: 20px 0px 10px 0px;
+    margin-bottom: 50px;
+}
+.editFormHeading>h1{
+    color:white;
 }

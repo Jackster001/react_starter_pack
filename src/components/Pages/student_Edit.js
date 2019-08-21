@@ -128,12 +128,10 @@ class Student_Edit extends React.Component {
       return (
          <div>
             <br/><br/><br/><br/>
-            <div>
-               <center><h1>Edit Student User</h1></center>
-            </div>
             <div className="add_Table_Styles">
+               <div className="editFormHeading"><h1>User Management</h1></div>
                <form className="add_form">
-               <center><h2>User Information</h2></center>
+               <center><h2>Edit User Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <select name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
                   <option disabled selected defaultValue>{this.props.selected.GroupName}</option>
@@ -163,14 +161,14 @@ class Student_Edit extends React.Component {
                   <label htmlFor="chaperone"><b>Chaperone: </b></label>
                   <input type="text" name="chaperone" onChange={this.onChangeChaperone.bind(this)} placeholder={this.props.selected.leadChaperone.firstName} required/><br/><br/>
                   <hr/><br/>
-                  <center><h2>Emergency Contact Information</h2></center>
+                  <center><h2>Emergency Contact Information</h2></center><br/>
                   <label htmlFor="name"><b>Full Name: </b></label>
                   <input type="text" name="name" onChange={this.onChangeFullName.bind(this)} placeholder={this.props.selected.emergencyContact.name} required/><br/><br/>
                   <label htmlFor="name"><b>Phone Number: </b></label>
                   <input type="text" name="name" onChange={this.onChangePhoneNumber.bind(this)} placeholder={this.props.selected.emergencyContact.phoneNumber} required/><br/><br/>
                   <label htmlFor="name"><b>Relationship: </b></label>
                   <input type="text" name="name" onChange={this.onChangeRelationship.bind(this)} placeholder={this.props.selected.emergencyContact.relationship} required/><br/><br/>
-                  <button type="button" className="student_Update" onClick={()=>this.handleEdit()}>Update User</button>
+                  <button type="button" className="update_Button" onClick={()=>this.handleEdit()}>Update User</button>
                </form>
          </div></div>
       );

@@ -56,18 +56,16 @@ class Add_Group extends React.Component {
       return (
          <div>
             <br/><br/><br/><br/>
-            <div>
-               <center><h1>Add New Group</h1></center>
-            </div>
             <div className="add_Table_Styles">
+            <div className="addFormHeading"><h1>Group Management</h1></div>
                <form className="add_form">
-                  <center><h2>Group Information</h2></center>
+                  <center><h2>Group Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <input type="text" name="name" onChange={this.onChangeGroupName.bind(this)} required/><br/><br/>
                   <label htmlFor="group_pin"><b>Group Pin: </b></label>
                   <input type="text" name="group_pin" onChange={this.onChangeGroupPin.bind(this)} required/><br/><br/>
                   <div className="groupTextField"><label htmlFor="group_info"><b>Group Description: </b></label>
-                  <textarea rows="4" cols="28" name="group_info" onChange={this.onChangeGroupInformation.bind(this)}></textarea></div><br/><br/>
+                  <textarea className="addGroupTextArea" name="group_info" onChange={this.onChangeGroupInformation.bind(this)}></textarea></div><br/><br/>
                   <button type="button" className="Submit_Button" onClick={()=>this.addGroup()}>Add Group</button>
                </form>
          </div>

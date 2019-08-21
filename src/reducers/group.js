@@ -25,9 +25,10 @@ function groupReducer(state = INITIAL_STATE, action) {
         return {...state, selectGroupChanged: false}
       }
       case 'EDIT_GROUP': {
-        const index= state.groups.findIndex(group => {return group.id == state.selected.id})
+        const index= state.groups.findIndex(group => {return group.id == state.selectedGroup.id})
         const newGroupSet = state.groups;
         newGroupSet[index]= action.payload;
+        console.log(newGroupSet)
         return {...state, groups: newGroupSet, groupChanging:true};
       }
       case 'GROUP_CHANGED':{

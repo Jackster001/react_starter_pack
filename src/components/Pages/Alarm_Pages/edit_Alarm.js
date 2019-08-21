@@ -5,7 +5,7 @@ import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
 import {editGroup, groupChanged} from '../../../Action/groupAction'
 import * as ROUTES from '../../../constants/routes';
-class Group_Edit extends React.Component {
+class Edit_Alarm extends React.Component {
    constructor(props){
       super(props);
       this.state={
@@ -53,16 +53,16 @@ class Group_Edit extends React.Component {
          <div>
             <br/><br/><br/><br/>
             <div className="add_Table_Styles">
-            <div className="editFormHeading"><h1>Group Management</h1></div>
+            <div className="editFormHeading"><h1>Alarm Management</h1></div>
                <form className="add_form">
-                  <center><h2>Edit Group Information</h2></center><br/>
+                  <center><h2>Edit Alarm Information</h2></center>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <input type="text" name="name" placeholder={this.props.selectedGroup.name} onChange={this.onChangeGroupName.bind(this)} required/><br/><br/>
                   <label htmlFor="group_pin"><b>Group Pin: </b></label>
                   <input type="text" name="group_pin" placeholder={this.props.selectedGroup.pin} onChange={this.onChangeGroupPin.bind(this)} required/><br/><br/>
                   <div className="groupTextField"><label htmlFor="group_info"><b>Group Description: </b></label>
                   <textarea rows="4" cols="28" name="group_info" placeholder={this.props.selectedGroup.Group_Information} onChange={this.onChangeGroupInformation.bind(this)}></textarea></div><br/><br/>
-                  <button type="button" className="update_Button" onClick={()=>this.onHandleEdit()}>Update Group</button>
+                  <button type="button" className="update_Button" onClick={()=>this.onHandleEdit()}>Update Alarm</button>
                </form>
             </div>
          </div>
@@ -80,5 +80,5 @@ export default compose(
      mapStateToProps,
      {editGroup, groupChanged}
    ),withAuthorization(condition)
-)(Group_Edit);
+)(Edit_Alarm);
 

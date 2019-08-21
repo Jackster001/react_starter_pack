@@ -28,7 +28,7 @@ const Navigation = ({ authUser }) => (
                 <Link className="links" to={ROUTES.NOTIFICATIONS}>Notifications</Link>
                 </li>
                 <li>
-                <Link className="links" to={ROUTES.ALARM}>Alarm</Link>
+                <Link className="links" to={ROUTES.ALARMS}>Alarm</Link>
                 </li>
                 <li>
                 <Link className="links" to={ROUTES.LOST}>I am Lost</Link>
