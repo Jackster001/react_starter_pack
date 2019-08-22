@@ -1,20 +1,16 @@
 import React from 'react';
-import '../components.css';
+import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import UserRow from "./userRow"
-import {getUsers, userAddedChanged} from '../../Action'
+import {userAddedChanged} from '../../../Action'
 class UserTable extends React.Component {
-  componentDidMount(){
-    this.props.getUsers();
-  }
    render() {
       return (
          <div className="basicTable">
            <table className="table1 table-dark" border="1" cellSpacing="0">
              <thead className="UserTableHead">
                <tr>
-                {/* <th>Id</th> */}
                 <th>User Type</th>
                 <th>Group Name</th>
                 <th>Details</th>
@@ -59,6 +55,6 @@ const mapStateToProps = state => ({
 export default compose(
    connect(
      mapStateToProps,
-     {getUsers, userAddedChanged}
+     {userAddedChanged}
    ),
 )(UserTable);

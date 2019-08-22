@@ -3,7 +3,6 @@ import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import {deleteAlarm, selectAlarm, selectAlarmChanging} from '../../../Action/alarmAction';
-import {getGroups} from '../../../Action/groupAction'
 import withAuthorization from '../../Session/withAuthorization';
 import { Link} from 'react-router-dom'
 class AlarmRow extends React.PureComponent{
@@ -24,19 +23,18 @@ class AlarmRow extends React.PureComponent{
         let temp=Object.assign({},group[0])
         this.setState({groupName: temp.name})
     }
-    // componentDidUpdate(){
-    //     if(this.props.selectGroupChanged){
-    //         this.props.selectGroupChanging()
-    //         // console.log(this.props.selectedGroup);
-    //         this.props.history.push('/group/'+this.props.id);        
-    //     } 
-    // }
+    componentDidUpdate(){
+        if(this.props.selectAlarmChanged){
+            this.props.selectAlarmChanging()
+            this.props.history.push('/alarm/'+this.props.id);        
+        } 
+    }
     handleDelete(id){
-        // alert("User with id:"+this.props.id+" has been deleted from the database");
-        // this.props.deleteGroup(id);
+        alert("User with id:"+this.props.id+" has been deleted from the database");
+        this.props.deleteAlarm(id);
     }
     selected(id){
-        // this.props.selectGroup(id);
+        this.props.selectAlarm(id);
     }
     render(){
         return(
@@ -56,13 +54,13 @@ class AlarmRow extends React.PureComponent{
 
 const mapStateToProps = state => ({
     groups: state.groupState.groups,
-    selectedGroup: state.groupState.selectedGroup,
-    selectGroupChanged: state.groupState.selectGroupChanged
+    selectedAlarm: state.alarmState.selectedAlarm,
+    selectAlarmChanged: state.alarmState.selectAlarmChanged
 });
 const condition = authUser => !!authUser;
 export default compose(
     connect(
       mapStateToProps,
-      {deleteAlarm, selectAlarm, selectAlarmChanging, getGroups}
+      {deleteAlarm, selectAlarm, selectAlarmChanging}
     ),withAuthorization(condition)
 )(AlarmRow);

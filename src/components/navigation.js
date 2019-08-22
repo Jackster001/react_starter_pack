@@ -6,7 +6,7 @@ import * as ROUTES from '../constants/routes';
 import { connect } from 'react-redux';
 const Navigation = ({ authUser }) => (
    
-<div onClick={console.log(authUser)}>{authUser ==true ? <NavigationAuth authUser={authUser} /> : <NavigationNonAuth />} </div>
+<div>{authUser ==true ? <NavigationAuth authUser={authUser} /> : <NavigationNonAuth />} </div>
  );
    const NavigationAuth = () => (
           <div className="nav">

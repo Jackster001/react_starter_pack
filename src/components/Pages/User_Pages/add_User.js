@@ -1,10 +1,10 @@
 import React from 'react';
-import '../components.css';
+import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { withAuthorization } from '../Session';
-import {addUser, userAddedChanged} from '../../Action'
-import * as ROUTES from '../../constants/routes';
+import { withAuthorization } from '../../Session';
+import {addUser, userAddedChanged} from '../../../Action'
+import * as ROUTES from '../../../constants/routes';
 class Add_User extends React.Component {
    constructor(props){
       super(props);
@@ -27,12 +27,7 @@ class Add_User extends React.Component {
    componentDidUpdate(){
       if(this.props.userAdded){
          this.props.userAddedChanged()
-         // console.log(this.props.userAddedLoading)
-         // if(this.props.userAddedLoading == false){
-         //    console.log(this.props.userAddedLoading)
-            this.props.history.push('/users')
-         // }
-         
+            this.props.history.push('/users')    
      }
    }
    onChangeGroupName(event){
@@ -134,10 +129,10 @@ class Add_User extends React.Component {
                   <center><h2>User Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <select name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
-                  <option disabled selected defaultValue> -- select an option -- </option>
-                     <option value="Band10018">Band10018</option>
-                     <option value="Crazy Band">Crazy Band</option>
-                     <option value="Band-001">Band-001</option>
+                    <option disabled selected defaultValue> -- select an option -- </option>
+                        {this.props.groups.map(function(group){
+                            return (<option value={group.name}>{group.name}</option>)
+                        })}
                   </select><br/><br/>
                   <label htmlFor="group_type"><b>User Type: </b></label>
                   <select name="group_type" onChange={this.onChangeUserType.bind(this)} required>
@@ -177,6 +172,7 @@ class Add_User extends React.Component {
 const mapStateToProps = state => ({
    users: state.userState.users,
    userAdded: state.userState.userAdded,
+   groups: state.groupState.groups
  });
 const condition = authUser => !!authUser;
 export default compose(

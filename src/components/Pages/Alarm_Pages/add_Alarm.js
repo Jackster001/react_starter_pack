@@ -85,8 +85,8 @@ class Add_Alarm extends React.Component {
                             return (<option value={group.name}>{group.name}</option>)
                         })}
                     </select>
-                    <label htmlFor="group_name"><b>Set Date: </b></label>
-                    <input type="date" onChange={this.onChangeDate.bind(this)}></input>
+                    <label htmlFor="Alarm_Date"><b>Set Date: </b></label>
+                    <input type="date" name="Alarm_Date" onChange={this.onChangeDate.bind(this)}></input>
                     <label htmlFor="group_name"><b>Set Time: </b></label>
                     <input type="time" onChange={this.onChangeTime.bind(this)}></input>
                     <div className="groupTextField"><label htmlFor="group_info"><b>Alarm Message: </b></label>

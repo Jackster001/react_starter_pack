@@ -17,9 +17,8 @@ function alarmReducer(state = INITIAL_STATE, action) {
         return {...state, alarmAdding: false}
       }
       case 'ALARM_SELECT': {
-        let newSelected=(action.payload);
-        console.log(newSelected)
-        return {...state, selectedAlarm: newSelected, selectAlarmChanged: true};
+        console.log(action.payload)
+        return {...state, selectedAlarm: action.payload, selectAlarmChanged: true};
       }
       case 'ALARM_SELECT_CHANGED':{
         return {...state, selectAlarmChanged: false}
@@ -28,7 +27,7 @@ function alarmReducer(state = INITIAL_STATE, action) {
         const index= state.alarms.findIndex(alarm => {return alarm.id == state.selectedAlarm.id})
         const newAlarmSet = state.alarms;
         newAlarmSet[index]= action.payload;
-        console.log(newAlarmSet)
+        console.log(newAlarmSet);
         return {...state, alarms: newAlarmSet, alarmChanging:true};
       }
       case 'ALARM_CHANGED':{

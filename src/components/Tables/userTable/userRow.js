@@ -1,23 +1,20 @@
 import React from 'react';
-import '../components.css';
+import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import {getUsers, getSingleUser, deleteUser, resetChanged} from '../../Action'
-import { withAuthorization } from '../Session';
+import {getUsers, getSingleUser, deleteUser, resetChanged} from '../../../Action'
+import { withAuthorization } from '../../Session';
 import { Link} from 'react-router-dom'
 class UserRow extends React.PureComponent{
     constructor(props){
         super(props);
-        this.state={selected : {}, done: false}
-    
+        this.state={selected : {}}
     }
     componentDidUpdate(){
         if(this.props.changed){
             this.props.resetChanged()
-
-            this.props.history.push('/student/'+this.props.id);
+            this.props.history.push('/user/'+this.props.id);
         }
-        
     }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");
@@ -26,8 +23,6 @@ class UserRow extends React.PureComponent{
     selected(id){
         this.props.getSingleUser(id);
     }
-
-    
     render(){
         return(
             <tr>
@@ -54,7 +49,6 @@ class UserRow extends React.PureComponent{
         )
     }
 }
-
 const mapStateToProps = state => ({
     users: state.userState.users,
     selected: state.userState.selected,

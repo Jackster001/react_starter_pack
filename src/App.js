@@ -4,9 +4,9 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Login from './components/Pages/login';
 import Home from './components/Pages/home';
-import Users from './components/Pages/users';
-import addUser from "./components/Pages/add_User";
-import student_Edit from "./components/Pages/student_Edit";
+import Users from './components/Pages/User_Pages/users';
+import addUser from "./components/Pages/User_Pages/add_User";
+import User_Edit from "./components/Pages/User_Pages/edit_User";
 import Groups from './components/Pages/Group_Pages/groups';
 import addGroup from './components/Pages/Group_Pages/add_Group';
 import groupEdit from './components/Pages/Group_Pages/groupEdit';
@@ -53,8 +53,8 @@ class App extends Component {
               <Route path={ROUTES.LOGIN} component={Login} />
               <Route path={ROUTES.HOME} component={Home} />
               <Route path={ROUTES.USERS} component={Users} />
-              <Route path={ROUTES.STUDENT_ADD} component={addUser} />
-              <Route path={ROUTES.STUDENT_EDIT} component={student_Edit} />
+              <Route path={ROUTES.USER_ADD} component={addUser} />
+              <Route path={ROUTES.USER_EDIT} component={User_Edit} />
               <Route path={ROUTES.GROUPS} component={Groups} />
               <Route path={ROUTES.GROUP_ADD} component={addGroup} />
               <Route path={ROUTES.GROUP_EDIT} component={groupEdit} />

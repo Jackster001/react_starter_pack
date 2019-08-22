@@ -1,17 +1,19 @@
 import React from 'react';
-import '../components.css';
+import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { withAuthorization } from '../Session';
-import {setUser, userResetChanged} from '../../Action'
-import * as ROUTES from '../../constants/routes';
-class Student_Edit extends React.Component {
+import { withAuthorization } from '../../Session';
+import {setUser, userResetChanged} from '../../../Action'
+import * as ROUTES from '../../../constants/routes';
+class User_Edit extends React.Component {
    constructor(props){
       super(props);
       this.state={
          user: this.props.selected,
          id: this.props.selected.id,
-         Group_Name: this.props.selected.GroupName,
+         Group_Name: "",
+         original_Name :"",
+         Group_Pin: this.props.selected.groupPin,
          userType: this.props.selected.userType,
          Username: this.props.selected.userName,
          firstName: this.props.selected.firstName,
@@ -26,9 +28,15 @@ class Student_Edit extends React.Component {
          }
       }
    componentDidMount(){
-      // // let Details= this.state.users.details;
-      console.log(this.props.selected);
-      console.log(this.props.changed);
+      //getting the group name 
+      let groupPin= this.state.Group_Pin;
+      let group=Object.assign([{}])
+      group= this.props.groups.filter(function(group){
+         return (group.pin == groupPin);
+      })
+      let selectedGroup=Object.assign({},group[0]);
+      let groupName=selectedGroup.name;
+      this.setState({Group_Name: groupName, original_Name: groupName})
    }
    onChangeGroupName(event){
       console.log(event.target.value)
@@ -134,10 +142,10 @@ class Student_Edit extends React.Component {
                <center><h2>Edit User Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <select name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
-                  <option disabled selected defaultValue>{this.props.selected.GroupName}</option>
-                     <option value="Band10018">Band10018</option>
-                     <option value="Crazy Band">Crazy Band</option>
-                     <option value="Band-001">Band-001</option>
+                    <option disabled selected defaultValue>{this.state.Group_Name}</option>
+                        {this.props.groups.map(function(group){
+                            return (<option value={group.name}>{group.name}</option>)
+                        })}
                   </select><br/><br/>
                   <label htmlFor="group_type"><b>User Type: </b></label>
                   <select name="group_type" onChange={this.onChangeUserType.bind(this)} required>
@@ -179,7 +187,8 @@ const mapStateToProps = state => ({
    selected: state.userState.selected,
    changed: state.userState.selected,
    listLoading: state.userState.listLoading,
-   userChanged: state.userState.userChanged
+   userChanged: state.userState.userChanged,
+   groups: state.groupState.groups
  });
 const condition = authUser => !!authUser;
 export default compose(
@@ -187,6 +196,4 @@ export default compose(
      mapStateToProps,
      {setUser, userResetChanged}
    ),withAuthorization(condition)
-)(Student_Edit);
-
-// export default withAuthorization(condition)(Add_User);
+)(User_Edit);

@@ -4,7 +4,7 @@ const selectAlarm= (id)=>{
     let alarmData={}
     let stringId=''+id+'';
     return (dispatch)=>{
-        let docRef=db.collection("alarmss").doc(stringId)
+        let docRef=db.collection("alarms").doc(stringId)
         docRef.get().then(function(doc){
         if(doc.exists){
             let alarm=doc.data();
@@ -24,7 +24,7 @@ const selectAlarm= (id)=>{
 }
 const selectAlarmChanging=()=>{
     return{
-        type:"GROUP_SELECT_CHANGED"
+        type:"ALARM_SELECT_CHANGED"
     }
 }
 const getAlarms = () =>{
@@ -32,15 +32,7 @@ const getAlarms = () =>{
     return (dispatch) => {
         db.collection("alarms").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
-            let alarm = {
-                id:doc.id,
-                groupPin: doc.data().groupPin,
-                // timestamp: doc.data().timestamp,
-                timestamp: new Date( doc.data().timestamp),
-                title: doc.data().title                
-            };
-            // let alarm= doc.data()
-            // console.log(alarm.timestamp)
+            let alarm = doc.data();
             alarm = {id: doc.id, ...alarm}
             data=[...data, alarm]
             })           
@@ -63,7 +55,7 @@ const addAlarm = (newAlarm)=>{
             title: newAlarm.title
         }).then(function(){
             dispatch({
-                type: 'GROUP_ADD',
+                type: 'ALARM_ADD',
                 payload: newAlarm
             })
         }).catch(error => {
@@ -73,26 +65,26 @@ const addAlarm = (newAlarm)=>{
 }
 const alarmAdded=()=>{
     return {
-        type: 'GROUP_ADDED'
+        type: 'ALARM_ADDED'
     }
 }
 const deleteAlarm = (id) =>{
-    db.collection("groups").doc(id).delete().then(function(){
+    db.collection("alarms").doc(id).delete().then(function(){
         console.log("Group successfully deleted!");
     }).catch(function(error) {
         console.error("Error removing document: ", error);
     });
     return{
-        type: "GROUP_DELETE",
+        type: "ALARM_DELETE",
         id: id
     }
 }
-const editAlarm = (group) =>{
+const editAlarm = (alarm) =>{
     return(dispatch)=>{
-        db.collection("groups").doc(group.id).set(group).then(function() {
+        db.collection("alarms").doc(alarm.id).set(alarm).then(function() {
             dispatch({
-                type:"EDIT_GROUP",
-                payload: group
+                type:"EDIT_ALARM",
+                payload: alarm
             })
         })
         .catch(function(error) {
@@ -102,7 +94,7 @@ const editAlarm = (group) =>{
 }
 const alarmChanged=()=>{
     return{
-        type: "GROUP_CHANGED"
+        type: "ALARM_CHANGED"
     }
 }
 export {getAlarms, addAlarm, alarmAdded, deleteAlarm, selectAlarm, selectAlarmChanging, editAlarm, alarmChanged}
