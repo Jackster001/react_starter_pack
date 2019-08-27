@@ -1,4 +1,4 @@
-import {db,auth} from "../components/Firebase";
+import {db,auth, storageRef} from "../components/Firebase";
 const resetChanged =() =>{
     return{
         type: "RESET_CHANGED"

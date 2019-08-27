@@ -17,9 +17,7 @@ class GroupTable extends React.Component {
                <tr>
                 <th>Group Name</th>
                 <th>Group Pin</th>
-                <th>Tour Guide</th>
-                <th>Lead Chaperone</th>
-                <th>Assign</th>
+                <th>Group Logo</th>
                 <th>Edit</th>
                </tr>
              </thead>
@@ -28,7 +26,7 @@ class GroupTable extends React.Component {
                 let tourGuides = [];
                 let leadChaperones= [];
                 if(group.subGroups){
-                  let subGroups =Object.assign([], group.subGroups)
+                  let subGroups = Object.assign([], group.subGroups)
                   subGroups.map(function(subGroupNumber){
                     tourGuides=[...tourGuides,{
                       id: subGroupNumber.tourGuide.id,
@@ -49,6 +47,7 @@ class GroupTable extends React.Component {
                   groupPin={group.pin}
                   TourGuides={tourGuides}
                   LeadChaperones= {leadChaperones}
+                  groupLogo={group.groupLogo}
                   />)
                 })}
               </tbody>

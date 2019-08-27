@@ -11,14 +11,14 @@ class Add_Group extends React.Component {
       this.state={
             Group_Name: "",
             Group_Pin: "",
-            Group_Information: ""
+            Group_Logo: {}
          }
    }
    componentDidUpdate(){
       if(this.props.groupAdding){
          this.props.groupAdded()
             this.props.history.push('/groups')
-     }
+      }
    }
    onChangeGroupName(event){
       return (
@@ -35,23 +35,26 @@ class Add_Group extends React.Component {
          this.setState({...this.state, Group_Information: event.target.value})
       )
    }
-   addGroup(){
-        let newGroup= {
-            GroupName: this.state.Group_Name,
-            GroupPin: this.state.Group_Pin,
-            GroupInfo: this.state.Group_Information
-            // director: {
-            //     id: "",
-            //     name: ""
-            // },
-            // subGroups:{
-            //     0:{
-            //         chaperones
-            //     }
-            // }
-        }
-        this.props.addGroup(newGroup);
+
+   onChangeRef(){
+      const file = this.file.files[0];
+      return(
+      this.setState({Group_Logo: file}) 
+      )
    }
+   setRef = ref =>{
+      this.file = ref
+   }
+   addGroup(){
+      let newGroup= {
+          GroupName: this.state.Group_Name,
+          GroupPin: this.state.Group_Pin,
+          GroupLogo: this.state.Group_Logo
+      }
+      // console.log(newGroup)
+      // this.props.addGroupLogo(newGroup)
+      this.props.addGroup(newGroup);
+   } 
    render() {
       return (
          <div>
@@ -64,8 +67,8 @@ class Add_Group extends React.Component {
                   <input type="text" name="name" onChange={this.onChangeGroupName.bind(this)} required/><br/><br/>
                   <label htmlFor="group_pin"><b>Group Pin: </b></label>
                   <input type="text" name="group_pin" onChange={this.onChangeGroupPin.bind(this)} required/><br/><br/>
-                  <div className="groupTextField"><label htmlFor="group_info"><b>Group Description: </b></label>
-                  <textarea className="addGroupTextArea" name="group_info" onChange={this.onChangeGroupInformation.bind(this)}></textarea></div><br/><br/>
+                  <div className="groupLogo"><label htmlFor="group_Logo"><b>Group Logo: </b></label>
+                  <input type="file" name="group_Logo" ref={this.setRef} onChange={this.onChangeRef.bind(this)}/></div>
                   <button type="button" className="Submit_Button" onClick={()=>this.addGroup()}>Add Group</button>
                </form>
          </div>
@@ -75,7 +78,8 @@ class Add_Group extends React.Component {
 }
 const mapStateToProps = state => ({
     groups: state.groupState.groups,
-    groupAdding: state.groupState.groupAdding
+    groupAdding: state.groupState.groupAdding,
+    logoAdding: state.groupState.logoAdding
  });
 const condition = authUser => !!authUser;
 export default compose(

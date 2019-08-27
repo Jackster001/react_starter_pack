@@ -11,7 +11,7 @@ class Home extends React.Component {
          <div className="Home">
  
             <center><h1 className="dashboard">SBNYC Dashboard</h1>
-            <div><img src={logo} height="250px" width="650px"/></div></center>
+            <div><img src={logo} height="250px" width="650px" alt="logo"/></div></center>
          </div>
       </div>
       );

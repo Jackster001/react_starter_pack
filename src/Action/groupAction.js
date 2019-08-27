@@ -1,4 +1,5 @@
-import {db} from "../components/Firebase";
+import {db, storageRef} from "../components/Firebase";
+import { file } from "@babel/types";
 
 const selectGroup= (id)=>{
     let groupData={}
@@ -33,6 +34,7 @@ const getGroups = () =>{
         db.collection("groups").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
             let group = doc.data();
+            // let GroupLogoUrl= storageRef.child('groupLogos/'+ group.groupLogoName).getDownloadURL()
             group= {id:doc.id,...group}
             data=[...data, group]
             })           
@@ -47,22 +49,48 @@ const getGroups = () =>{
     }
 }
 const addGroup = (group)=>{
-    return(dispatch)=>{
-        db.collection("groups").add({
-            name: group.GroupName,
-            pin: group.GroupPin,
-            Group_Information: group.GroupInfo
-            // director: group.director,
-            // subGroups: group.subGroups
-        }).then(function(){
-            dispatch({
-                type: 'GROUP_ADD',
-                payload: group
+    return (dispatch)=>{
+        storageRef.ref('groupLogos').child(group.GroupLogo.name)
+        .put(group.GroupLogo,{contentType:'image/jpeg'})
+        .then(()=>{
+            storageRef.ref('groupLogos').child(group.GroupLogo.name).getDownloadURL().then(url=>{
+                db.collection("groups").add({
+                    name: group.GroupName,
+                    pin: group.GroupPin,
+                    groupLogo:url
+                }).then(function(){
+                    console.log(url);
+                    let newGroup={...group, groupLogo:url}
+                        dispatch({type: 'GROUP_ADD',
+                        payload: newGroup})
+                }).catch(error => {
+                    console.log({ error });
+                });
+            }).catch(error => {
+                console.log({ error });
             })
         }).catch(error => {
             console.log({ error });
-        });
-    }
+    })}
+    // return(dispatch)=>{
+    //     db.collection("groups").add({
+    //         name: group.GroupName,
+    //         pin: group.GroupPin,
+    //         // groupLogoName: group.GroupLogo.name
+    //         // Group_Information: group.GroupInfo
+    //         // groupLogo: storageRef.ref('groupLogos').child(group.GroupLogo.name).getDownloadURL()
+    //         // director: group.director
+    //         // subGroups: group.subGroups
+    //     }).then(function(){
+    //         // console.log(storageRef.child('groupLogos/'+ group.GroupLogo.name).getDownloadURL());
+    //         dispatch({
+    //             type: 'GROUP_ADD',
+    //             payload: group
+    //         })
+    //     }).catch(error => {
+    //         console.log({ error });
+    //     });
+    // }
 }
 const groupAdded=()=>{
     return {
@@ -80,17 +108,44 @@ const deleteGroup = (id) =>{
         id: id
     }
 }
-const editGroup = (group) =>{
+const editGroup = (group, logoChanged) =>{
     return(dispatch)=>{
-        db.collection("groups").doc(group.id).set(group).then(function() {
+        if(logoChanged){
+            storageRef.ref('groupLogos').child(group.GroupLogo.name)
+            .put(group.GroupLogo,{contentType:'image/jpeg'})
+            .then(()=>{
+            storageRef.ref('groupLogos').child(group.GroupLogo.name).getDownloadURL().then(url=>{
+                db.collection("groups").set({
+                    name: group.GroupName,
+                    pin: group.GroupPin,
+                    groupLogo:url
+                }).then(function(){
+                    console.log(url);
+                    let newGroup={...group, groupLogo:url}
+                        dispatch({type: 'GROUP_ADD',
+                        payload: newGroup})
+                }).catch(error => {
+                    console.log({ error });
+                });
+            }).catch(error => {
+                console.log({ error });
+            })
+        }).catch(error => {
+            console.log({ error });
+        })
+        }
+        else{
+            db.collection("groups").doc(group.id).set(group).then(function() {
             dispatch({
                 type:"EDIT_GROUP",
                 payload: group
             })
-        })
-        .catch(function(error) {
-            console.error("Error writing document: ", error);
-        });
+            })
+            .catch(function(error) {
+                console.error("Error writing document: ", error);
+            });
+        }
+       
     } 
 }
 const groupChanged=()=>{

@@ -13,15 +13,15 @@ class Group_Edit extends React.Component {
          id: this.props.selectedGroup.id,
          Group_Name: this.props.selectedGroup.name,
          Group_Pin: this.props.selectedGroup.pin,
-         Group_Information: this.props.selectedGroup.Group_Information
+         groupLogo: this.props.selectedGroup.groupLogo,
+         logoChanged: false
          }
       }
    componentDidUpdate(){
       if(this.props.groupChanging){
             this.props.groupChanged()
             this.props.history.push('/groups');
-         }
-         
+      }
    }
    onChangeGroupName(event){
       return (
@@ -38,15 +38,23 @@ class Group_Edit extends React.Component {
          this.setState({...this.state, Group_Information: event.target.value})
       )
    }
+   onChangeRef(){
+      const file = this.file.files[0];
+      return(
+      this.setState({Group_Logo: file, logoChanged: true}) 
+      )
+   }
+   setRef = ref =>{
+      this.file = ref
+   }
    onHandleEdit(){
       let newGroup= {...this.state.selectedGroup,
          id: this.state.id,
          name: this.state.Group_Name,
          pin: this.state.Group_Pin,
-         Group_Information: this.state.Group_Information
+         groupLogo: this.state.groupLogo
       }
-      // console.log(newGroup)
-      this.props.editGroup(newGroup);
+      this.props.editGroup(newGroup, this.state.logoChanged);
    }
    render() {
       return (
@@ -54,14 +62,15 @@ class Group_Edit extends React.Component {
             <br/><br/><br/><br/>
             <div className="add_Table_Styles">
             <div className="editFormHeading"><h1>Group Management</h1></div>
+            <img className="group_Logo_Edit" src={this.state.groupLogo}/>
                <form className="add_form">
                   <center><h2>Edit Group Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <input type="text" name="name" placeholder={this.props.selectedGroup.name} onChange={this.onChangeGroupName.bind(this)} required/><br/><br/>
                   <label htmlFor="group_pin"><b>Group Pin: </b></label>
                   <input type="text" name="group_pin" placeholder={this.props.selectedGroup.pin} onChange={this.onChangeGroupPin.bind(this)} required/><br/><br/>
-                  <div className="groupTextField"><label htmlFor="group_info"><b>Group Description: </b></label>
-                  <textarea rows="4" cols="28" name="group_info" placeholder={this.props.selectedGroup.Group_Information} onChange={this.onChangeGroupInformation.bind(this)}></textarea></div><br/><br/>
+                  <div className="groupLogo"><label htmlFor="group_Logo"><b>Group Logo: </b></label>
+                  <input type="file" name="group_Logo" ref={this.setRef} onChange={this.onChangeRef.bind(this)}/></div>
                   <button type="button" className="update_Button" onClick={()=>this.onHandleEdit()}>Update Group</button>
                </form>
             </div>

@@ -309,3 +309,10 @@ td.UserId{
 .editFormHeading>h1{
     color:white;
 }
+.Group_Logo_Table{
+    /* width: 50%; */
+    height:150px;
+}
+.group_Logo_Edit{
+    height:200px;
+}

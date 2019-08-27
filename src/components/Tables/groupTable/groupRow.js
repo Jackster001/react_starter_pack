@@ -5,16 +5,15 @@ import { compose } from 'recompose';
 import {deleteGroup, selectGroup, selectGroupChanging} from '../../../Action/groupAction'
 import withAuthorization from '../../Session/withAuthorization';
 import { Link} from 'react-router-dom'
+
 class GroupRow extends React.PureComponent{
     constructor(props){
         super(props);
-        this.state={selected : {}, done: false}
-    
+        this.state={selected : {}}
     }
     componentDidUpdate(){
         if(this.props.selectGroupChanged){
             this.props.selectGroupChanging()
-            // console.log(this.props.selectedGroup);
             this.props.history.push('/group/'+this.props.id);        
         } 
     }
@@ -30,7 +29,7 @@ class GroupRow extends React.PureComponent{
             <tr>
                 <td><center>{this.props.groupName}</center></td>
                 <td><center>{this.props.groupPin}</center></td>
-                <td>
+                {/* <td>
                     <center>
                         {this.props.TourGuides.map(function(tourGuide){
                             return <p>{tourGuide.firstName}</p>
@@ -43,8 +42,17 @@ class GroupRow extends React.PureComponent{
                             return <p>{leadChaperone.firstName}</p>
                         })}<br/><br/>
                     </center>
-                </td>
-                <td><center><button className="assignButton">Assign</button></center></td>
+                </td> */}
+                {/* <td><center><button className="assignButton" onClick={()=>this.showModal()}>Assign</button>
+                <GroupModal show={this.state.show} handleClose={()=>this.hideModal()}>
+                    <div className="modalContent">
+                        <center><h2>Assign Team Members to Group</h2></center>
+                        <br/>
+                        <h4>Select type of team member to </h4>
+                    </div>
+                </GroupModal>
+                </center></td> */}
+                <td><center><img className="Group_Logo_Table" src={this.props.groupLogo} /></center></td>
                 <td><center>
                     <button className="edit_button" onClick={()=> this.selected(this.props.id)}>Edit</button><br/>
                     <button className="delete_button" id={this.props.id} onClick={()=>this.handleDelete(this.props.id)}>Delete</button></center>
