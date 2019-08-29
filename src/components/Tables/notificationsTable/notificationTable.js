@@ -2,8 +2,8 @@ import React from 'react';
 import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import AlarmRow from "./alarmRow"
-class AlarmTable extends React.Component {
+import NotificationRow from "./notificationRow"
+class NotificationTable extends React.Component {
     render() {
         return (
             <div className="basicTable">
@@ -11,14 +11,32 @@ class AlarmTable extends React.Component {
                 <thead className="TableHead">
                 <tr>
                     <th>Group Name</th>
-                    <th>Group Pin</th>
-                    <th>Alarm Message</th>
+                    <th>Sender</th>
+                    <th>Notification</th>
                     <th>Date & Time</th>
-                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                { 
+                    {
+                        this.props.notifications.map(function(notification, i){
+                            let date = new Date(notification.timestamp)
+                            let timestamp= date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: "2-digit"})  
+                            return (
+                                <NotificationRow
+                                key={i}
+                                groupName={notification.sender.GroupName}
+                                userType={notification.sender.userType}
+                                firstName={notification.sender.firstName}
+                                lastName={notification.sender.lastName}
+                                notification={notification.message}
+                                notificationTimeStamp={timestamp}
+                                />
+                            )
+                        })
+                    
+                    }
+                {/* { 
                     this.props.alarms.map(function(alarm, i){  
                     let timeObject = Object.assign({},alarm.timestamp);
                     let date= new Date(timeObject.seconds*1000)
@@ -31,7 +49,7 @@ class AlarmTable extends React.Component {
                         title={alarm.title}
                         alarmTimestamp={timestamp}
                         />)
-                        })}
+                        })} */}
                 </tbody>
                 </table>
             </div>
@@ -39,7 +57,7 @@ class AlarmTable extends React.Component {
    }
 }
 const mapStateToProps = state => ({
-    alarms: state.alarmState.alarms
+    notifications: state.notificationState.notifications
 });
  
 export default compose(
@@ -47,4 +65,4 @@ export default compose(
      mapStateToProps,
      {}
    ),
-)(AlarmTable);
+)(NotificationTable);

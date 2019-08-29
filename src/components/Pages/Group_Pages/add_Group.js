@@ -67,8 +67,8 @@ class Add_Group extends React.Component {
                   <input type="text" name="name" onChange={this.onChangeGroupName.bind(this)} required/><br/><br/>
                   <label htmlFor="group_pin"><b>Group Pin: </b></label>
                   <input type="text" name="group_pin" onChange={this.onChangeGroupPin.bind(this)} required/><br/><br/>
-                  <div className="groupLogo"><label htmlFor="group_Logo"><b>Group Logo: </b></label>
-                  <input type="file" name="group_Logo" ref={this.setRef} onChange={this.onChangeRef.bind(this)}/></div>
+                  <label htmlFor="group_Logo logo_add"><b>Group Logo: </b></label>
+                  <input type="file" name="group_Logo" ref={this.setRef} onChange={this.onChangeRef.bind(this)}/>
                   <button type="button" className="Submit_Button" onClick={()=>this.addGroup()}>Add Group</button>
                </form>
          </div>

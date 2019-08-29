@@ -51,7 +51,7 @@ const getGroups = () =>{
 const addGroup = (group)=>{
     return (dispatch)=>{
         storageRef.ref('groupLogos').child(group.GroupLogo.name)
-        .put(group.GroupLogo,{contentType:'image/jpeg'})
+        .put(group.GroupLogo,{contentType:group.GroupLogo.type})
         .then(()=>{
             storageRef.ref('groupLogos').child(group.GroupLogo.name).getDownloadURL().then(url=>{
                 db.collection("groups").add({
@@ -72,25 +72,6 @@ const addGroup = (group)=>{
         }).catch(error => {
             console.log({ error });
     })}
-    // return(dispatch)=>{
-    //     db.collection("groups").add({
-    //         name: group.GroupName,
-    //         pin: group.GroupPin,
-    //         // groupLogoName: group.GroupLogo.name
-    //         // Group_Information: group.GroupInfo
-    //         // groupLogo: storageRef.ref('groupLogos').child(group.GroupLogo.name).getDownloadURL()
-    //         // director: group.director
-    //         // subGroups: group.subGroups
-    //     }).then(function(){
-    //         // console.log(storageRef.child('groupLogos/'+ group.GroupLogo.name).getDownloadURL());
-    //         dispatch({
-    //             type: 'GROUP_ADD',
-    //             payload: group
-    //         })
-    //     }).catch(error => {
-    //         console.log({ error });
-    //     });
-    // }
 }
 const groupAdded=()=>{
     return {
@@ -111,19 +92,18 @@ const deleteGroup = (id) =>{
 const editGroup = (group, logoChanged) =>{
     return(dispatch)=>{
         if(logoChanged){
-            storageRef.ref('groupLogos').child(group.GroupLogo.name)
-            .put(group.GroupLogo,{contentType:'image/jpeg'})
+            storageRef.ref('groupLogos').child(group.groupLogo.name)
+            .put(group.groupLogo,{contentType:group.groupLogo.type})
             .then(()=>{
-            storageRef.ref('groupLogos').child(group.GroupLogo.name).getDownloadURL().then(url=>{
-                db.collection("groups").set({
-                    name: group.GroupName,
-                    pin: group.GroupPin,
+            storageRef.ref('groupLogos').child(group.groupLogo.name).getDownloadURL().then(url=>{
+                db.collection("groups").doc(group.id).set({
+                    name: group.name,
+                    pin: group.pin,
                     groupLogo:url
                 }).then(function(){
-                    console.log(url);
                     let newGroup={...group, groupLogo:url}
-                        dispatch({type: 'GROUP_ADD',
-                        payload: newGroup})
+                    dispatch({type: 'EDIT_GROUP',
+                    payload: newGroup})
                 }).catch(error => {
                     console.log({ error });
                 });

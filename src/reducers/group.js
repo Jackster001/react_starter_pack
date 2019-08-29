@@ -1,10 +1,9 @@
 const INITIAL_STATE = {
     groups: [{}],
     groupAdding: false,
-    // logoAdding: false,
     selectedGroup: {},
     selectGroupChanged: false,
-    groupChanging: false,
+    groupChanging: false
     
 };
 function groupReducer(state = INITIAL_STATE, action) {

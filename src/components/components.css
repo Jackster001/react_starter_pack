@@ -173,7 +173,7 @@ td.UserId{
 }
 .add_Table_Styles>.add_form>div>textarea{
     padding: 5px;
-    width: 40%;
+    width: 41%;
     display: inline-flex;
     background: white;
 }
@@ -279,15 +279,15 @@ td.UserId{
     background-color: #2D2D2D;
 }
 
-.UserTableHead>tr>th{
+.TableHead>tr>th{
     padding: 10px 5px;
 }
 
-.groupTextField * {
+.formTextField * {
     vertical-align: top;
 }
-.addGroupTextArea{
-    width:50%
+.addTextArea{
+    height: 100px;
 }
 .addFormHeading{
     width:100%;
@@ -315,4 +315,7 @@ td.UserId{
 }
 .group_Logo_Edit{
     height:200px;
+}
+.logo_add{
+    margin-bottom: 20px;
 }

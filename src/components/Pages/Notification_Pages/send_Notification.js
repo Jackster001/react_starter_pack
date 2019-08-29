@@ -6,14 +6,26 @@ import { withAuthorization } from '../../Session';
 import {addAlarm, alarmAdded} from '../../../Action/alarmAction'
 import * as ROUTES from '../../../constants/routes';
 
-class Add_Alarm extends React.Component {
+class Send_Notification extends React.Component {
    constructor(props){
       super(props);
       this.state={
+            userAccounts:[{
+                userType: "Director",
+                firstName: "Tour",
+                lastName: "Management"
+            },{
+                userType: "Tour Guide",
+                firstName: "Tour",
+                lastName: "Management"
+            },{
+                userType: "Lead Chaperone",
+                firstName: "Tour",
+                lastName: "Management"
+            }],
             groupName: "",
-            message: "",
-            date: "",
-            time:""
+            sender: {},
+            message: ""
          }
     }
     componentDidUpdate(){
@@ -42,42 +54,27 @@ class Add_Alarm extends React.Component {
             this.setState({...this.state, time: event.target.value})
         )
     }
-    addAlarm(){
-        //getting the timestamp
-        let myDate=this.state.date;
-        myDate=myDate.split("-");
-        let newDate=myDate[1]+"/"+myDate[2]+"/"+myDate[0];
-        let temp= newDate + " " + this.state.time; 
-        let date= new Date(temp)
-
-        //getting the group pin 
-        let groupName= this.state.groupName;
-        let group=Object.assign([{}])
-        group= this.props.groups.filter(function(group){
-            return (group.name == groupName)
-        })
-        let selectedGroup=Object.assign({},group[0])
-        let groupPin=selectedGroup.pin;
-
-        //setting up new alarm
-        let newAlarm= {
-            groupPin: groupPin,
-            timestamp: date,
-            title: this.state.message
-        }
+    addNotification(){
+        //setting the current timestamp
+        // let myDate=this.state.date;
+        // myDate=myDate.split("-");
+        // let newDate=myDate[1]+"/"+myDate[2]+"/"+myDate[0];
+        // let temp= newDate + " " + this.state.time; 
+        // let date= new Date(temp)
+        let timeStamp = Math.floor(Date.now() / 1000);
+        let date= new Date(timeStamp);
 
         //called alarm action to add to firebase
-        this.props.addAlarm(newAlarm)
+        // this.props.addAlarm(newAlarm)
     }
     render() {
         return (
             <div>
                 <br/><br/><br/><br/>
-
                 <div className="add_Table_Styles">
-                <div className="addFormHeading"><h1>Alarm Management</h1></div>
+                <div className="addFormHeading"><h1>Send a Notification</h1></div>
                 <form className="add_form">
-                    <center><h2>Alarm Details</h2></center>
+                    <center><h2>Notification Details</h2></center><br/>
                     <label htmlFor="group_name"><b>Group Name: </b></label>
                     <select name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
                     <option disabled selected defaultValue> -- select an option -- </option>
@@ -85,13 +82,16 @@ class Add_Alarm extends React.Component {
                             return (<option value={group.name}>{group.name}</option>)
                         })}
                     </select>
-                    <label htmlFor="Alarm_Date"><b>Set Date: </b></label>
-                    <input type="date" name="Alarm_Date" onChange={this.onChangeDate.bind(this)}></input>
-                    <label htmlFor="group_name"><b>Set Time: </b></label>
-                    <input type="time" onChange={this.onChangeTime.bind(this)}></input>
-                    <div className="formTextField"><label htmlFor="group_info"><b>Alarm Message: </b></label>
-                    <textarea className="addGroupTextArea" name="group_info" onChange={this.onChangeAlarmMessage.bind(this)}></textarea></div><br/><br/>
-                    <button type="button" className="Submit_Button" onClick={()=>this.addAlarm()}>Add Alarm</button>
+                    <label htmlFor="sender"><b>Sender: </b></label>
+                    <select name="sender" onChange={this.onChangeGroupName.bind(this)} required>
+                    <option disabled selected defaultValue> -- select an option -- </option>
+                        {this.state.userAccounts.map(function(user){
+                            return (<option value={user}>{user.userType}{": "}{user.firstName}{" "}{user.lastName}</option>)
+                        })}
+                    </select>
+                    <div className="formTextField"><label htmlFor="notification"><b>Notification: </b></label>
+                    <textarea className="addTextArea" name="notification" onChange={this.onChangeAlarmMessage.bind(this)}></textarea></div><br/><br/>
+                    <button type="button" className="Submit_Button" onClick={()=>this.addNotification()}>Send Notification</button>
                 </form>
             </div>
             </div>
@@ -109,4 +109,4 @@ export default compose(
      mapStateToProps,
      {addAlarm, alarmAdded}
    ),withAuthorization(condition)
-)(Add_Alarm);
+)(Send_Notification);

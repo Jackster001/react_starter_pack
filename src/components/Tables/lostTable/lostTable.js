@@ -3,22 +3,23 @@ import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import AlarmRow from "./alarmRow"
-class AlarmTable extends React.Component {
+class LostTable extends React.Component {
     render() {
         return (
             <div className="basicTable">
             <table className="table1 table-dark" border="1" cellSpacing="0">
                 <thead className="TableHead">
                 <tr>
-                    <th>Group Name</th>
                     <th>Group Pin</th>
-                    <th>Alarm Message</th>
-                    <th>Date & Time</th>
+                    <th>Group Name</th>
+                    <th>User Information</th>
+                    <th>Emergency Contact</th>
+                    <th>Location, Date & Time</th>
                     <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
-                { 
+                {/* { 
                     this.props.alarms.map(function(alarm, i){  
                     let timeObject = Object.assign({},alarm.timestamp);
                     let date= new Date(timeObject.seconds*1000)
@@ -31,7 +32,7 @@ class AlarmTable extends React.Component {
                         title={alarm.title}
                         alarmTimestamp={timestamp}
                         />)
-                        })}
+                        })} */}
                 </tbody>
                 </table>
             </div>
@@ -47,4 +48,4 @@ export default compose(
      mapStateToProps,
      {}
    ),
-)(AlarmTable);
+)(LostTable);

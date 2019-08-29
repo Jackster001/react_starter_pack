@@ -41,7 +41,7 @@ class Group_Edit extends React.Component {
    onChangeRef(){
       const file = this.file.files[0];
       return(
-      this.setState({Group_Logo: file, logoChanged: true}) 
+      this.setState({groupLogo: file, logoChanged: true}) 
       )
    }
    setRef = ref =>{
@@ -55,6 +55,7 @@ class Group_Edit extends React.Component {
          groupLogo: this.state.groupLogo
       }
       this.props.editGroup(newGroup, this.state.logoChanged);
+      // console.log(this.state.groupLogo)
    }
    render() {
       return (
@@ -62,14 +63,14 @@ class Group_Edit extends React.Component {
             <br/><br/><br/><br/>
             <div className="add_Table_Styles">
             <div className="editFormHeading"><h1>Group Management</h1></div>
-            <img className="group_Logo_Edit" src={this.state.groupLogo}/>
+            <img className="group_Logo_Edit" src={this.props.selectedGroup.groupLogo}/>
                <form className="add_form">
                   <center><h2>Edit Group Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <input type="text" name="name" placeholder={this.props.selectedGroup.name} onChange={this.onChangeGroupName.bind(this)} required/><br/><br/>
                   <label htmlFor="group_pin"><b>Group Pin: </b></label>
                   <input type="text" name="group_pin" placeholder={this.props.selectedGroup.pin} onChange={this.onChangeGroupPin.bind(this)} required/><br/><br/>
-                  <div className="groupLogo"><label htmlFor="group_Logo"><b>Group Logo: </b></label>
+                  <div className="group_Logo logo_add"><label htmlFor="group_Logo"><b>Group Logo: </b></label>
                   <input type="file" name="group_Logo" ref={this.setRef} onChange={this.onChangeRef.bind(this)}/></div>
                   <button type="button" className="update_Button" onClick={()=>this.onHandleEdit()}>Update Group</button>
                </form>

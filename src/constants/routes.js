@@ -9,6 +9,7 @@ export const GROUP_ADD = '/add_new_group';
 export const GROUP_EDIT = '/group/:id';
 export const ITINERARY = '/itinerary';
 export const NOTIFICATIONS = '/notifications';
+export const SEND_NOTIFICATION = '/send_notification'
 export const ALARMS = '/alarms';
 export const ALARM_ADD = '/add_new_alarm';
 export const ALARM_EDIT = '/alarm/:id';

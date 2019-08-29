@@ -9,7 +9,7 @@ class UserTable extends React.Component {
       return (
          <div className="basicTable">
            <table className="table1 table-dark" border="1" cellSpacing="0">
-             <thead className="UserTableHead">
+             <thead className="TableHead">
                <tr>
                 <th>User Type</th>
                 <th>Group Name</th>
