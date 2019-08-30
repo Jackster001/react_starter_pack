@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     notifications: [{}],
-    notificationAdding: false,
+    notificationsGetting: false,
+    notificationSending: false,
     selectedNotification: {},
     selectNotificationChanged: false,
     groupChanging: false
@@ -8,13 +9,16 @@ const INITIAL_STATE = {
 function notificationReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
       case 'NOTIFICATIONS_GET': {
-        return {...state, notifications: action.payload};
+        return {...state, notifications: action.payload, notificationsGetting: true};
       }
-      case 'NOTIFICATION_ADD': {
-        return {...state, notifications: [action.payload,...state.notifications], notificationAdding: true};
+      case "NOTIFICATIONS_GETTING":{
+        return {...state, notificationsGetting: false}
       }
-      case 'NOTIFICATION_ADDED': {
-        return {...state, notificationAdding: false}
+      case 'NOTIFICATION_SEND': {
+        return {...state, notifications: [action.payload,...state.notifications], notificationSending: true};
+      }
+      case 'NOTIFICATION_SENT': {
+        return {...state, notificationSending: false}
       }
       case 'NOTIFICATION_SELECT': {
         return {...state, selectedNotification: action.payload, selectNotificationChanged: true};

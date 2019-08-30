@@ -14,21 +14,6 @@ class NotificationRow extends React.PureComponent{
             selected : {}
         }
     }
-    componentDidMount(){
-        // let pin = this.state.groupPin
-        // let group=Object.assign([{}])
-        // group= this.props.groups.filter(function(group){
-        //     return (group.pin== pin)
-        // })
-        // let temp=Object.assign({},group[0])
-        // this.setState({groupName: temp.name})
-    }
-    componentDidUpdate(){
-        // if(this.props.selectAlarmChanged){
-        //     this.props.selectAlarmChanging()
-        //     this.props.history.push('/alarm/'+this.props.id);        
-        // } 
-    }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");
         this.props.deleteNotification(id);

@@ -13,6 +13,7 @@ class User_Edit extends React.Component {
          id: this.props.selected.id,
          Group_Name: "",
          original_Name :"",
+         GroupName: this.props.GroupName,
          Group_Pin: this.props.selected.groupPin,
          userType: this.props.selected.userType,
          Username: this.props.selected.userName,
@@ -21,7 +22,7 @@ class User_Edit extends React.Component {
          Password: this.props.selected.password,
          tourGuideFirstName: this.props.selected.tourGuide.firstName,
          leadChaperoneFirstName: this.props.selected.leadChaperone.firstName,
-         profilePicture: "#",
+         profilePicture: this.props.selected.url,
          name:this.props.selected.emergencyContact.name,
          phoneNumber: this.props.selected.emergencyContact.phoneNumber,
          relationship:this.props.selected.emergencyContact.relationship
@@ -36,6 +37,7 @@ class User_Edit extends React.Component {
       })
       let selectedGroup=Object.assign({},group[0]);
       let groupName=selectedGroup.name;
+      console.log(this.state.user);
       this.setState({Group_Name: groupName, original_Name: groupName})
    }
    onChangeGroupName(event){

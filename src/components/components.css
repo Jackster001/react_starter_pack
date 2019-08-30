@@ -7,13 +7,16 @@
 .header > h1{
     color:white;
 }
+html{
+    position: relative;
+}
 
 /* Footer */
 .footer{
     background-color: black;
     padding: 5px 0px; 
-    position: relative; 
-    bottom: 0px;
+    position: absolute; 
+    bottom: 0;
     width: 100%;
 }
 .footer > p{
@@ -48,7 +51,7 @@ body {
     width: 100%;
     display: flex;
     margin-top: 200px;
-    
+    margin-bottom: 300px;
 }
 .loginPos{
     margin: 0 auto;
@@ -94,7 +97,7 @@ body {
     margin-top: 100px;
 }
 .Home{
-    margin-bottom: 100px;
+    margin-bottom: 400px;
 }
 
 /* User page */

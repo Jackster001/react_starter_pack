@@ -1,9 +1,13 @@
 import React from 'react';
 import '../../components.css';
 import { connect } from 'react-redux';
+import {getNotifications} from '../../../Action/notificationAction';
 import { compose } from 'recompose';
 import NotificationRow from "./notificationRow"
 class NotificationTable extends React.Component {
+    constructor(props){
+        super(props);
+    }
     render() {
         return (
             <div className="basicTable">
@@ -18,13 +22,14 @@ class NotificationTable extends React.Component {
                 </tr>
                 </thead>
                 <tbody>
-                    {
+                    { 
                         this.props.notifications.map(function(notification, i){
                             let date = new Date(notification.timestamp)
                             let timestamp= date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: "2-digit"})  
                             return (
                                 <NotificationRow
                                 key={i}
+                                id={notification.id}
                                 groupName={notification.sender.GroupName}
                                 userType={notification.sender.userType}
                                 firstName={notification.sender.firstName}
@@ -49,6 +54,6 @@ const mapStateToProps = state => ({
 export default compose(
    connect(
      mapStateToProps,
-     {}
+     {getNotifications}
    ),
 )(NotificationTable);

@@ -8,10 +8,12 @@ import {getGroups} from '../../../Action/groupAction';
 import NotificationTable from '../../Tables/notificationsTable/notificationTable';
 import { Link} from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
+
 class Notifications extends React.Component {
    componentDidMount(){
       this.props.getNotifications();
       this.props.getGroups();
+      this.setState({openTable: true})
    }
    render() {
       return (

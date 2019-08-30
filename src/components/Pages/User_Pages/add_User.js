@@ -18,7 +18,7 @@ class Add_User extends React.Component {
             userPhoneNumber: "",
             tourGuideFirstName: "",
             leadChaperoneFirstName: "",
-            profilePicture: "#",
+            profilePicture: "",
             name:"",
             phoneNumber: "",
             relationship:''
@@ -109,7 +109,6 @@ class Add_User extends React.Component {
             lastName: "",
             id: ""
          },
-         profilePicture: this.state.profilePicture,
          emergencyContact:{
             name: this.state.name,
             phoneNumber: this.state.phoneNumber,

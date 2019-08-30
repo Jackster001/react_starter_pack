@@ -46,16 +46,16 @@ const getNotifications = () =>{
          })
     }
 }
-const addNotification = (newNotification)=>{
+const recievedNotifications = () =>{
+    return {
+        type: "NOTIFICATIONS_GETTING"
+    }
+}
+const sendNotification = (newNotification)=>{
     return(dispatch)=>{
-        db.collection("notifications").add({
-            notifType: "message",
-            groupPin: newNotification.groupPin,
-            timestamp: newNotification.timestamp,
-            title: newNotification.title
-        }).then(function(){
+        db.collection("notifications").add(newNotification).then(function(){
             dispatch({
-                type: 'NOTIFICATION_ADD',
+                type: 'NOTIFICATION_SEND',
                 payload: newNotification
             })
         }).catch(error => {
@@ -63,9 +63,9 @@ const addNotification = (newNotification)=>{
         });
     }
 }
-const notificationAdded=()=>{
+const notificationSent=()=>{
     return {
-        type: 'NOTIFICATION_ADDED'
+        type: 'NOTIFICATION_SENT'
     }
 }
 const deleteNotification = (id) =>{
@@ -97,4 +97,4 @@ const notificationChanged=()=>{
         type: "NOTIFICATION_CHANGED"
     }
 }
-export {getNotifications, addNotification, notificationAdded, deleteNotification, selectNotification, selectNotificationChanging, editNotification, notificationChanged}
+export {getNotifications, sendNotification, notificationSent, deleteNotification, selectNotification, selectNotificationChanging, editNotification, notificationChanged, recievedNotifications}
