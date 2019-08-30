@@ -36,20 +36,6 @@ class NotificationTable extends React.Component {
                         })
                     
                     }
-                {/* { 
-                    this.props.alarms.map(function(alarm, i){  
-                    let timeObject = Object.assign({},alarm.timestamp);
-                    let date= new Date(timeObject.seconds*1000)
-                    let timestamp= date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: "2-digit"})          
-                        return(
-                        <AlarmRow key={i}
-                        id={alarm.id} 
-                        groupName={alarm.name}
-                        groupPin={alarm.groupPin}
-                        title={alarm.title}
-                        alarmTimestamp={timestamp}
-                        />)
-                        })} */}
                 </tbody>
                 </table>
             </div>
