@@ -2,7 +2,7 @@ import React from 'react';
 import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import AlarmRow from "./alarmRow"
+import LostRow from "./lostRow"
 class LostTable extends React.Component {
     render() {
         return (
@@ -10,29 +10,37 @@ class LostTable extends React.Component {
             <table className="table1 table-dark" border="1" cellSpacing="0">
                 <thead className="TableHead">
                 <tr>
-                    <th>Group Pin</th>
-                    <th>Group Name</th>
+                    <th>Group</th>
                     <th>User Information</th>
-                    <th>Emergency Contact</th>
                     <th>Location, Date & Time</th>
-                    <th>Edit</th>
+                    <th>Emergency Contact</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                {/* { 
-                    this.props.alarms.map(function(alarm, i){  
-                    let timeObject = Object.assign({},alarm.timestamp);
+                { 
+                    this.props.lostNotifications.map(function(lostNotification, i){  
+                    let emergencyContact= Object.assign({}, lostNotification.user.emergencyContact)
+                    let timeObject = Object.assign({},lostNotification.timestamp);
                     let date= new Date(timeObject.seconds*1000)
                     let timestamp= date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: "2-digit"})          
                         return(
-                        <AlarmRow key={i}
-                        id={alarm.id} 
-                        groupName={alarm.name}
-                        groupPin={alarm.groupPin}
-                        title={alarm.title}
-                        alarmTimestamp={timestamp}
+                        <LostRow key={i}
+                            id={lostNotification.id} 
+                            groupPin={lostNotification.groupPin}
+                            groupName={lostNotification.user.GroupName}
+                            firstName={lostNotification.user.firstName}
+                            lastName={lostNotification.user.lastName}
+                            phoneNumber={lostNotification.user.phoneNumber}
+                            locationLatitude= {lostNotification.location.latitude}
+                            locationLongitude= {lostNotification.location.longitude}
+                            lostTimestamp={timestamp}
+                            profilePicture={lostNotification.user.profilePicture}
+                            emergencyContactName={emergencyContact.name}
+                            relationship={emergencyContact.relationship}
+                            emergencyContactNumber={emergencyContact.number}
                         />)
-                        })} */}
+                        })}
                 </tbody>
                 </table>
             </div>
@@ -40,7 +48,7 @@ class LostTable extends React.Component {
    }
 }
 const mapStateToProps = state => ({
-    alarms: state.alarmState.alarms
+    lostNotifications: state.lostState.lostNotifications
 });
  
 export default compose(

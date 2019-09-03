@@ -72,6 +72,7 @@ const addUser = (user)=>{
                         userName: user.userName,
                         firstName: user.firstName,
                         lastName: user.lastName,
+                        phoneNumber: user.phoneNumber,
                         password: user.password,
                         tourGuide: user.tourGuide,
                         leadChaperone: user.leadChaperone,
@@ -87,32 +88,7 @@ const addUser = (user)=>{
                 }).catch(error => {
                 console.log({ error });
             })
-    }
-    // let email= user.userName + "@mail.com"
-    // auth.createUserWithEmailAndPassword(email, user.password)
-    // .then(response=>{
-    //     db.collection("users").doc(response.user.uid).set({
-    //         GroupName: user.GroupName,
-    //         userType: user.userType,
-    //         userName: user.userName,
-    //         firstName: user.firstName,
-    //         lastName: user.lastName,
-    //         password: user.password,
-    //         tourGuide: user.tourGuide,
-    //         leadChaperone: user.leadChaperone,
-    //         profilePicture: user.profilePicture,
-    //         emergencyContact: user.emergencyContact
-            
-    //     })
-    //     dispatch({
-    //         type: 'USER_ADD',
-    //         payload: user
-    //     })
-    // })
-    // .catch(error => {
-    //     console.log({ error });
-    // });
-    
+    }    
 }
 const deleteUser = (id) =>{
     db.collection("users").doc(id).delete().then(function(){

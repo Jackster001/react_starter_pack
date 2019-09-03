@@ -140,6 +140,7 @@ class User_Edit extends React.Component {
             <br/><br/><br/><br/>
             <div className="add_Table_Styles">
                <div className="editFormHeading"><h1>User Management</h1></div>
+               <img className="group_Logo_Edit" src={this.props.selected.profilePicture}/>
                <form className="add_form">
                <center><h2>Edit User Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>

@@ -7,7 +7,7 @@ const getLostNotifications = () =>{
             querySnapshot.forEach(function(doc) {
             let lostUser = doc.data();
             lostUser = {id: doc.id, ...lostUser}
-            data=[...data, lostUser]
+            data=[lostUser,...data]
             })           
             dispatch({
                 type: "LOST_GET",

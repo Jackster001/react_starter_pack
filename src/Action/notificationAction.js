@@ -34,7 +34,7 @@ const getNotifications = () =>{
             querySnapshot.forEach(function(doc) {
             let notification = doc.data();
             notification = {id: doc.id, ...notification}
-            data=[...data, notification]
+            data=[notification, ...data]
             })           
             dispatch({
                 type: "NOTIFICATIONS_GET",

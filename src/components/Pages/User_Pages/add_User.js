@@ -20,7 +20,7 @@ class Add_User extends React.Component {
             leadChaperoneFirstName: "",
             profilePicture: "",
             name:"",
-            phoneNumber: "",
+            number: "",
             relationship:''
          }
    }
@@ -28,7 +28,7 @@ class Add_User extends React.Component {
       if(this.props.userAdded){
          this.props.userAddedChanged()
             this.props.history.push('/users')    
-     }
+      }
    }
    onChangeGroupName(event){
       return (
@@ -80,9 +80,9 @@ class Add_User extends React.Component {
          this.setState({...this.state, name: event.target.value})
       )
    }
-   onChangePhoneNumber(event){
+   onChangeEmergencyPhoneNumber(event){
       return (
-         this.setState({...this.state, phoneNumber: event.target.value})
+         this.setState({...this.state, number: event.target.value})
       )
    }
    onChangeRelationship(event){
@@ -99,6 +99,7 @@ class Add_User extends React.Component {
          lastName: this.state.lastName,
          password: this.state.Password,
          phoneNumber:this.state.userPhoneNumber,
+         profilePicture: "",
          tourGuide: {
             firstName:this.state.tourGuideFirstName,
             lastName: "",
@@ -111,7 +112,7 @@ class Add_User extends React.Component {
          },
          emergencyContact:{
             name: this.state.name,
-            phoneNumber: this.state.phoneNumber,
+            number: this.state.number,
             relationship: this.state.relationship
          }
       }
@@ -148,6 +149,8 @@ class Add_User extends React.Component {
                   <input type="text" name="name" onChange={this.onChangeFirstName.bind(this)} required/><br/><br/>
                   <label htmlFor="name"><b>Last Name: </b></label>
                   <input type="text" name="name" onChange={this.onChangeLastName.bind(this)} required/><br/><br/>
+                  <label htmlFor="name"><b>Phone Number: </b></label>
+                  <input type="text" name="name" onChange={this.onChangePhoneNumber.bind(this)} required/><br/><br/>
                   <label htmlFor="name"><b>Password: </b></label>
                   <input type="text" name="name" onChange={this.onChangePassword.bind(this)} required/><br/><br/>
                   <label htmlFor="guide"><b>Tour Guide: </b></label>
@@ -159,7 +162,7 @@ class Add_User extends React.Component {
                   <label htmlFor="name"><b>Full Name: </b></label>
                   <input type="text" name="name" onChange={this.onChangeFullName.bind(this)} required/><br/><br/>
                   <label htmlFor="name"><b>Phone Number: </b></label>
-                  <input type="text" name="name" onChange={this.onChangePhoneNumber.bind(this)} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangeEmergencyPhoneNumber.bind(this)} required/><br/><br/>
                   <label htmlFor="name"><b>Relationship: </b></label>
                   <input type="text" name="name" onChange={this.onChangeRelationship.bind(this)} required/><br/><br/><br/>
                   <button type="button" className="Submit_Button" onClick={()=>this.setUser()}>Add User</button>

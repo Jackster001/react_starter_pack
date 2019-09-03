@@ -11,7 +11,7 @@ import {getAlarms} from '../../../Action/alarmAction'
 class Alarm extends React.Component {
    componentDidMount(){
       this.props.getAlarms();
-      this.props.getGroups()
+      this.props.getGroups();
    }
    render() {
       return (

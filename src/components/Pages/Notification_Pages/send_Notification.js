@@ -66,6 +66,7 @@ class Send_Notification extends React.Component {
         // let date= new Date(temp)
 
         let sender = this.state.userAccounts[this.state.sender]
+        sender= {...sender, GroupName: this.state.groupName}
         let selectedGroup = this.props.groups.filter(group=>{
             return group.name === this.state.groupName
         })
@@ -76,14 +77,13 @@ class Send_Notification extends React.Component {
         
         let newNotification={
             groupPin: pin,
-            GroupName: this.state.groupName,
             notifType: "message",
             message: this.state.message,
             sender: sender,
             timestamp: date
         }
         this.props.sendNotification(newNotification)
-        // console.log(date)
+        // console.log(newNotification)
     }
     render() {
         return (

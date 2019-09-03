@@ -23,22 +23,6 @@ class GroupTable extends React.Component {
              </thead>
              <tbody>
               {this.props.groups.map(function(group, i){
-                // if(group.subGroups){
-                //   let subGroups = Object.assign([], group.subGroups)
-                //   subGroups.map(function(subGroupNumber){
-                //     tourGuides=[...tourGuides,{
-                //       id: subGroupNumber.tourGuide.id,
-                //       firstName: subGroupNumber.tourGuide.firstName,
-                //       lastName: subGroupNumber.tourGuide.lastName
-                //     }]
-                //     leadChaperones=[...leadChaperones,{
-                //       id: subGroupNumber.leadChaperone.id,
-                //       firstName: subGroupNumber.leadChaperone.firstName,
-                //       lastName: subGroupNumber.leadChaperone.lastName}
-                //     ]
-                // });
-                // }
-                
                 return(<GroupRow key={i}
                   id={group.id} 
                   groupName={group.name}

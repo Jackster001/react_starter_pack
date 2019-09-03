@@ -10,11 +10,12 @@ class Groups extends React.Component {
       return (
          <div className="App">
          <div>
+            <br/>
              <div className="userTable">
             <center>
                <h1>Group Management</h1>
                <Link to={ROUTES.GROUP_ADD}><button className="addNew">Add New Group</button></Link>
-            </center><br/>
+            </center><br/><br/>
                <GroupTable/>
             </div>
          </div>

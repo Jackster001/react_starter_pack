@@ -55,7 +55,6 @@ class Group_Edit extends React.Component {
          groupLogo: this.state.groupLogo
       }
       this.props.editGroup(newGroup, this.state.logoChanged);
-      // console.log(this.state.groupLogo)
    }
    render() {
       return (
