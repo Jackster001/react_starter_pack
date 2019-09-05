@@ -1,27 +1,27 @@
 import React from 'react';
 import '../../components.css';
 import { withAuthorization } from '../../Session';
-import AlarmTable from "../../Tables/alarmTable/alarmTable";
+import ContactTable from "../../Tables/contactTable/contactTable";
 import * as ROUTES from '../../../constants/routes';
 import { Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import {getGroups} from '../../../Action/groupAction'
-import {getAlarms} from '../../../Action/alarmAction'
-class Alarm extends React.Component {
+import {getGroups} from '../../../Action/groupAction';
+import {getContacts} from '../../../Action/contactAction';
+class Contact extends React.Component {
    componentDidMount(){
-      this.props.getAlarms();
+      this.props.getContacts();
       this.props.getGroups();
    }
    render() {
       return (
-      <div className="App">
+         <div className="App">
          <div><br/>
             <center>
-               <h1>Alarm Management</h1>
-               <Link to={ROUTES.ALARM_ADD}><button className="addNew">Add Alarm</button></Link>
+               <h1>Contact Management</h1>
+               <Link to={ROUTES.CONTACT_ADD}><button className="addNew">Add Contact Information</button></Link>
             </center><br/><br/>
-            <AlarmTable/>
+            <ContactTable/>
          </div>
       </div>
       );
@@ -29,11 +29,10 @@ class Alarm extends React.Component {
 }
 const condition = authUser => !!authUser;
 const mapStateToProps = state => ({
-   groups: state.groupState.groups
 });
 export default compose(
    connect(
       mapStateToProps,
-     {getGroups, getAlarms}
+     {getGroups, getContacts}
    ),withAuthorization(condition)
-)(Alarm);
+)(Contact);

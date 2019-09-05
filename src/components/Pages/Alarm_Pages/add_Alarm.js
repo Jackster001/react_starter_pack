@@ -73,7 +73,6 @@ class Add_Alarm extends React.Component {
         return (
             <div>
                 <br/><br/><br/><br/>
-
                 <div className="add_Table_Styles">
                 <div className="addFormHeading"><h1>Alarm Management</h1></div>
                 <form className="add_form">

@@ -6,14 +6,6 @@ import {getLostNotifications, deleteLostNotifications} from '../../../Action/los
 import withAuthorization from '../../Session/withAuthorization';
 
 class LostRow extends React.PureComponent{
-    constructor(props){
-        super(props);
-        this.state={
-            // groupName: "",
-            // groupPin: this.props.groupPin,
-            // selected : {}
-        }
-    }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");
         this.props.deleteLostNotifications(id);
@@ -21,17 +13,18 @@ class LostRow extends React.PureComponent{
     render(){
         return(
             <tr>
-                <td><center>{this.state.groupName}<br/>{this.props.groupPin}</center></td>
+                <td><center>{this.props.groupName}<br/><br/>{this.props.groupPin}</center></td>
+                <td><center><img src={this.props.profilePicture} height="120px" width="110px;"/></center></td>
                 <td>
-                    Name: {this.props.firstName} {this.props.lastName} <br/>
-                    Phone Number: {this.props.phoneNumber} <br/>
-                    Tour Guide: {this.props.tourGuide} <br/>
-                    Lead Chaperone: {this.props.leadChaperone}
+                    <p>Name: <span className="lostTableData">{this.props.firstName} {this.props.lastName} </span></p>
+                    <p>Phone Number: <span className="lostTableData">{this.props.phoneNumber} </span></p>
+                    <p>Tour Guide: <span className="lostTableData">{this.props.tourGuide}</span></p>
+                    <p>Lead Chaperone: <span className="lostTableData">{this.props.leadChaperone}</span></p>
                 </td>
                 <td>
-                    Longitude: {this.props.locationLongitude} <br/>
-                    Latitude: {this.props.locationLatitude} <br/>
-                    Date & Time: {this.props.lostTimeStamp}
+                <p>Latitude: <span className="lostTableData">{this.props.locationLatitude}</span></p>
+                    <p>Longitude: <span className="lostTableData">{this.props.locationLongitude}</span></p>
+                    <p>Date & Time: <span className="lostTableData">{this.props.lostTimestamp}</span></p>
                 </td>
                 <td><center>
                     {this.props.emergencyContactName}

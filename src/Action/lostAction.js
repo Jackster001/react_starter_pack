@@ -21,7 +21,7 @@ const getLostNotifications = () =>{
 }
 const deleteLostNotifications = (id) =>{
     db.collection("lostUsers").doc(id).delete().then(function(){
-        console.log("Group successfully deleted!");
+        console.log("I am lost Notification successfully deleted!");
     }).catch(function(error) {
         console.error("Error removing document: ", error);
     });

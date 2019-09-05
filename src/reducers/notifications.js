@@ -4,7 +4,7 @@ const INITIAL_STATE = {
     notificationSending: false,
     selectedNotification: {},
     selectNotificationChanged: false,
-    groupChanging: false
+    notificationChanging: false
 };
 function notificationReducer(state = INITIAL_STATE, action) {
     switch (action.type) {

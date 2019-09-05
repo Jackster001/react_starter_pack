@@ -17,8 +17,10 @@ import Alarm from './components/Pages/Alarm_Pages/alarm';
 import Add_Alarm from './components/Pages/Alarm_Pages/add_Alarm';
 import Edit_Alarm from './components/Pages/Alarm_Pages/edit_Alarm';
 import Lost from './components/Pages/lost';
-import Contact from './components/Pages/contact';
-import Content from './components/Pages/content';
+import Contact from './components/Pages/Contact_Pages/contact';
+import Add_Contact from './components/Pages/Contact_Pages/add_Contact';
+import Edit_Contact from './components/Pages/Contact_Pages/edit_Contact';
+import About from './components/Pages/About_Pages/about.js';
 import Settings from './components/Pages/settings';
 import * as ROUTES from '../src/constants/routes';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
@@ -67,7 +69,9 @@ class App extends Component {
               <Route path={ROUTES.ALARM_EDIT} component={Edit_Alarm} />
               <Route path={ROUTES.LOST} component={Lost} />
               <Route path={ROUTES.CONTACT} component={Contact} />
-              <Route path={ROUTES.CONTENT} component={Content} />
+              <Route path={ROUTES.CONTACT_ADD} component={Add_Contact} />
+              <Route path={ROUTES.CONTACT_EDIT} component={Edit_Contact} />
+              <Route path={ROUTES.ABOUT} component={About} />
               <Route path={ROUTES.SETTINGS} component={Settings} />
             </div>
           </Router>

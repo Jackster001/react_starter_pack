@@ -37,11 +37,11 @@ const Navigation = ({ authUser }) => (
                 <Link className="links" to={ROUTES.CONTACT}>Contact Info</Link>
                 </li>
                 <li>
-                <Link className="links" to={ROUTES.CONTENT}>Content</Link>
+                <Link className="links" to={ROUTES.ABOUT}>About Info</Link>
                 </li>
-                <li>
+                {/* <li>
                 <Link className="links" to={ROUTES.SETTINGS}>Settings</Link>
-                </li>
+                </li> */}
                 <li>
                 <Link to={ROUTES.LOGIN}><SignOutButton/></Link>
                 </li>

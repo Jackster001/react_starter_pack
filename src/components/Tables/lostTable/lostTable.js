@@ -11,6 +11,7 @@ class LostTable extends React.Component {
                 <thead className="TableHead">
                 <tr>
                     <th>Group</th>
+                    <th>Profile Picture</th>
                     <th>User Information</th>
                     <th>Location, Date & Time</th>
                     <th>Emergency Contact</th>
@@ -35,6 +36,8 @@ class LostTable extends React.Component {
                             locationLatitude= {lostNotification.location.latitude}
                             locationLongitude= {lostNotification.location.longitude}
                             lostTimestamp={timestamp}
+                            tourGuide={lostNotification.user.tourGuide.firstName}
+                            leadChaperone={lostNotification.user.leadChaperone.firstName}
                             profilePicture={lostNotification.user.profilePicture}
                             emergencyContactName={emergencyContact.name}
                             relationship={emergencyContact.relationship}

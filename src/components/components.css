@@ -359,3 +359,11 @@ td.UserId{
     cursor: pointer;
     background-color: #3CAF4B;
 }
+.lostTableData{
+    float: right;
+}
+@media only screen and (max-width: 1000px){
+    .lostTableData{
+        float: none;
+    }
+}
