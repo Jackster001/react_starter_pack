@@ -6,6 +6,7 @@ import alarmReducer from "./alarm";
 import lostReducer from "./lost";
 import notificationReducer from "./notifications"
 import contactReducer from "./contact"
+import aboutReducer from "./about"
 
 const rootReducer = combineReducers({
   sessionState: sessionReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   alarmState: alarmReducer,
   lostState: lostReducer,
   notificationState: notificationReducer,
-  contactState: contactReducer
+  contactState: contactReducer,
+  aboutState: aboutReducer
 });
 
 export default rootReducer;

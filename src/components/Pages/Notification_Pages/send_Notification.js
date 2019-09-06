@@ -5,7 +5,6 @@ import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
 import {sendNotification, notificationSent} from '../../../Action/notificationAction'
 import * as ROUTES from '../../../constants/routes';
-import {fb} from "../../Firebase/firebase"
 import * as firebase from "firebase";
 
 class Send_Notification extends React.Component {

@@ -15,19 +15,23 @@ class GroupTable extends React.Component {
            <table className="table1 table-dark" border="1" cellSpacing="0">
              <thead className="TableHead">
                <tr>
-                <th>Group Name</th>
-                <th>Group Pin</th>
-                <th>Group Logo</th>
+                <th>Group</th>
+                <th>Logo</th>
+                <th>Assigned</th>
                 <th>Edit</th>
                </tr>
              </thead>
              <tbody>
               {this.props.groups.map(function(group, i){
+                let subgroup= Object.assign({}, group.subGroup[i])
+                let tourguide = Object.assign([{}], subgroup.tourGuide)
+                console.log(tourguide)
                 return(<GroupRow key={i}
                   id={group.id} 
                   groupName={group.name}
                   groupPin={group.pin}
                   groupLogo={group.groupLogo}
+                  tourguide={tourguide}
                   />)
                 })}
               </tbody>
