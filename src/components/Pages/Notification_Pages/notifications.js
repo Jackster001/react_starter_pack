@@ -13,7 +13,6 @@ class Notifications extends React.Component {
    componentDidMount(){
       this.props.getNotifications();
       this.props.getGroups();
-      this.setState({openTable: true})
    }
    render() {
       return (

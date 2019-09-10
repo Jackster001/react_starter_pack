@@ -15,11 +15,6 @@ import SignInForm from "./signInForm"
    <div>
       <SignInForm/>
    </div>
- );
- 
-
-// const SignInForm = compose (login, withRouter)(SignInFormBase);
-// const SignInForm = withRouter(SignInFormBase);
-
+);
 
 export default withRouter(Login);

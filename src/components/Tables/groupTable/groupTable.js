@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import GroupRow from "./groupRow"
 import {getGroups} from '../../../Action/groupAction'
+import {getUsers} from '../../../Action/userAction'
 class GroupTable extends React.Component {
-
-  componentDidMount(){
-    this.props.getGroups();
-  }
    render() {
       return (
          <div className="basicTable">
@@ -17,21 +14,29 @@ class GroupTable extends React.Component {
                <tr>
                 <th>Group</th>
                 <th>Logo</th>
-                <th>Assigned</th>
+                <th>Assigned Tour Guides</th>
+                <th>Assigned Lead Chaperones</th>
                 <th>Edit</th>
                </tr>
              </thead>
-             <tbody>
-              {this.props.groups.map(function(group, i){
-                let subgroup= Object.assign({}, group.subGroup[i])
-                let tourguide = Object.assign([{}], subgroup.tourGuide)
-                console.log(tourguide)
+            <tbody>
+              {
+                this.props.groups.map((group, i)=>{
+                let subgroup= Object.assign([], group.subGroups)
+                let avaliableTourGuides= this.props.users.filter((user)=>{
+                  return (user.userType === "Tour Guide" && user.groupPin === group.pin)
+                })
+                let avaliableLeadChaperones = this.props.users.filter((user)=>{
+                  return (user.userType === "Lead Chaperone" && user.groupPin === group.pin)
+                })
                 return(<GroupRow key={i}
                   id={group.id} 
                   groupName={group.name}
                   groupPin={group.pin}
                   groupLogo={group.groupLogo}
-                  tourguide={tourguide}
+                  subgroup={subgroup}
+                  avaliableTourGuides={avaliableTourGuides}
+                  avaliableLeadChaperones={avaliableLeadChaperones}
                   />)
                 })}
               </tbody>
@@ -41,12 +46,13 @@ class GroupTable extends React.Component {
    }
 }
 const mapStateToProps = state => ({
-  groups: state.groupState.groups
+  groups: state.groupState.groups,
+  users: state.userState.users
 });
  
 export default compose(
    connect(
      mapStateToProps,
-     {getGroups}
+     {getGroups, getUsers}
    ),
 )(GroupTable);

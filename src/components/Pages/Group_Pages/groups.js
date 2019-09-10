@@ -4,8 +4,15 @@ import { withAuthorization } from '../../Session';
 import GroupTable from "../../Tables/groupTable/groupTable";
 import * as ROUTES from '../../../constants/routes';
 import { Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import {getGroups} from '../../../Action/groupAction';
+import {getUsers} from '../../../Action/userAction';
 class Groups extends React.Component {
-
+   componentDidMount(){
+      this.props.getGroups();
+      this.props.getUsers();
+    }
    render() {
       return (
          <div className="App">
@@ -24,4 +31,14 @@ class Groups extends React.Component {
    }
 }
 const condition = authUser => !!authUser;
-export default withAuthorization(condition)(Groups)
+const mapStateToProps = state => ({
+   groups: state.groupState.groups,
+   users: state.userState.users
+ });
+  
+export default compose(
+   connect(
+      mapStateToProps,
+      {getGroups, getUsers}
+   ),withAuthorization(condition)
+ )(Groups);

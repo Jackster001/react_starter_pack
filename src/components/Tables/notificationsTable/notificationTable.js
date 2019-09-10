@@ -24,6 +24,7 @@ class NotificationTable extends React.Component {
                 <tbody>
                     { 
                         this.props.notifications.map(function(notification, i){
+                            console.log(notification)
                             let date = new Date(notification.timestamp.seconds*1000);
                             let timestamp= date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: "2-digit"})  
                             return (

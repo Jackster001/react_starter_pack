@@ -106,9 +106,15 @@ class User_Edit extends React.Component {
       )
    }
    handleEdit(){
+      let groupPin= this.props.groups.filter((group)=>{
+         if(group.name === this.state.Group_Name){
+            return(group.pin)
+         }
+      })
       let updatedUser = {
          id: this.state.user.id,
          GroupName: this.state.Group_Name,
+         groupPin: groupPin,
          userType: this.state.userType,
          userName: this.state.Username,
          firstName: this.state.firstName,

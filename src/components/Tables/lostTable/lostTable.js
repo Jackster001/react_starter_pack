@@ -19,8 +19,9 @@ class LostTable extends React.Component {
                 </tr>
                 </thead>
                 <tbody>
+                    {/* {console.log(this.props.lostNotifications)} */}
                 { 
-                    this.props.lostNotifications.map(function(lostNotification, i){  
+                    this.props.lostNotifications.map((lostNotification, i)=>{  
                     let emergencyContact= Object.assign({}, lostNotification.user.emergencyContact)
                     let timeObject = Object.assign({},lostNotification.timestamp);
                     let date= new Date(timeObject.seconds*1000)
@@ -53,7 +54,6 @@ class LostTable extends React.Component {
 const mapStateToProps = state => ({
     lostNotifications: state.lostState.lostNotifications
 });
- 
 export default compose(
    connect(
      mapStateToProps,

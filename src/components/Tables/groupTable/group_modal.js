@@ -6,7 +6,7 @@ export const GroupModal = ({ handleClose, show, children }) => {
         <section className="modal-main">
           {children}
           <br></br>
-          <center><button onClick={handleClose}>close</button></center>
+          <center><button className="closeButton" onClick={handleClose}>Close</button></center>
         </section>
       </div>
     );

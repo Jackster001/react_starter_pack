@@ -305,7 +305,6 @@ td.UserId{
     color:white;
 }
 .Group_Logo_Table{
-    /* width: 50%; */
     height:150px;
 }
 .group_Logo_Edit{
@@ -315,7 +314,6 @@ td.UserId{
     margin-bottom: 20px;
 }
 .filterBox{
-    /* background-color: #ECEBEB; */
     width:99%;
     margin: 0 auto;
     padding-top: 10px;
@@ -367,7 +365,6 @@ td.UserId{
         float: none;
     }
 }
-
 .modal {
     position: fixed;
     top: 0;
@@ -375,27 +372,48 @@ td.UserId{
     width:100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
-  
-  }
-  .modal-main {
+}
+.modal-main {
     position:fixed;
     background: white;
-    width: 40%;
+    width: 700px;
     height: auto;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
     padding: 20px;
-  }
-  .display-block {
+}
+.display-block {
     display: block;
-  }
-  
-  .display-none {
+}  
+.display-none {
     display: none;
-  }
-  .modalContent{
+}
+.modalContent{
     width: 100%;
     position: relative;
-    /* margin-left: 15px; */
-  }
+}
+.assignemntSection{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+}
+.selectBox{
+    width: 250px;
+    height:250px;
+}
+.assignBottom{
+    width:50%;
+    margin: 0 auto;
+}
+.closeButton{
+    margin-top: 5px;
+    border: none; 
+    background-color: black;
+    color: white;
+    padding: 5px 15px;
+}
+.closeButton:hover{
+    cursor: pointer;
+    background-color: #424242;
+}

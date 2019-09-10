@@ -4,16 +4,61 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import {deleteGroup, selectGroup, selectGroupChanging} from '../../../Action/groupAction'
 import withAuthorization from '../../Session/withAuthorization';
-import { Link} from 'react-router-dom';
 import {GroupModal} from './group_modal';
+import {UserList} from './group_userList'
 
 class GroupRow extends React.PureComponent{
     constructor(props){
         super(props);
-        this.state={selected : {}, show:false}
+        this.state={
+            selected : {}, 
+            show:false,
+            listShow:false,
+            showList: "",
+            tourGuides:[],
+            leadChaperones:[],
+            radioSelected: "",
+            targetList:[],
+            avaliableTourGuides:[],
+            avaliableLeadChaperones:[],
+            assignedTourGuides:[],
+            assignedLeadChaperones:[],
+            forAssign: false
+        }
+    }
+    componentDidMount(){
+        let tourguides = this.props.avaliableTourGuides.map( guide=>{
+            return {
+                id: guide.id,
+                firstName:guide.firstName, 
+                lastName: guide.lastName
+            }
+        })
+        let leadChaperones = this.props.avaliableLeadChaperones.map( guide=>{
+            return {
+                id: guide.id,
+                firstName:guide.firstName, 
+                lastName: guide.lastName
+            }
+        })
+        this.setState({...this.state, avaliableTourGuides: tourguides, avaliableLeadChaperones: leadChaperones})
+        if(this.props.subgroup[0]){
+            let subgroup= Object.assign([],this.props.subgroup);
+            let leadChaps= [];
+            let tourGuides=[];
+            subgroup.map(group=>{
+                if(group.leadChaperone){
+                    leadChaps.push(""+group.leadChaperone.firstName+" "+group.leadChaperone.lastName)
+                }
+                if(group.tourGuide){
+                    tourGuides.push(""+group.tourGuide.firstName+" "+group.tourGuide.lastName)
+                }
+            })
+            this.setState({tourGuides: tourGuides, leadChaperones: leadChaps});
+        }
     }
     componentDidUpdate(){
-        if(this.props.selectGroupChanged){
+        if(this.props.selectGroupChanged && this.state.forAssign === false){
             this.props.selectGroupChanging()
             this.props.history.push('/group/'+this.props.id);        
         } 
@@ -26,14 +71,19 @@ class GroupRow extends React.PureComponent{
         this.props.selectGroup(id);
     }
     showModal = () => {
+        this.setState({...this.state, forAssign: true})
         let show=true
         this.setState({show: show});
-        console.log("button changed to"+ this.state.show + show);
+        if(this.state.forAssign === true){
+            this.props.selectGroup(this.props.id);
+        }
+        
     };
-     hideModal = () => {
-        this.setState({ show: false });
+    hideModal = () => {
+        this.setState({...this.state, forAssign: false})
+        this.setState({ show: false, listShow: false });
      };
-     onHandleEdit(){
+    onHandleEdit(){
         let newItem={
            id: this.props.selected.id,
            Date: this.props.selected.Date,
@@ -50,43 +100,90 @@ class GroupRow extends React.PureComponent{
         if(current.Description != null){
            newItem.Description=current.Description 
         }
-        // console.log(newItem);
         
         this.props.editItem(newItem)
         this.hideModal();
-     }
+    }
+    onChangeTourGuidesSelected(event){
+        let temp = [...event.target.options].filter(o=>o.selected).map(o=>o.value);
+        let tourguides = this.state.avaliableTourGuides.filter(guide=>{
+            for(let i=0; i<temp.length; i++){
+                if(guide.id === temp[i]){
+                    return guide
+                }
+            }
+        })
+        return this.setState({...this.state, assignedTourGuides: tourguides});
+    }
+    onChangeLeadChaperonesSelected(event){
+        let temp = [...event.target.options].filter(o=>o.selected).map(o=>o.value);
+        let leadChaperones = this.state.avaliableLeadChaperones.filter(chap=>{
+            for(let i=0; i<temp.length; i++){
+                if(chap.id === temp[i]){
+                    return chap
+                }
+            }
+        })
+        return this.setState({...this.state, assignedLeadChaperones: leadChaperones});
+    }
+    assign(){
+        let subgroup = {...this.props.selectedGroup.subGroup};
+        let tourguides = this.state.assignedTourGuides;
+        for(let i=0; i<tourguides.length; i++){
+            subgroup.push(tourguides[i]);
+        }
+        console.log();
+        let newGroup= {...this.props.selectedGroup,
+
+            
+        }
+        // this.props.editGroup(newGroup, this.state.logoChanged);
+    }
     render(){
         return(
             <tr>
                 <td><center><h2><b>{this.props.groupName}</b></h2><h4>Group Pin: {this.props.groupPin}</h4></center></td>
                 <td><center><img className="Group_Logo_Table" src={this.props.groupLogo} /></center></td>
-                <td>                
-                
-                {/* <td>
-                    <center>
-                        {this.props.TourGuides.map(function(tourGuide){
-                            return <p>{tourGuide.firstName}</p>
-                        })}<br/><br/>
-                    </center>
+                <td>
+                    {this.state.tourGuides.map((name,i)=>{
+                        return <p>Bus {i+1} - {name}</p>
+                    })} 
+                </td>
+                <td>      
+                    {this.state.leadChaperones.map((name,i)=>{
+                        return <p>Bus {i+1} - {name}</p>
+                    })}          
                 </td>
                 <td>
-                    <center>
-                        {this.props.LeadChaperones.map(function(leadChaperone){
-                            return <p>{leadChaperone.firstName}</p>
-                        })}<br/><br/>
-                    </center>
-                </td> */}</td>
-                <td><center>
-                <button className="edit_button" onClick={()=> this.selected(this.props.id)}>Edit</button><br/>
-                    <button className="assignButton" onClick={()=>this.showModal()}>Assign</button><br/><br/>
+                <center><button className="edit_button" onClick={()=>this.selected(this.props.id)}>Edit</button><br/>
+                    <button className="assignButton" onClick={()=>this.showModal()}>Assign</button><br/><br/></center>
                     <GroupModal show={this.state.show} handleClose={()=>this.hideModal()}>
                         <div className="modalContent">
-                            <center><h2>Assign Team Members to Group</h2></center>
-                            <br/>
-                            <h4>Select type of team member to </h4>
+                            <center><h2>Assign Tour Guides and Chaperones to</h2><h1>{this.props.groupName}</h1></center><br/>
+                                <div className="assignemntSection">
+                                    <div>
+                                        <h2>Tour Guides</h2>
+                                        <select name="tourGuides" className="selectBox" onChange={this.onChangeTourGuidesSelected.bind(this)} multiple>
+                                            {this.state.avaliableTourGuides.map(guide=>{
+                                                return <option value={guide.firstName, guide.lastName, guide.id}>{guide.firstName} {guide.lastName}</option>
+                                            })} 
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <h2>Lead Chaperones</h2>
+                                        <select name="leadChaperones" className="selectBox" onChange={this.onChangeLeadChaperonesSelected.bind(this)} multiple>
+                                            {this.state.avaliableLeadChaperones.map(chap=>{
+                                                return <option value={chap.firstName, chap.lastName, chap.id}>{chap.firstName} {chap.lastName}</option>
+                                            })} 
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                                <br/>
+                                <div className="assignBottom"><center><button className="Submit_Button" onClick={()=>this.assign()}>Assign</button></center></div>
                         </div>
                     </GroupModal>
-                    <button className="delete_button" id={this.props.id} onClick={()=>this.handleDelete(this.props.id)}>Delete</button></center>
+                    <center><button className="delete_button" id={this.props.id} onClick={()=>this.handleDelete(this.props.id)}>Delete</button></center>
                 </td>
             </tr>
         )

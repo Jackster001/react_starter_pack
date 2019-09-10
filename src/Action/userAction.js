@@ -67,7 +67,9 @@ const addUser = (user)=>{
                     auth.createUserWithEmailAndPassword(email, user.password)
                     .then(response=>{
                     db.collection("users").doc(response.user.uid).set({
+                        id:response.user.uid,
                         GroupName: user.GroupName,
+                        groupPin: user.groupPin,
                         userType: user.userType,
                         userName: user.userName,
                         firstName: user.firstName,

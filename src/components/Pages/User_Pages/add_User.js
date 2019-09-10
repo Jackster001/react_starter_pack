@@ -91,8 +91,14 @@ class Add_User extends React.Component {
       )
    }
    setUser(){
+      let groupPin= this.props.groups.filter((group)=>{
+         if(group.name === this.state.Group_Name){
+            return(group.pin)
+         }
+      })
       let newUser = {
          GroupName: this.state.Group_Name,
+         groupPin: groupPin,
          userType: this.state.userType,
          userName: this.state.Username,
          firstName: this.state.firstName,

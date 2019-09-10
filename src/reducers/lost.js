@@ -8,7 +8,7 @@ function lostReducer(state = INITIAL_STATE, action) {
       }
       case "LOST_DELETE": {
         const newlostNotifications = Object.assign([],{...state.lostNotifications});
-        const index= state.lostNotifications.findIndex(lostNotification => {return lostNotification.id == action.id})
+        const index= state.lostNotifications.findIndex(lostNotification => {return lostNotification.id === action.id})
         newlostNotifications.splice(index, 1)
         return {...state, lostNotifications: newlostNotifications};
       }
