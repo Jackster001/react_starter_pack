@@ -1,5 +1,7 @@
 const INITIAL_STATE = {
     authUser: null,
+    email: "",
+    password: ""
   };
   function sessionReducer(state = INITIAL_STATE, action) {
     switch (action.type) {

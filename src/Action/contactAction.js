@@ -9,7 +9,6 @@ const selectContact= (id)=>{
         if(doc.exists){
             let contact=doc.data();
             contactData={...contact, id}
-            console.log(contactData)
         } else{
             console.log("Something went wrong!")
         }

@@ -35,6 +35,9 @@ const getAlarms = () =>{
             let alarm = doc.data();
             alarm = {id: doc.id, ...alarm}
             data=[...data, alarm]
+            data.sort(function(a,b){
+                return  a.timestamp.seconds - b.timestamp.seconds
+            }).reverse();
             })           
             dispatch({
                 type: "ALARMS_GET",

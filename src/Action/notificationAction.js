@@ -35,6 +35,9 @@ const getNotifications = () =>{
             let notification = doc.data();
             notification = {id: doc.id, ...notification}
             data=[notification, ...data]
+            data.sort(function(a,b){
+                return  a.timestamp.seconds - b.timestamp.seconds
+            }).reverse();
             })           
             dispatch({
                 type: "NOTIFICATIONS_GET",

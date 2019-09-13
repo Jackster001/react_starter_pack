@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom'
 import logo from '../images/SBNYC-logo.jpg'
 import * as ROUTES from '../../constants/routes'
 import 'firebase/auth';
-import {login} from "../../Action"
+import {login, getAdminInputs} from "../../Action"
 import {connect} from "react-redux"
 const INITIAL_STATE = {
     email: '',
@@ -18,6 +18,9 @@ class SignInFormBase extends React.Component {
        super(props);
        this.state = {...INITIAL_STATE};
     }
+    componentDidMount(){
+       this.props.getAdminInputs();
+    }
     onChange = event =>{
        this.setState({[event.target.name]: event.target.value})
     }
@@ -25,7 +28,6 @@ class SignInFormBase extends React.Component {
        const {email, password} = this.state;
        console.log("clicked");       
        this.props.login(email, password);
-      //  this.props.history.push(ROUTES.HOME);
        
     }
     componentDidUpdate(){
@@ -33,7 +35,7 @@ class SignInFormBase extends React.Component {
          this.props.history.push(ROUTES.HOME);
       }
     }
-    render() {
+   render() {
        const {
           email,
           password, 
@@ -61,9 +63,9 @@ class SignInFormBase extends React.Component {
        </div>
        );
     }
- }
- const mapStateToProps = state => ({
+}
+const mapStateToProps = state => ({
    authUser: state.sessionState.authUser,
- });
- const SignInForm = connect(mapStateToProps, {login})(SignInFormBase)
- export default withRouter(SignInForm);
+});
+const SignInForm = connect(mapStateToProps, {login, getAdminInputs})(SignInFormBase)
+export default withRouter(SignInForm);

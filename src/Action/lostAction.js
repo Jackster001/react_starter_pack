@@ -8,6 +8,9 @@ const getLostNotifications = () =>{
             let lostUser = doc.data();
             lostUser = {id: doc.id, ...lostUser}
             data=[lostUser,...data]
+            data.sort(function(a,b){
+                return  a.timestamp.seconds - b.timestamp.seconds
+            }).reverse();
             })           
             dispatch({
                 type: "LOST_GET",

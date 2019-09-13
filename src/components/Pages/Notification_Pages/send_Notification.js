@@ -54,15 +54,7 @@ class Send_Notification extends React.Component {
         )
     }
     addNotification(){
-        // let timeStamp = Math.floor(Date.now() / 1000);
         let date= firebase.firestore.Timestamp.fromDate(new Date());
-        // let date= new Date();
-
-        // let myDate=this.state.date;
-        // myDate=myDate.split("-");
-        // let newDate=myDate[1]+"/"+myDate[2]+"/"+myDate[0];
-        // let temp= newDate + " " + this.state.time; 
-        // let date= new Date(temp)
 
         let sender = this.state.userAccounts[this.state.sender]
         sender= {...sender, GroupName: this.state.groupName}
@@ -82,7 +74,6 @@ class Send_Notification extends React.Component {
             timestamp: date
         }
         this.props.sendNotification(newNotification)
-        // console.log(newNotification)
     }
     render() {
         return (

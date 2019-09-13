@@ -21,9 +21,12 @@ class Add_User extends React.Component {
             profilePicture: "",
             name:"",
             number: "",
-            relationship:''
+            relationship:'',
+            avaliableTourGuides: [],
+            avaliableLeadChaperones: []
          }
    }
+
    componentDidUpdate(){
       if(this.props.userAdded){
          this.props.userAddedChanged()
@@ -31,9 +34,14 @@ class Add_User extends React.Component {
       }
    }
    onChangeGroupName(event){
-      return (
-         this.setState({...this.state, Group_Name: event.target.value})
-      )
+      let avaliableTourGuides=this.props.users.filter(user=>{
+         return user.userType === 'Tour Guide' && user.GroupName === event.target.value
+         })
+         let avaliableLeadChaperones=this.props.users.filter(user=>{
+            return user.userType === 'Lead Chaperone' && user.GroupName === event.target.value
+         })
+      this.setState({...this.state, Group_Name: event.target.value})   
+      this.setState({...this.state, avaliableTourGuides: avaliableTourGuides, avaliableLeadChaperones: avaliableLeadChaperones})
    }
    onChangeUserType(event){
       return (
@@ -160,10 +168,19 @@ class Add_User extends React.Component {
                   <label htmlFor="name"><b>Password: </b></label>
                   <input type="text" name="name" onChange={this.onChangePassword.bind(this)} required/><br/><br/>
                   <label htmlFor="guide"><b>Tour Guide: </b></label>
-                  <input type="text" name="guide" onChange={this.onChangeTourGuide.bind(this)} required/><br/><br/>
+                  <select name="guide" onChange={this.onChangeTourGuide.bind(this)} required>
+                    <option disabled selected defaultValue> -- select an option -- </option>
+                        {this.state.avaliableTourGuides.map(function(user, key){
+                            return (<option key={key} value={user.firstName}>{user.firstName}{" "}{user.lastName}</option>)
+                        })}
+                  </select><br/><br/>
                   <label htmlFor="chaperone"><b>Chaperone: </b></label>
-                  <input type="text" name="chaperone" onChange={this.onChangeChaperone.bind(this)} required/><br/><br/>
-                  <hr/><br/>
+                  <select name="guide" onChange={this.onChangeChaperone.bind(this)} required>
+                    <option disabled selected defaultValue> -- select an option -- </option>
+                        {this.state.avaliableLeadChaperones.map(function(user, key){
+                            return (<option key={key} value={user.firstName}>{user.firstName}{" "}{user.lastName}</option>)
+                        })}
+                  </select><br/><br/>
                   <center><h2>Emergency Contact Information</h2></center><br/>
                   <label htmlFor="name"><b>Full Name: </b></label>
                   <input type="text" name="name" onChange={this.onChangeFullName.bind(this)} required/><br/><br/>

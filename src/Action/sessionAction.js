@@ -13,19 +13,33 @@ const setOffUserAuth = () =>{
         payload: false
     }
 }
+const getAdminInputs = () =>{
+    return (dispatch) => {
+        db.collection("admin").doc("adminLogin").get().then(doc=>{
+            if(doc.exists){
+                console.log("Document data:", doc.data());
+            }
+            else {
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+    }
+}
 const login = (email, password) =>{
-     return (dispatch) => {
+    return (dispatch) => {
          
-         auth.signInWithEmailAndPassword(email, password).then(() => {
-             dispatch({
+        auth.signInWithEmailAndPassword(email, password).then(() => {
+            dispatch({
                 type: "AUTH_USER_SET",
                 payload: true
             })
-         }).catch(error =>{
+        }).catch(error =>{
              console.log(error);
              alert("The email and password combination is incorrect");
-         })
-     }
+        })
+    }
 }
 
 const signOut = () =>{
@@ -41,4 +55,4 @@ const signOut = () =>{
     }
 }
 
-export {setUserAuth,setOffUserAuth, login, signOut};
+export {setUserAuth,setOffUserAuth, login, signOut, getAdminInputs};

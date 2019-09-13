@@ -27,7 +27,6 @@ class About extends React.Component {
          twitter: this.props.about.twitter
       })
       }
-      console.log(this.props.aboutChanging)
       if(this.props.aboutChanging){
          this.props.aboutChanged();
          window.location.reload();
