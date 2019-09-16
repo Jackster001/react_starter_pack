@@ -36,12 +36,11 @@ class Add_User extends React.Component {
    onChangeGroupName(event){
       let avaliableTourGuides=this.props.users.filter(user=>{
          return user.userType === 'Tour Guide' && user.GroupName === event.target.value
-         })
-         let avaliableLeadChaperones=this.props.users.filter(user=>{
-            return user.userType === 'Lead Chaperone' && user.GroupName === event.target.value
-         })
-      this.setState({...this.state, Group_Name: event.target.value})   
-      this.setState({...this.state, avaliableTourGuides: avaliableTourGuides, avaliableLeadChaperones: avaliableLeadChaperones})
+      })
+      let avaliableLeadChaperones=this.props.users.filter(user=>{
+         return user.userType === 'Lead Chaperone' && user.GroupName === event.target.value
+      })
+      this.setState({...this.state, Group_Name: event.target.value, avaliableTourGuides: avaliableTourGuides, avaliableLeadChaperones: avaliableLeadChaperones})  
    }
    onChangeUserType(event){
       return (
@@ -106,7 +105,7 @@ class Add_User extends React.Component {
       })
       let newUser = {
          GroupName: this.state.Group_Name,
-         groupPin: groupPin,
+         groupPin: groupPin[0].pin,
          userType: this.state.userType,
          userName: this.state.Username,
          firstName: this.state.firstName,
@@ -131,7 +130,6 @@ class Add_User extends React.Component {
          }
       }
       this.props.addUser(newUser);
-      console.log(newUser);
    }
    render() {
       return (

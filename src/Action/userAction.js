@@ -1,4 +1,4 @@
-import {db,auth, storageRef} from "../components/Firebase";
+import {db,auth, storageRef, admin} from "../components/Firebase";
 const resetChanged =() =>{
     return{
         type: "RESET_CHANGED"
@@ -63,7 +63,7 @@ const getUsers = () =>{
 const addUser = (user)=>{
     return(dispatch)=>{
             storageRef.ref("user.png").getDownloadURL().then(url=>{
-                let email= user.userName + "@mail.com"
+                let email= user.userName + "@sbnyc.com"
                     auth.createUserWithEmailAndPassword(email, user.password)
                     .then(response=>{
                     db.collection("users").doc(response.user.uid).set({

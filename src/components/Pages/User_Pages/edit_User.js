@@ -19,12 +19,13 @@ class User_Edit extends React.Component {
          Username: this.props.selected.userName,
          firstName: this.props.selected.firstName,
          lastName: this.props.selected.lastName,
+         userPhoneNumber: this.props.selected.phoneNumber,
          Password: this.props.selected.password,
          tourGuideFirstName: this.props.selected.tourGuide.firstName,
          leadChaperoneFirstName: this.props.selected.leadChaperone.firstName,
-         profilePicture: this.props.selected.url,
+         profilePicture: this.props.selected.profilePicture,
          name:this.props.selected.emergencyContact.name,
-         phoneNumber: this.props.selected.emergencyContact.phoneNumber,
+         emergencyphoneNumber: this.props.selected.emergencyContact.phoneNumber+"",
          relationship:this.props.selected.emergencyContact.relationship
          }
       }
@@ -75,6 +76,11 @@ class User_Edit extends React.Component {
          this.setState({...this.state, lastName: event.target.value})
       )
    }
+   onChangePhoneNumber(event){
+      return (
+         this.setState({...this.state, userPhoneNumber: event.target.value})
+      )
+   }
    onChangePassword(event){
       return (
          this.setState({...this.state, Password: event.target.value})
@@ -95,7 +101,7 @@ class User_Edit extends React.Component {
          this.setState({...this.state, name: event.target.value})
       )
    }
-   onChangePhoneNumber(event){
+   onChangeEmergencyPhoneNumber(event){
       return (
          this.setState({...this.state, phoneNumber: event.target.value})
       )
@@ -111,14 +117,19 @@ class User_Edit extends React.Component {
             return(group.pin)
          }
       })
+      let emergencyPhoneNumber= this.state.emergencyPhoneNumber;
+      if(emergencyPhoneNumber === "undefined"){
+         emergencyPhoneNumber= ""
+      }
       let updatedUser = {
          id: this.state.user.id,
          GroupName: this.state.Group_Name,
-         groupPin: groupPin,
+         groupPin: groupPin[0],
          userType: this.state.userType,
          userName: this.state.Username,
          firstName: this.state.firstName,
          lastName: this.state.lastName,
+         phoneNumber: this.state.userPhoneNumber,
          password: this.state.Password,
          tourGuide: {
             firstName: this.state.tourGuideFirstName,
@@ -133,12 +144,13 @@ class User_Edit extends React.Component {
          profilePicture: this.state.profilePicture,
          emergencyContact:{
             name: this.state.name,
-            phoneNumber: this.state.phoneNumber,
+            phoneNumber: emergencyPhoneNumber,
             relationship: this.state.relationship
          }
       }
-      this.props.setUser(updatedUser);
-      this.props.history.push(ROUTES.USERS)
+      console.log(updatedUser)
+      // this.props.setUser(updatedUser);
+      // this.props.history.push(ROUTES.USERS);
    }
    render() {
       return (
@@ -171,6 +183,8 @@ class User_Edit extends React.Component {
                   <input type="text" name="name" onChange={this.onChangeFirstName.bind(this)} placeholder={this.props.selected.firstName} required/><br/><br/>
                   <label htmlFor="name"><b>Last Name: </b></label>
                   <input type="text" name="name" onChange={this.onChangeLastName.bind(this)} placeholder={this.props.selected.lastName} required/><br/><br/>
+                  <label htmlFor="name"><b>Phone Number: </b></label>
+                  <input type="text" name="name" onChange={this.onChangePhoneNumber.bind(this)} placeholder={this.props.selected.phoneNumber} required/><br/><br/>
                   <label htmlFor="name"><b>Password: </b></label>
                   <input type="text" name="name" onChange={this.onChangePassword.bind(this)} placeholder={this.props.selected.password} required/><br/><br/>
                   <label htmlFor="guide"><b>Tour Guide: </b></label> 
@@ -182,7 +196,7 @@ class User_Edit extends React.Component {
                   <label htmlFor="name"><b>Full Name: </b></label>
                   <input type="text" name="name" onChange={this.onChangeFullName.bind(this)} placeholder={this.props.selected.emergencyContact.name} required/><br/><br/>
                   <label htmlFor="name"><b>Phone Number: </b></label>
-                  <input type="text" name="name" onChange={this.onChangePhoneNumber.bind(this)} placeholder={this.props.selected.emergencyContact.phoneNumber} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangeEmergencyPhoneNumber.bind(this)} placeholder={this.props.selected.emergencyContact.phoneNumber} required/><br/><br/>
                   <label htmlFor="name"><b>Relationship: </b></label>
                   <input type="text" name="name" onChange={this.onChangeRelationship.bind(this)} placeholder={this.props.selected.emergencyContact.relationship} required/><br/><br/>
                   <button type="button" className="update_Button" onClick={()=>this.handleEdit()}>Update User</button>

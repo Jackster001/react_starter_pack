@@ -2,7 +2,7 @@ import React from 'react';
 import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import {deleteGroup, selectGroup, selectGroupChanging} from '../../../Action/groupAction'
+import {deleteGroup, selectGroup, selectGroupChanging, selectGroupForModal, groupChanged, editGroup, getGroups} from '../../../Action/groupAction'
 import withAuthorization from '../../Session/withAuthorization';
 import {GroupModal} from './group_modal';
 import {UserList} from './group_userList'
@@ -21,9 +21,8 @@ class GroupRow extends React.PureComponent{
             targetList:[],
             avaliableTourGuides:[],
             avaliableLeadChaperones:[],
-            assignedTourGuides:[],
-            assignedLeadChaperones:[],
-            forAssign: false
+            assignedTourGuide:{},
+            assignedLeadChaperone:{}
         }
     }
     componentDidMount(){
@@ -58,10 +57,15 @@ class GroupRow extends React.PureComponent{
         }
     }
     componentDidUpdate(){
-        if(this.props.selectGroupChanged && this.state.forAssign === false){
+        if(this.props.selectGroupChanged){
             this.props.selectGroupChanging()
             this.props.history.push('/group/'+this.props.id);        
         } 
+        if(this.props.groupChanging){
+            this.props.groupChanged();
+            window.location.reload();
+            this.hideModal();
+        }
     }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");
@@ -71,13 +75,9 @@ class GroupRow extends React.PureComponent{
         this.props.selectGroup(id);
     }
     showModal = () => {
-        this.setState({...this.state, forAssign: true})
-        let show=true
+        let show=true;
         this.setState({show: show});
-        if(this.state.forAssign === true){
-            this.props.selectGroup(this.props.id);
-        }
-        
+        this.props.selectGroupForModal(this.props.id);
     };
     hideModal = () => {
         this.setState({...this.state, forAssign: false})
@@ -105,39 +105,26 @@ class GroupRow extends React.PureComponent{
         this.hideModal();
     }
     onChangeTourGuidesSelected(event){
-        let temp = [...event.target.options].filter(o=>o.selected).map(o=>o.value);
-        let tourguides = this.state.avaliableTourGuides.filter(guide=>{
-            for(let i=0; i<temp.length; i++){
-                if(guide.id === temp[i]){
-                    return guide
-                }
-            }
-        })
-        return this.setState({...this.state, assignedTourGuides: tourguides});
+        let tourguide= this.state.avaliableTourGuides.find(guide => guide.id === event.target.value);
+        return this.setState({...this.state, assignedTourGuide: tourguide});
     }
     onChangeLeadChaperonesSelected(event){
-        let temp = [...event.target.options].filter(o=>o.selected).map(o=>o.value);
-        let leadChaperones = this.state.avaliableLeadChaperones.filter(chap=>{
-            for(let i=0; i<temp.length; i++){
-                if(chap.id === temp[i]){
-                    return chap
-                }
-            }
-        })
-        return this.setState({...this.state, assignedLeadChaperones: leadChaperones});
+        let leadChaperone= this.state.avaliableLeadChaperones.find(chap => chap.id === event.target.value);
+        return this.setState({...this.state, assignedLeadChaperone: leadChaperone});
     }
     assign(){
-        let subgroup = {...this.props.selectedGroup.subGroup};
-        let tourguides = this.state.assignedTourGuides;
-        for(let i=0; i<tourguides.length; i++){
-            subgroup.push(tourguides[i]);
+        let subgroups = this.props.selectedGroup.subGroups;
+        let tourguide = this.state.assignedTourGuide;
+        let leadChaperone = this.state.assignedLeadChaperone;
+        let bus= {
+            leadChaperone : {...leadChaperone},
+            tourGuide : {...tourguide}
         }
-        console.log();
-        let newGroup= {...this.props.selectedGroup,
-
-            
+        subgroups.push(bus);
+        let updateGroup= {...this.props.selectedGroup,
+            subGroups: subgroups
         }
-        // this.props.editGroup(newGroup, this.state.logoChanged);
+        this.props.editGroup(updateGroup);
     }
     render(){
         return(
@@ -146,12 +133,12 @@ class GroupRow extends React.PureComponent{
                 <td><center><img className="Group_Logo_Table" src={this.props.groupLogo} /></center></td>
                 <td>
                     {this.state.tourGuides.map((name,i)=>{
-                        return <p>Bus {i+1} - {name}</p>
+                        return <p>{name}</p>
                     })} 
                 </td>
                 <td>      
                     {this.state.leadChaperones.map((name,i)=>{
-                        return <p>Bus {i+1} - {name}</p>
+                        return <p>{name}</p>
                     })}          
                 </td>
                 <td>
@@ -159,11 +146,12 @@ class GroupRow extends React.PureComponent{
                     <button className="assignButton" onClick={()=>this.showModal()}>Assign</button><br/><br/></center>
                     <GroupModal show={this.state.show} handleClose={()=>this.hideModal()}>
                         <div className="modalContent">
-                            <center><h2>Assign Tour Guides and Chaperones to</h2><h1>{this.props.groupName}</h1></center><br/>
+                            <center><h2>Assign Tour Guides and Chaperones to</h2><h1>{this.props.groupName} <strong>(Bus {this.props.selectedGroup.subGroups.length+1})</strong></h1></center><br/>
                                 <div className="assignemntSection">
                                     <div>
                                         <h2>Tour Guides</h2>
-                                        <select name="tourGuides" className="selectBox" onChange={this.onChangeTourGuidesSelected.bind(this)} multiple>
+                                        <select name="tourGuides" className="selectBox" onChange={this.onChangeTourGuidesSelected.bind(this)}>
+                                        <option disabled selected defaultValue> -- Select Tour Guide -- </option>
                                             {this.state.avaliableTourGuides.map(guide=>{
                                                 return <option value={guide.firstName, guide.lastName, guide.id}>{guide.firstName} {guide.lastName}</option>
                                             })} 
@@ -171,7 +159,8 @@ class GroupRow extends React.PureComponent{
                                     </div>
                                     <div>
                                         <h2>Lead Chaperones</h2>
-                                        <select name="leadChaperones" className="selectBox" onChange={this.onChangeLeadChaperonesSelected.bind(this)} multiple>
+                                        <select name="leadChaperones" className="selectBox" onChange={this.onChangeLeadChaperonesSelected.bind(this)}>
+                                        <option disabled selected defaultValue> -- Select Chaperone -- </option>
                                             {this.state.avaliableLeadChaperones.map(chap=>{
                                                 return <option value={chap.firstName, chap.lastName, chap.id}>{chap.firstName} {chap.lastName}</option>
                                             })} 
@@ -193,12 +182,13 @@ class GroupRow extends React.PureComponent{
 const mapStateToProps = state => ({
     groups: state.groupState.groups,
     selectedGroup: state.groupState.selectedGroup,
-    selectGroupChanged: state.groupState.selectGroupChanged
+    selectGroupChanged: state.groupState.selectGroupChanged,
+    groupChanging: state.groupState.groupChanging
 });
 const condition = authUser => !!authUser;
 export default compose(
     connect(
       mapStateToProps,
-      {deleteGroup, selectGroup, selectGroupChanging}
+      {deleteGroup, selectGroup, selectGroupChanging, selectGroupForModal, groupChanged, editGroup, getGroups}
     ),withAuthorization(condition)
 )(GroupRow);

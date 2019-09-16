@@ -29,7 +29,6 @@ class Users extends React.Component {
                   <center><h1>User Management</h1></center>
                   <div>
                   <Link to={ROUTES.USER_ADD}><button className="addNew">Add New User</button></Link>
-                  {/* <CSVLink data={this.state.data} ><button className="downloadCSV">Download CSV</button></CSVLink> */}
                   </div><br/>
                   <UserTable/>
                </div>

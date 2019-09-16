@@ -399,8 +399,8 @@ td.UserId{
     margin-bottom: 30px;
 }
 .selectBox{
-    width: 250px;
-    height:250px;
+    padding: 5px 10px;
+    width: 200px;
 }
 .assignBottom{
     width:50%;

@@ -18,12 +18,16 @@ function groupReducer(state = INITIAL_STATE, action) {
         return {...state, groupAdding: false}
       }
       case 'GROUP_SELECT': {
-        let newSelected=(action.payload);
-        console.log(newSelected)
+        let newSelected=action.payload;
         return {...state, selectedGroup: newSelected, selectGroupChanged: true};
       }
       case 'GROUP_SELECT_CHANGED':{
         return {...state, selectGroupChanged: false}
+      }
+      case 'GROUP_SELECT_FOR_MODAL':{
+        let newSelected=action.payload;
+        console.log(newSelected)
+        return {...state, selectedGroup: newSelected}
       }
       case 'EDIT_GROUP': {
         const index= state.groups.findIndex(group => {return group.id == state.selectedGroup.id})

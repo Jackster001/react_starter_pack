@@ -4,6 +4,7 @@ import { file } from "@babel/types";
 const selectGroup= (id)=>{
     let groupData={}
     let stringId=''+id+'';
+    console.log("selectgroup called")
     return (dispatch)=>{
         let docRef=db.collection("groups").doc(stringId)
         docRef.get().then(function(doc){
@@ -26,6 +27,28 @@ const selectGroup= (id)=>{
 const selectGroupChanging=()=>{
     return{
         type:"GROUP_SELECT_CHANGED"
+    }
+}
+const selectGroupForModal= (id)=>{
+    let groupData={}
+    let stringId=''+id+'';
+    return (dispatch)=>{
+        let docRef=db.collection("groups").doc(stringId)
+        docRef.get().then(function(doc){
+        if(doc.exists){
+            let group=doc.data();
+            groupData={...group, id}
+        } else{
+            console.log("Something went wrong!")
+        }
+        dispatch({
+            type: "GROUP_SELECT_FOR_MODAL",
+            payload: groupData,
+            id: id
+        })
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
     }
 }
 const getGroups = () =>{
@@ -133,4 +156,4 @@ const groupChanged=()=>{
         type: "GROUP_CHANGED"
     }
 }
-export {getGroups, addGroup, groupAdded, deleteGroup, selectGroup, selectGroupChanging, editGroup, groupChanged}
+export {getGroups, addGroup, groupAdded, deleteGroup, selectGroup, selectGroupChanging, editGroup, groupChanged, selectGroupForModal}
