@@ -16,7 +16,7 @@ const INITIAL_STATE = {
 class SignInFormBase extends React.Component {
     constructor(props){
        super(props);
-       this.state = {...INITIAL_STATE};
+       this.state = {...INITIAL_STATE, getAdminInputs:{}};
     }
     componentDidMount(){
        this.props.getAdminInputs();
@@ -30,7 +30,7 @@ class SignInFormBase extends React.Component {
        this.props.login(email, password);
        
     }
-    componentDidUpdate(){
+    componentWillUpdate(){
       if(this.props.authUser){
          this.props.history.push(ROUTES.HOME);
       }

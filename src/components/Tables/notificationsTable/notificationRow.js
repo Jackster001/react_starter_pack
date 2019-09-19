@@ -26,7 +26,7 @@ class NotificationRow extends React.PureComponent{
                 <td><center>{this.props.notification}</center></td>
                 <td><center>{this.props.notificationTimeStamp}</center></td>                
                 <td><center>
-                    <button className="delete_button" id={this.props.id} onClick={()=>this.handleDelete(this.props.id)}>Delete</button></center>
+                    <button className="delete_button" id={this.props.id} onClick={() => { if (window.confirm('Are you sure you wish to delete this Notification?')) this.handleDelete(this.props.id)}}>Delete</button></center>
                 </td>
             </tr>
         )

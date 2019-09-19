@@ -3,8 +3,8 @@ import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
-import {addUser, userAddedChanged} from '../../../Action'
-import * as ROUTES from '../../../constants/routes';
+import {addUser, getUsers, userAddedChanged} from '../../../Action'
+import * as firebase from "firebase";
 class Add_User extends React.Component {
    constructor(props){
       super(props);
@@ -26,10 +26,10 @@ class Add_User extends React.Component {
             avaliableLeadChaperones: []
          }
    }
-
    componentDidUpdate(){
       if(this.props.userAdded){
          this.props.userAddedChanged()
+            this.props.getUsers();
             this.props.history.push('/users')    
       }
    }
@@ -103,8 +103,10 @@ class Add_User extends React.Component {
             return(group.pin)
          }
       })
+      let date= firebase.firestore.Timestamp.fromDate(new Date());
       let newUser = {
          GroupName: this.state.Group_Name,
+         dateCreated: date,
          groupPin: groupPin[0].pin,
          userType: this.state.userType,
          userName: this.state.Username,
@@ -201,6 +203,6 @@ const condition = authUser => !!authUser;
 export default compose(
    connect(
      mapStateToProps,
-     {addUser, userAddedChanged}
+     {addUser, userAddedChanged, getUsers}
    ),withAuthorization(condition)
 )(Add_User);

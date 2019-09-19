@@ -12,7 +12,6 @@ const withAuthentication = Component => {
         authUser => {
           localStorage.setItem('authUser', JSON.stringify(authUser));
           this.props.setUserAuth();
-          console.log("this is the auth user")
         },
         () => {
           localStorage.removeItem('authUser');

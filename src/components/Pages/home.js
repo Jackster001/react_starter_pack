@@ -2,9 +2,15 @@ import React from 'react';
 import '../components.css';
 import logo from '../images/SBNYC-logo.jpg'
 import { withAuthorization } from '../Session';
-
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 class Home extends React.Component {
-
+   constructor(props){
+      super(props)
+      this.state={
+         auth: this.props.authUser
+      }
+   }
    render() {
       return (
       <div className="App">
@@ -17,5 +23,12 @@ class Home extends React.Component {
       );
    }
 }
+const mapStateToProps = state => ({
+   authUser: state.sessionState.authUser
+});
 const condition = authUser => !!authUser;
-export default withAuthorization(condition)(Home)
+export default compose(
+   connect(
+      mapStateToProps
+   ),withAuthorization(condition)
+)(Home);

@@ -103,8 +103,10 @@ class UserTable extends React.Component {
                   emergencyName={data.name}
                   emergencyNumber={data.number}
                   emergencyRelationship={data.relationship}
-                  tourGuide={tourGuide.firstName}
-                  leadChaperone={leadChaperone.firstName}
+                  tourGuideFirstName={tourGuide.firstName}
+                  tourGuideLastName={tourGuide.lastName}
+                  leadChaperoneFirstName={leadChaperone.firstName}
+                  leadChaperoneLastName={leadChaperone.lastName}
                   profilePicture={user.profilePicture}
                   />)
                 })}

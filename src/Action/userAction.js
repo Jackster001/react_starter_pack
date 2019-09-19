@@ -29,7 +29,6 @@ const getSingleUser= (id)=>{
         } else{
             console.log("Something went wrong!")
         }
-        console.log(user)
         dispatch({
             type: "USERS_SELECT",
             payload: user,
@@ -48,6 +47,9 @@ const getUsers = () =>{
             let users = doc.data();
             users= {id:doc.id,...users}
             data=[users, ...data];
+            data.sort(function(a,b){
+                return  a.dateCreated.seconds - b.dateCreated.seconds
+            }).reverse();
             })           
             dispatch({
                 type: "USERS_GET",
@@ -57,7 +59,6 @@ const getUsers = () =>{
          .catch(function(error){
             console.log("Error getting document:", error);
          })
-         
     }
 }
 const addUser = (user)=>{
@@ -68,6 +69,7 @@ const addUser = (user)=>{
                     .then(response=>{
                     db.collection("users").doc(response.user.uid).set({
                         id:response.user.uid,
+                        dateCreated: user.dateCreated,
                         GroupName: user.GroupName,
                         groupPin: user.groupPin,
                         userType: user.userType,
@@ -82,6 +84,11 @@ const addUser = (user)=>{
                         emergencyContact: user.emergencyContact
                         
                     })
+                    user={
+                        ...user,
+                        id: response.user.uid,
+                        profilePicture: url
+                    }
                     dispatch({
                         type: 'USER_ADD',
                         payload: user
@@ -103,6 +110,11 @@ const deleteUser = (id) =>{
         id: id
     }
 }
+const finishedDeletingUser = () =>{
+    return{
+        type: "FINISHED_DELETING"
+    }
+}
 const setUser = (user) =>{
     
     return(dispatch)=>{
@@ -120,4 +132,4 @@ const setUser = (user) =>{
         });
     } 
 }
-export {getUsers, addUser, deleteUser, getSingleUser, setUser, userAddedChanged, resetChanged, userResetChanged};
+export {getUsers, addUser, deleteUser, getSingleUser, setUser, userAddedChanged, resetChanged, userResetChanged, finishedDeletingUser};

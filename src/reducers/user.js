@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   listLoading: false,
   userChanged: false,
   userAdded: false,
+  userDeleting: false,
 };
 
 function userReducer(state = INITIAL_STATE, action) {
@@ -48,7 +49,10 @@ function userReducer(state = INITIAL_STATE, action) {
       newUsers.splice(index, 1)
       console.log(index);
       console.log(newUsers)
-      return {...state, users: newUsers};
+      return {...state, users: newUsers, userDeleting: true};
+    }
+    case "FINISHED_DELETING": {
+      return {...state, userDeleting:false}
     }
     default:
       return state;

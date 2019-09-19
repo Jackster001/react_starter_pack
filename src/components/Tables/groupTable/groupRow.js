@@ -172,7 +172,7 @@ class GroupRow extends React.PureComponent{
                                 <div className="assignBottom"><center><button className="Submit_Button" onClick={()=>this.assign()}>Assign</button></center></div>
                         </div>
                     </GroupModal>
-                    <center><button className="delete_button" id={this.props.id} onClick={()=>this.handleDelete(this.props.id)}>Delete</button></center>
+                    <center><button className="delete_button" id={this.props.id} onClick={() => { if (window.confirm('Are you sure you wish to delete this Group?')) this.handleDelete(this.props.id)}}>Delete</button></center>
                 </td>
             </tr>
         )

@@ -12,7 +12,7 @@ class About extends React.Component {
          About: this.props.about.About,
          facebook: this.props.about.facebook,
          twitter: this.props.about.twitter,
-         website: this.props.about.website
+         instagram: this.props.about.instagram
       }
    }
    componentDidMount(){
@@ -23,7 +23,7 @@ class About extends React.Component {
          this.props.aboutReceived();
          this.setState({About: this.props.about.About,
          facebook: this.props.about.facebook,
-         website: this.props.about.website,
+         website: this.props.about.instagram,
          twitter: this.props.about.twitter
       })
       }
@@ -33,15 +33,10 @@ class About extends React.Component {
       }
    }
    onChangeAbout(event){
-      return(
-         this.setState({About:event.target.value
-      })
-   )}
-   onChangeAbout(event){
       return(this.setState({About:event.target.value})
    )}
-   onChangeWebsite(event){
-      return(this.setState({website:event.target.value})
+   onChangeInstagram(event){
+      return(this.setState({instagram:event.target.value})
    )}
    onChangeFacebook(event){
       return(this.setState({facebook:event.target.value})
@@ -53,7 +48,7 @@ class About extends React.Component {
       let about={
          id: this.state.id,
          About: this.state.About,
-         website:this.state.website,
+         instagram:this.state.instagram,
          twitter: this.state.twitter,
          facebook: this.state.facebook
       }
@@ -65,17 +60,17 @@ class About extends React.Component {
          <div><br/><br/><br/>
             <div className="add_Table_Styles">
             <div className="editFormHeading"><h1>About Us</h1></div>
-               <form className="add_form">
+               <form className="about_form">
                   <div className="formTextField">
                      <label htmlFor="about"><b>About Us: </b></label>
-                     <textarea className="addTextArea" name="about" placeholder={this.state.About} onChange={this.onChangeAbout.bind(this)}></textarea><br/><br/>
+                     <textarea className="addTextArea" name="about" value={this.state.About} onChange={this.onChangeAbout.bind(this)}></textarea><br/><br/>
                   </div>
-                  <label htmlFor="website"><b>Website: </b></label>
-                  <input type="text" name="website" placeholder={this.state.website} onChange={this.onChangeWebsite.bind(this)}></input>
+                  <label htmlFor="website"><b>Instagram: </b></label>
+                  <input type="text" name="website" value={this.state.instagram} onChange={this.onChangeInstagram.bind(this)}></input>
                   <label htmlFor="website"><b>Facebook: </b></label>
-                  <input type="text" name="website" placeholder={this.state.facebook} onChange={this.onChangeFacebook.bind(this)}></input>
+                  <input type="text" name="website" value={this.state.facebook} onChange={this.onChangeFacebook.bind(this)}></input>
                   <label htmlFor="website"><b>Twitter: </b></label>
-                  <input type="text" name="website" placeholder={this.state.twitter} onChange={this.onChangeTwitter.bind(this)}></input><br/><br/>
+                  <input type="text" name="website" value={this.state.twitter} onChange={this.onChangeTwitter.bind(this)}></input><br/><br/>
                   <button type="button" className="update_Button" onClick={()=>this.editAbout()}>Update About</button>
                </form>
             </div>

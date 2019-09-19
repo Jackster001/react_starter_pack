@@ -45,7 +45,7 @@ class AlarmRow extends React.PureComponent{
                 <td><center>{this.props.alarmTimestamp}</center></td>                
                 <td><center>
                     <button className="edit_button" onClick={()=> this.selected(this.props.id)}>Edit</button><br/>
-                    <button className="delete_button" id={this.props.id} onClick={()=>this.handleDelete(this.props.id)}>Delete</button></center>
+                    <button className="delete_button" id={this.props.id} onClick={() => { if (window.confirm('Are you sure you wish to delete this Alarm?')) this.handleDelete(this.props.id)}}>Delete</button></center>
                 </td>
             </tr>
         )

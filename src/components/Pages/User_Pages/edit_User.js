@@ -11,9 +11,8 @@ class User_Edit extends React.Component {
       this.state={
          user: this.props.selected,
          id: this.props.selected.id,
-         Group_Name: "",
-         original_Name :"",
-         GroupName: this.props.GroupName,
+         dateCreated: this.props.selected.dateCreated,
+         GroupName: this.props.selected.GroupName,
          Group_Pin: this.props.selected.groupPin,
          userType: this.props.selected.userType,
          Username: this.props.selected.userName,
@@ -21,38 +20,40 @@ class User_Edit extends React.Component {
          lastName: this.props.selected.lastName,
          userPhoneNumber: this.props.selected.phoneNumber,
          Password: this.props.selected.password,
-         tourGuideFirstName: this.props.selected.tourGuide.firstName,
-         leadChaperoneFirstName: this.props.selected.leadChaperone.firstName,
+         tourGuide: this.props.selected.tourGuide,
+         leadChaperone: this.props.selected.leadChaperone,
          profilePicture: this.props.selected.profilePicture,
          name:this.props.selected.emergencyContact.name,
-         emergencyphoneNumber: this.props.selected.emergencyContact.phoneNumber+"",
-         relationship:this.props.selected.emergencyContact.relationship
+         emergencyPhoneNumber: this.props.selected.emergencyContact.number+"",
+         relationship:this.props.selected.emergencyContact.relationship,
+         avaliableTourGuides: [],
+         avaliableLeadChaperones: []
          }
       }
    componentDidMount(){
-      //getting the group name 
       let groupPin= this.state.Group_Pin;
-      let group=Object.assign([{}])
-      group= this.props.groups.filter(function(group){
-         return (group.pin == groupPin);
+
+      let avaliableTourGuides=this.props.users.filter(user=>{
+         return user.userType === 'Tour Guide' && user.groupPin === groupPin
       })
-      let selectedGroup=Object.assign({},group[0]);
-      let groupName=selectedGroup.name;
-      console.log(this.state.user);
-      this.setState({Group_Name: groupName, original_Name: groupName})
+      let avaliableLeadChaperones=this.props.users.filter(user=>{
+         return user.userType === 'Lead Chaperone' && user.groupPin === groupPin
+      })
+      this.setState({...this.state, avaliableTourGuides: avaliableTourGuides, avaliableLeadChaperones: avaliableLeadChaperones})
    }
    onChangeGroupName(event){
-      console.log(event.target.value)
-      return (
-         this.setState({...this.state, Group_Name: event.target.value})
-      )
+      let avaliableTourGuides=this.props.users.filter(user=>{
+         return user.userType === 'Tour Guide' && user.GroupName === event.target.value
+      })
+      let avaliableLeadChaperones=this.props.users.filter(user=>{
+         return user.userType === 'Lead Chaperone' && user.GroupName === event.target.value
+      })
+      this.setState({...this.state, Group_Name: event.target.value, avaliableTourGuides: avaliableTourGuides, avaliableLeadChaperones: avaliableLeadChaperones})  
    }
    componentDidUpdate(){
    if(this.props.userChanged){
          this.props.userResetChanged()
-         console.log(this.props.changed);
-
-         this.props.history.push('/student/'+this.props.id);
+         this.props.history.push(ROUTES.USERS);
       }
       
   }
@@ -87,13 +88,29 @@ class User_Edit extends React.Component {
       )
    }
    onChangeTourGuide(event){
+      let tourGuide = this.state.avaliableTourGuides.find(guide=>{
+         return guide.id === event.target.value
+      })
+      tourGuide ={
+         firstName: tourGuide.firstName,
+         lastName: tourGuide.lastName,
+         id: tourGuide.id
+      }
       return (
-         this.setState({...this.state, tourGuideFirstName: event.target.value})
+         this.setState({...this.state, tourGuide: tourGuide})
       )
    }
    onChangeChaperone(event){
+      let leadChaperone = this.state.avaliableLeadChaperones.find(chap=>{
+         return chap.id === event.target.value
+      })
+      leadChaperone ={
+         firstName: leadChaperone.firstName,
+         lastName: leadChaperone.lastName,
+         id: leadChaperone.id
+      }
       return (
-         this.setState({...this.state, leadChaperoneFirstName: event.target.value})
+         this.setState({...this.state, leadChaperone: leadChaperone})
       )
    }
    onChangeFullName(event){
@@ -118,13 +135,14 @@ class User_Edit extends React.Component {
          }
       })
       let emergencyPhoneNumber= this.state.emergencyPhoneNumber;
-      if(emergencyPhoneNumber === "undefined"){
+      if(emergencyPhoneNumber == null){
          emergencyPhoneNumber= ""
       }
       let updatedUser = {
          id: this.state.user.id,
-         GroupName: this.state.Group_Name,
-         groupPin: groupPin[0],
+         dateCreated: this.state.dateCreated,
+         GroupName: this.state.GroupName,
+         groupPin: this.state.Group_Pin,
          userType: this.state.userType,
          userName: this.state.Username,
          firstName: this.state.firstName,
@@ -132,25 +150,23 @@ class User_Edit extends React.Component {
          phoneNumber: this.state.userPhoneNumber,
          password: this.state.Password,
          tourGuide: {
-            firstName: this.state.tourGuideFirstName,
-            lastName: this.props.selected.lastName,
-            id: this.props.selected.id
+            firstName: this.state.tourGuide.firstName,
+            lastName: this.state.tourGuide.lastName,
+            id: this.state.tourGuide.id
          },
          leadChaperone: {
-            firstName: this.state.leadChaperoneFirstName,
-            lastName: this.props.selected.lastName,
-            id: this.props.selected.id
+            firstName: this.state.leadChaperone.firstName,
+            lastName: this.state.leadChaperone.lastName,
+            id: this.state.leadChaperone.id
          },
          profilePicture: this.state.profilePicture,
          emergencyContact:{
             name: this.state.name,
-            phoneNumber: emergencyPhoneNumber,
+            number: emergencyPhoneNumber,
             relationship: this.state.relationship
          }
       }
-      console.log(updatedUser)
-      // this.props.setUser(updatedUser);
-      // this.props.history.push(ROUTES.USERS);
+      this.props.setUser(updatedUser);
    }
    render() {
       return (
@@ -163,7 +179,7 @@ class User_Edit extends React.Component {
                <center><h2>Edit User Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <select name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
-                    <option disabled selected defaultValue>{this.state.Group_Name}</option>
+                    <option disabled selected defaultValue>{this.state.GroupName}</option>
                         {this.props.groups.map(function(group){
                             return (<option value={group.name}>{group.name}</option>)
                         })}
@@ -178,27 +194,37 @@ class User_Edit extends React.Component {
                      <option value="Parent">Parent</option>
                   </select><br/><br/>
                   <label htmlFor="name"><b>Username: </b></label>
-                  <input type="text" name="name" onChange={this.onChangeUsername.bind(this)} placeholder={this.props.selected.userName} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangeUsername.bind(this)} defaultValue={this.props.selected.userName} required/><br/><br/>
                   <label htmlFor="name"><b>First Name: </b></label>
-                  <input type="text" name="name" onChange={this.onChangeFirstName.bind(this)} placeholder={this.props.selected.firstName} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangeFirstName.bind(this)} defaultValue={this.props.selected.firstName} required/><br/><br/>
                   <label htmlFor="name"><b>Last Name: </b></label>
-                  <input type="text" name="name" onChange={this.onChangeLastName.bind(this)} placeholder={this.props.selected.lastName} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangeLastName.bind(this)} defaultValue={this.props.selected.lastName} required/><br/><br/>
                   <label htmlFor="name"><b>Phone Number: </b></label>
-                  <input type="text" name="name" onChange={this.onChangePhoneNumber.bind(this)} placeholder={this.props.selected.phoneNumber} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangePhoneNumber.bind(this)} defaultValue={this.props.selected.phoneNumber} required/><br/><br/>
                   <label htmlFor="name"><b>Password: </b></label>
-                  <input type="text" name="name" onChange={this.onChangePassword.bind(this)} placeholder={this.props.selected.password} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangePassword.bind(this)} defaultValue={this.props.selected.password} required></input><br/><br/>
                   <label htmlFor="guide"><b>Tour Guide: </b></label> 
-                  <input type="text" name="guide" onChange={this.onChangeTourGuide.bind(this)} placeholder={this.props.selected.tourGuide.firstName} required/><br/><br/>
+                  <select name="guide" onChange={this.onChangeTourGuide.bind(this)} required>
+                    <option disabled selected defaultValue> {this.props.selected.tourGuide.firstName} {this.props.selected.tourGuide.lastName}</option>
+                        {this.state.avaliableTourGuides.map(function(user, key){
+                            return (<option key={key} value={user.id}>{user.firstName}{" "}{user.lastName}</option>)
+                        })}
+                  </select><br/><br/>
                   <label htmlFor="chaperone"><b>Chaperone: </b></label>
-                  <input type="text" name="chaperone" onChange={this.onChangeChaperone.bind(this)} placeholder={this.props.selected.leadChaperone.firstName} required/><br/><br/>
+                  <select name="guide" onChange={this.onChangeChaperone.bind(this)} required>
+                    <option disabled selected defaultValue> {this.props.selected.leadChaperone.firstName} {this.props.selected.leadChaperone.lastName}</option>
+                        {this.state.avaliableLeadChaperones.map(function(user, key){
+                            return (<option key={key} value={user.id}>{user.firstName}{" "}{user.lastName}</option>)
+                        })}
+                  </select><br/><br/>
                   <hr/><br/>
                   <center><h2>Emergency Contact Information</h2></center><br/>
                   <label htmlFor="name"><b>Full Name: </b></label>
-                  <input type="text" name="name" onChange={this.onChangeFullName.bind(this)} placeholder={this.props.selected.emergencyContact.name} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangeFullName.bind(this)} defaultValue={this.props.selected.emergencyContact.name} required/><br/><br/>
                   <label htmlFor="name"><b>Phone Number: </b></label>
-                  <input type="text" name="name" onChange={this.onChangeEmergencyPhoneNumber.bind(this)} placeholder={this.props.selected.emergencyContact.phoneNumber} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangeEmergencyPhoneNumber.bind(this)} defaultValue={this.state.emergencyPhoneNumber} required/><br/><br/>
                   <label htmlFor="name"><b>Relationship: </b></label>
-                  <input type="text" name="name" onChange={this.onChangeRelationship.bind(this)} placeholder={this.props.selected.emergencyContact.relationship} required/><br/><br/>
+                  <input type="text" name="name" onChange={this.onChangeRelationship.bind(this)} defaultValue={this.props.selected.emergencyContact.relationship} required/><br/><br/>
                   <button type="button" className="update_Button" onClick={()=>this.handleEdit()}>Update User</button>
                </form>
          </div></div>

@@ -27,6 +27,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { withAuthentication } from './components/Session';
 import Navigation from './components/navigation';
 import {auth} from "./components/Firebase";
+import SessionExpire from "../src/components/Session/autoLogOut"
 class App extends Component {
   constructor(props) {
     super(props);
@@ -80,4 +81,5 @@ class App extends Component {
   );
 };
 };
-export default App;
+export default App
+
