@@ -344,6 +344,19 @@ td.UserId{
     cursor: pointer;
     background-color: #343434;
 }
+.deleteSelection{
+    margin-left: 10px;
+    padding: 6px 20px;
+    border: none;
+    background-color: #7E0000; 
+    color:white;
+    float:left;
+    font-size: 16px;
+}
+.deleteSelection:hover{
+    cursor: pointer;
+    background-color: #B02323;
+}
 .downloadCSV{
     margin-left: 10px;
     padding: 6px 20px;

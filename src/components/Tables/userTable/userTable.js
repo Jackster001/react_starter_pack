@@ -11,7 +11,8 @@ class UserTable extends React.Component {
     this.state={
       userList: this.props.users,
       targetList: this.props.users,
-      csvFormat:[{}]
+      csvFormat:[{}],
+      show: false
     }
   }
   onChangeGroupName (event){
@@ -72,6 +73,7 @@ class UserTable extends React.Component {
               })}
             </select>
             <button className="resetFilterButton" onClick={()=>this.resetUserList()}>Reset</button>
+            <button className="deleteSelection" >Delete Select Accounts</button>
             <CSVLink id="csv" data={this.state.csvFormat} onClick={()=>this.downloadCSV(this.state.targetList)}><button className="downloadCSV">Download CSV</button></CSVLink>
             <br/><br/>
             </div>

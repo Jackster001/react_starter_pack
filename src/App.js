@@ -24,16 +24,41 @@ import About from './components/Pages/About_Pages/about.js';
 import Settings from './components/Pages/settings';
 import * as ROUTES from '../src/constants/routes';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import { withAuthentication } from './components/Session';
 import Navigation from './components/navigation';
 import {auth} from "./components/Firebase";
-import SessionExpire from "../src/components/Session/autoLogOut"
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import {signOut} from "../src/Action/sessionAction";
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       authUser: null,
+      loginStatus: false
     };
+    this.events = [
+      'load',
+      'mousemove',
+      'mousedown',
+      'click',
+      'scroll',
+      'keypress',
+      'onbeforeunload'
+    ];
+    this.warn = this.warn.bind(this);
+    this.logout = this.logout.bind(this);
+    this.resetTimeout = this.resetTimeout.bind(this);
+
+    for (var i in this.events) {
+      window.addEventListener(this.events[i], this.resetTimeout);
+    }
+    if(this.props.authUser){
+      this.setTimeout();
+    }
+    window.addEventListener("beforeunload", function (ev) {
+      ev.preventDefault();
+      this.props.signOut()
+    })
   }
   componentDidMount() {
     this.listener = auth.onAuthStateChanged(
@@ -42,9 +67,54 @@ class App extends Component {
         ? this.setState({ authUser: true })
         : this.setState({ authUser: null });
     });
+    this.setState({loginStatus:this.props.authUser})
+    window.addEventListener("beforeunload", function (ev) {
+      ev.preventDefault();
+      this.props.signOut()
+    })
+  }
+  componentDidUpdate(){
+    if(this.props.authUser && this.state.loginStatus != true){
+      this.setState({loginStatus:this.props.authUser})
+    }
   }
   componentWillUnmount() {
     this.listener();
+    window.addEventListener("beforeunload", function (ev) {
+      ev.preventDefault();
+      this.props.signOut()
+    })
+  }
+  clearTimeout() {
+      if (this.warnTimeout) clearTimeout(this.warnTimeout);
+      if (this.logoutTimeout) clearTimeout(this.logoutTimeout);
+  }
+
+  setTimeout() {
+      if(this.state.loginStatus && this.props.authUser){
+      this.logoutTimeout = setTimeout(this.logout, 9000 * 1000);
+      }
+    
+  }
+
+  resetTimeout() {
+    this.clearTimeout();
+    this.setTimeout();
+  }
+  warn() {
+    alert("You will be logged out automatically in 2 seconds");
+  }
+  logout = () => {
+    this.props.signOut()
+    this.setState({loginStatus: false})
+    alert("You have been logged out due to being idle")
+  };
+  destroy() {
+    this.clearTimeout();
+
+    for (var i in this.events) {
+      window.removeEventListener(this.events[i], this.resetTimeout);
+    }
   }
   render(){
   return (
@@ -81,5 +151,10 @@ class App extends Component {
   );
 };
 };
-export default App
+const mapStateToProps = state => ({
+  authUser: state.sessionState.authUser
+});
+export default compose( 
+  connect( mapStateToProps,{signOut})
+)(App);
 

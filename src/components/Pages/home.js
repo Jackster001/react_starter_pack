@@ -15,7 +15,6 @@ class Home extends React.Component {
       return (
       <div className="App">
          <div className="Home">
- 
             <center><h1 className="dashboard">SBNYC Dashboard</h1>
             <div><img src={logo} height="250px" width="650px" alt="logo"/></div></center>
          </div>
