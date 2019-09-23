@@ -7,6 +7,7 @@ import lostReducer from "./lost";
 import notificationReducer from "./notifications"
 import contactReducer from "./contact"
 import aboutReducer from "./about"
+import itineraryReducer from "./itinerary"
 
 const rootReducer = combineReducers({
   sessionState: sessionReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   lostState: lostReducer,
   notificationState: notificationReducer,
   contactState: contactReducer,
-  aboutState: aboutReducer
+  aboutState: aboutReducer,
+  itineraryState: itineraryReducer
 });
 
 export default rootReducer;

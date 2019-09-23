@@ -2,26 +2,43 @@ import React from 'react';
 import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import GroupRow from "./groupRow";
 import { withAuthorization } from '../../Session';
-import {getGroups} from '../../../Action/groupAction';
-import {getUsers} from '../../../Action/userAction';
-class GroupTable extends React.Component {
-   render() {
+import ItineraryRow from "./itineraryRow"
+class ItineraryTable extends React.Component {
+    constructor(props){
+        super(props)
+        this.state={
+            groupSelected:"",
+
+        }
+        
+    }
+    onChangeGroupName (event){
+        return this.setState({...this.state, groupSelected: event.target.value})
+    }
+    render() {
       return (
          <div className="basicTable">
-           <table className="table1 table-dark" border="1" cellSpacing="0">
+            <div className="filterBox">
+                <select id="group_name" name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
+                <option disabled selected defaultValue>Group</option>
+                    {this.props.groups.map(function(group){
+                        return (<option value={group.name}>{group.name}</option>)
+                })}
+                </select>
+            </div>
+            <br/><br/>
+            <table className="table1 table-dark" border="1" cellSpacing="0">
              <thead className="TableHead">
                <tr>
                 <th>Group</th>
-                <th>Logo</th>
-                <th>Assigned Tour Guides</th>
-                <th>Assigned Lead Chaperones</th>
+                <th>Date</th>
+                <th>Schedule</th>
                 <th>Edit</th>
                </tr>
              </thead>
             <tbody>
-              {
+              {/* {
                 this.props.groups.map((group, i)=>{
                 let subgroup= Object.assign([], group.subGroups)
                 let avaliableTourGuides= this.props.users.filter((user)=>{
@@ -39,7 +56,7 @@ class GroupTable extends React.Component {
                   avaliableTourGuides={avaliableTourGuides}
                   avaliableLeadChaperones={avaliableLeadChaperones}
                   />)
-                })}
+                })} */}
               </tbody>
             </table>
          </div>
@@ -51,12 +68,12 @@ const condition = authUser => !!authUser;
 
 const mapStateToProps = state => ({
   groups: state.groupState.groups,
-  users: state.userState.users
+//   users: state.userState.users
 });
  
 export default compose(
    connect(
      mapStateToProps,
-     {getGroups, getUsers}
+     {}
    ),withAuthorization(condition)
-)(GroupTable);
+)(ItineraryTable);

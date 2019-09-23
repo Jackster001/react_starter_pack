@@ -10,7 +10,7 @@ import User_Edit from "./components/Pages/User_Pages/edit_User";
 import Groups from './components/Pages/Group_Pages/groups';
 import addGroup from './components/Pages/Group_Pages/add_Group';
 import groupEdit from './components/Pages/Group_Pages/groupEdit';
-import Itinerary from './components/Pages/itinerary';
+import Itinerary from './components/Pages/Itinerary_Pages/itinerary';
 import Notifications from './components/Pages/Notification_Pages/notifications';
 import Send_Notification from './components/Pages/Notification_Pages/send_Notification'
 import Alarm from './components/Pages/Alarm_Pages/alarm';
@@ -96,7 +96,6 @@ class App extends Component {
       }
     
   }
-
   resetTimeout() {
     this.clearTimeout();
     this.setTimeout();
