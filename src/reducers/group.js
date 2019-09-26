@@ -3,7 +3,8 @@ const INITIAL_STATE = {
     groupAdding: false,
     selectedGroup: {},
     selectGroupChanged: false,
-    groupChanging: false
+    groupChanging: false,
+    groupModalSelectProcess: false
     
 };
 function groupReducer(state = INITIAL_STATE, action) {
@@ -26,15 +27,17 @@ function groupReducer(state = INITIAL_STATE, action) {
       }
       case 'GROUP_SELECT_FOR_MODAL':{
         let newSelected=action.payload;
-        console.log(newSelected)
-        return {...state, selectedGroup: newSelected}
+        return {...state, selectedGroup: newSelected, groupModalSelecting:true}
+      }
+      case 'GROUP_MODAL_SELECTING':{
+        return{...state, groupModalSelecting:false}
       }
       case 'EDIT_GROUP': {
         const index= state.groups.findIndex(group => {return group.id == state.selectedGroup.id})
         const newGroupSet = state.groups;
         newGroupSet[index]= action.payload;
         console.log(newGroupSet)
-        return {...state, groups: newGroupSet, groupChanging:true};
+        return {...state, groups: newGroupSet, selectedGroup:{}, groupChanging:true};
       }
       case 'GROUP_CHANGED':{
         return{...state, groupChanging:false}

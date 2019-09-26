@@ -8,13 +8,35 @@ class ItineraryTable extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            groupSelected:"",
-
+          dailyData:[],
+          
         }
         
     }
     onChangeGroupName (event){
-        return this.setState({...this.state, groupSelected: event.target.value})
+      const selectedGroup = this.props.groups.find(group =>{
+        return group.name == event.target.value
+      })
+      const groupName= selectedGroup.name;
+      const groupPin= selectedGroup.pin
+      let selectedItinerary = this.props.itineraries.find(itinerary =>{
+        return itinerary.groupName == groupName && itinerary.groupPin == groupPin
+      })
+      // let tempArray= []
+      // tempArray.push(selectedItinerary.dailyData)
+      // console.log(tempArray)
+      let days= []
+      days= selectedItinerary.dailyData.map( day =>{
+        let obj=Object.assign({}, day)
+        return obj
+      })
+      // let obj = []
+      // days.map( (group,i) =>{
+      //   obj.push(group[i])
+      // })
+      // console.log(obj)
+      
+      return this.setState({...this.state, dailyData: days})
     }
     render() {
       return (
@@ -38,6 +60,13 @@ class ItineraryTable extends React.Component {
                </tr>
              </thead>
             <tbody>
+              {this.state.dailyData.map((day, i)=>{
+                let activity = day;
+                activity.map(activityItem=>{
+                  let date= activityItem.date;
+                  let Des
+                })
+              })}
               {/* {
                 this.props.groups.map((group, i)=>{
                 let subgroup= Object.assign([], group.subGroups)
@@ -68,7 +97,7 @@ const condition = authUser => !!authUser;
 
 const mapStateToProps = state => ({
   groups: state.groupState.groups,
-//   users: state.userState.users
+  itineraries: state.itineraryState.itineraries
 });
  
 export default compose(

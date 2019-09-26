@@ -226,6 +226,17 @@ td.UserId{
     cursor: pointer;
     background-color: #464646;
 }
+.resetAssignedButton{
+    border: none;
+    background-color: #464646;
+    color: white;
+    padding: 10px 20px;
+    width: 75%;
+}
+.resetAssignedButton:hover{
+    cursor: pointer;
+    background-color: #B0292A;
+}
 .addNew{
     border: none;
     padding: 5px 15px;
@@ -416,6 +427,10 @@ td.UserId{
     width: 200px;
 }
 .assignBottom{
+    width:50%;
+    margin: 0 auto;
+}
+.resetBottom{
     width:50%;
     margin: 0 auto;
 }

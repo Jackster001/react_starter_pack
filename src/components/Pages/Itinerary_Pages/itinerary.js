@@ -9,6 +9,7 @@ import {getItineraries} from '../../../Action/itineraryAction';
 class Itinerary extends React.Component {
    componentDidMount(){
       this.props.getGroups();
+      this.props.getItineraries();
    }
    render() {
       return (

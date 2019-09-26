@@ -2,7 +2,7 @@ import React from 'react';
 import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import {deleteGroup, selectGroup, selectGroupChanging, selectGroupForModal, groupChanged, editGroup, getGroups} from '../../../Action/groupAction'
+import {deleteGroup, selectGroup, selectGroupChanging, selectGroupForModal, groupChanged, editGroup, getGroups, groupModalSelecting} from '../../../Action/groupAction'
 import withAuthorization from '../../Session/withAuthorization';
 import {GroupModal} from './group_modal';
 import {UserList} from './group_userList'
@@ -22,7 +22,9 @@ class GroupRow extends React.PureComponent{
             avaliableTourGuides:[],
             avaliableLeadChaperones:[],
             assignedTourGuide:{},
-            assignedLeadChaperone:{}
+            assignedLeadChaperone:{}, 
+            selectedGroupLength:0,
+            condition: false
         }
     }
     componentDidMount(){
@@ -55,6 +57,7 @@ class GroupRow extends React.PureComponent{
             })
             this.setState({tourGuides: tourGuides, leadChaperones: leadChaps});
         }
+        console.log(this.state.subgroups)
     }
     componentDidUpdate(){
         if(this.props.selectGroupChanged){
@@ -66,6 +69,10 @@ class GroupRow extends React.PureComponent{
             window.location.reload();
             this.hideModal();
         }
+        // if(this.props.groupModalSelectProcess){
+        //     this.props.groupModalSelecting();
+        //     this.setState({...this.state, show:true});
+        // }
     }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");
@@ -73,16 +80,16 @@ class GroupRow extends React.PureComponent{
     }
     selected(id){
         this.props.selectGroup(id);
+        
     }
     showModal = () => {
-        let show=true;
-        this.setState({show: show});
+        this.setState({...this.state, show: true})
         this.props.selectGroupForModal(this.props.id);
     };
     hideModal = () => {
         this.setState({...this.state, forAssign: false})
         this.setState({ show: false, listShow: false });
-     };
+    };
     onHandleEdit(){
         let newItem={
            id: this.props.selected.id,
@@ -111,6 +118,21 @@ class GroupRow extends React.PureComponent{
     onChangeLeadChaperonesSelected(event){
         let leadChaperone= this.state.avaliableLeadChaperones.find(chap => chap.id === event.target.value);
         return this.setState({...this.state, assignedLeadChaperone: leadChaperone});
+    }
+    onHandleReset(){
+        // let subgroups = this.props.selectedGroup.subGroups;
+        // let tourguide = this.state.assignedTourGuide;
+        // let leadChaperone = this.state.assignedLeadChaperone;
+        // let bus= {
+        //     leadChaperone : {...leadChaperone},
+        //     tourGuide : {...tourguide}
+        // }
+        // subgroups.push(bus);
+        this.setState({...this.state})
+        let updateGroup= {...this.props.selectedGroup,
+            subGroups: []
+        }
+        this.props.editGroup(updateGroup);
     }
     assign(){
         let subgroups = this.props.selectedGroup.subGroups;
@@ -146,7 +168,9 @@ class GroupRow extends React.PureComponent{
                     <button className="assignButton" onClick={()=>this.showModal()}>Assign</button><br/><br/></center>
                     <GroupModal show={this.state.show} handleClose={()=>this.hideModal()}>
                         <div className="modalContent">
-                            <center><h2>Assign Tour Guides and Chaperones to</h2><h1>{this.props.groupName} <strong>(Bus {this.props.selectedGroup.subGroups.length+1})</strong></h1></center><br/>
+                            <div>
+                                <center><h2>Assign Tour Guides and Chaperones to</h2><h1>{this.props.groupName} <strong>(Bus {this.props.selectedGroup.length ? this.props.selectedGroup.length + 1: 1})</strong></h1></center><br/>
+                            </div>
                                 <div className="assignemntSection">
                                     <div>
                                         <h2>Tour Guides</h2>
@@ -168,8 +192,9 @@ class GroupRow extends React.PureComponent{
                                         
                                     </div>
                                 </div>
-                                <br/>
-                                <div className="assignBottom"><center><button className="Submit_Button" onClick={()=>this.assign()}>Assign</button></center></div>
+                                <br/><br/><br/>
+                                <div className="assignBottom"><center><button className="Submit_Button" onClick={()=>this.assign()}>Assign</button></center></div><br/>
+                                <div className="resetBottom"><center><button className="resetAssignedButton" onClick={()=>this.onHandleReset()}>Reset All Assigned</button></center></div>
                         </div>
                     </GroupModal>
                     <center><button className="delete_button" id={this.props.id} onClick={() => { if (window.confirm('Are you sure you wish to delete this Group?')) this.handleDelete(this.props.id)}}>Delete</button></center>
@@ -183,12 +208,13 @@ const mapStateToProps = state => ({
     groups: state.groupState.groups,
     selectedGroup: state.groupState.selectedGroup,
     selectGroupChanged: state.groupState.selectGroupChanged,
-    groupChanging: state.groupState.groupChanging
+    groupChanging: state.groupState.groupChanging,
+    groupModalSelectProcess : state.groupState.groupModalSelectProcess
 });
 const condition = authUser => !!authUser;
 export default compose(
     connect(
       mapStateToProps,
-      {deleteGroup, selectGroup, selectGroupChanging, selectGroupForModal, groupChanged, editGroup, getGroups}
+      {deleteGroup, selectGroup, selectGroupChanging, selectGroupForModal, groupChanged, editGroup, getGroups, groupModalSelecting}
     ),withAuthorization(condition)
 )(GroupRow);

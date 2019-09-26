@@ -7,6 +7,7 @@ import { withAuthorization } from '../../Session';
 import {getGroups} from '../../../Action/groupAction';
 import {getUsers} from '../../../Action/userAction';
 class GroupTable extends React.Component {
+
    render() {
       return (
          <div className="basicTable">
@@ -51,7 +52,7 @@ const condition = authUser => !!authUser;
 
 const mapStateToProps = state => ({
   groups: state.groupState.groups,
-  users: state.userState.users
+  users: state.userState.users,
 });
  
 export default compose(

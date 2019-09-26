@@ -51,6 +51,11 @@ const selectGroupForModal= (id)=>{
     });
     }
 }
+const groupModalSelecting = () =>{
+    return{
+        type: "GROUP_MODAL_SELECTING"
+    }
+}
 const getGroups = () =>{
     let data=Object.assign([])
     return (dispatch) => {
@@ -125,6 +130,7 @@ const editGroup = (group, logoChanged) =>{
                     groupLogo:url
                 }).then(function(){
                     let newGroup={...group, groupLogo:url}
+                    console.log(newGroup)
                     dispatch({type: 'EDIT_GROUP',
                     payload: newGroup})
                 }).catch(error => {
@@ -156,4 +162,4 @@ const groupChanged=()=>{
         type: "GROUP_CHANGED"
     }
 }
-export {getGroups, addGroup, groupAdded, deleteGroup, selectGroup, selectGroupChanging, editGroup, groupChanged, selectGroupForModal}
+export {getGroups, addGroup, groupAdded, deleteGroup, selectGroup, selectGroupChanging, editGroup, groupChanged, selectGroupForModal, groupModalSelecting}

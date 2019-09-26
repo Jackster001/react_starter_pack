@@ -37,7 +37,7 @@ const getItineraries = () =>{
             data=[...data, itinerary]
             })           
             dispatch({
-                type: "ITINERARY_GET",
+                type: "ITINERARIES_GET",
                 payload: data
             })
          })
