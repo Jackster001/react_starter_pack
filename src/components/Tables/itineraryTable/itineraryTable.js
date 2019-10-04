@@ -3,12 +3,14 @@ import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
-import ItineraryRow from "./itineraryRow"
+import ItineraryRow from "./itineraryRow";
 class ItineraryTable extends React.Component {
     constructor(props){
         super(props)
         this.state={
+          selectedItinerary: {},
           dailyData:[],
+          id: ""
           
         }
         
@@ -18,25 +20,18 @@ class ItineraryTable extends React.Component {
         return group.name == event.target.value
       })
       const groupName= selectedGroup.name;
-      const groupPin= selectedGroup.pin
+      const groupPin= selectedGroup.pin;
       let selectedItinerary = this.props.itineraries.find(itinerary =>{
         return itinerary.groupName == groupName && itinerary.groupPin == groupPin
       })
-      // let tempArray= []
-      // tempArray.push(selectedItinerary.dailyData)
-      // console.log(tempArray)
       let days= []
       days= selectedItinerary.dailyData.map( day =>{
         let obj=Object.assign({}, day)
         return obj
       })
-      // let obj = []
-      // days.map( (group,i) =>{
-      //   obj.push(group[i])
-      // })
-      // console.log(obj)
+      let id= selectedItinerary.id;
       
-      return this.setState({...this.state, dailyData: days})
+      return this.setState({...this.state, dailyData: days, selectedItinerary: selectedItinerary, id: id})
     }
     render() {
       return (
@@ -61,11 +56,16 @@ class ItineraryTable extends React.Component {
              </thead>
             <tbody>
               {this.state.dailyData.map((day, i)=>{
-                let activity = day;
-                activity.map(activityItem=>{
-                  let date= activityItem.date;
-                  let Des
-                })
+                let timeObject = Object.assign({},day.date);
+                let date= new Date(timeObject.seconds*1000);
+                let timestamp= date.toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+                return <ItineraryRow 
+                  index={i}
+                  groupName= {this.state.selectedItinerary.groupName}
+                  id= {this.state.id}
+                  date= {timestamp}
+                  activities ={day.activities}
+                />
               })}
               {/* {
                 this.props.groups.map((group, i)=>{

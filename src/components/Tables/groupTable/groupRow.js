@@ -80,7 +80,6 @@ class GroupRow extends React.PureComponent{
     }
     selected(id){
         this.props.selectGroup(id);
-        
     }
     showModal = () => {
         this.setState({...this.state, show: true})

@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     itineraryAdding: false,
     selectedItinerary: {},
     selectItinerariesChanged: false,
-    itinerariesChanging: false
+    itinerariesChanging: false,
+    itineraryHead:{}
 };
 function itineraryReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
@@ -21,7 +22,7 @@ function itineraryReducer(state = INITIAL_STATE, action) {
         return {...state, itineraryAdding: false}
       }
       case 'ITINERARY_SELECT': {
-        return {...state, selectedItinerary: action.payload, selectItineraryChanged: true};
+        return {...state, selectedItinerary: {...action.payload}, itineraryHead: action.itineraryHead, selectItineraryChanged: true};
       }
       case 'ITINERARY_SELECT_CHANGED':{
         return {...state, selectItineraryChanged: false}

@@ -11,6 +11,7 @@ import Groups from './components/Pages/Group_Pages/groups';
 import addGroup from './components/Pages/Group_Pages/add_Group';
 import groupEdit from './components/Pages/Group_Pages/groupEdit';
 import Itinerary from './components/Pages/Itinerary_Pages/itinerary';
+import ItineraryEdit from './components/Pages/Itinerary_Pages/itinerary_Edit'
 import Notifications from './components/Pages/Notification_Pages/notifications';
 import Send_Notification from './components/Pages/Notification_Pages/send_Notification'
 import Alarm from './components/Pages/Alarm_Pages/alarm';
@@ -132,6 +133,7 @@ class App extends Component {
               <Route path={ROUTES.GROUP_ADD} component={addGroup} />
               <Route path={ROUTES.GROUP_EDIT} component={groupEdit} />
               <Route path={ROUTES.ITINERARY} component={Itinerary} />
+              <Route path={ROUTES.ITINERARY_EDIT} component={ItineraryEdit}/>
               <Route path={ROUTES.NOTIFICATIONS} component={Notifications} />
               <Route path={ROUTES.SEND_NOTIFICATION} component={Send_Notification}/>
               <Route path={ROUTES.ALARMS} component={Alarm} />

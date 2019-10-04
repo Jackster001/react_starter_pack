@@ -1,21 +1,24 @@
 import {db, storageRef} from "../components/Firebase";
 
-const selectItinerary= (id)=>{
+const selectItinerary= (id, index)=>{
     let itineraryData={}
     let stringId=''+id+'';
+    let head= {}
     return (dispatch)=>{
         let docRef=db.collection("itineraries").doc(stringId)
         docRef.get().then(function(doc){
         if(doc.exists){
             let itinerary=doc.data();
-            itineraryData={...itinerary, id}
+            head= itinerary
+            let selectItinerary= itinerary.dailyData[index];
+            itineraryData=selectItinerary
         } else{
             console.log("Something went wrong!")
         }
         dispatch({
             type: "ITINERARY_SELECT",
             payload: itineraryData,
-            id: id
+            itineraryHead: head
         })
     }).catch(function(error) {
         console.log("Error getting document:", error);

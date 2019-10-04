@@ -135,7 +135,6 @@ body {
     font-size: 14px;
     /* font-weight: bold; */
     /* border: 1px solid black; */
-
 }
 .table1> tbody> tr:nth-child(even)
 {
@@ -159,6 +158,32 @@ table{
 }
 td.UserId{
     width:0px;
+}
+/* For Schedule Table */
+.schedule{
+    width: 100%;
+    height: 100%;
+}
+.table1> tbody> tr> td.scheduleBox{
+    text-align: left;
+    padding: 35px 20px;
+    font-size: 14px;
+    margin:0;
+    /* font-weight: bold; */
+    /* border: 1px solid black; */
+}
+.scheduleTable> tbody> tr> td{
+    text-align: left;
+    padding: 35px 20px;
+    font-size: 14px;
+}
+th.scheduleTableTime{
+    width: 150px
+}
+.schedule>table.scheduleTable{
+    width: 700px;
+    background-color: #E8E8E8;
+    margin-bottom: 0;
 }
 /* add_User_Styles */
 .add_Table_Styles{
