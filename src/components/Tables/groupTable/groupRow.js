@@ -135,6 +135,9 @@ class GroupRow extends React.PureComponent{
     }
     assign(){
         let subgroups = this.props.selectedGroup.subGroups;
+        if(!subgroups){
+            subgroups = []
+        }
         let tourguide = this.state.assignedTourGuide;
         let leadChaperone = this.state.assignedLeadChaperone;
         let bus= {

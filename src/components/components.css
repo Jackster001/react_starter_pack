@@ -229,6 +229,51 @@ th.scheduleTableTime{
     display: inline-flex;
     margin-right: 10px;
 }
+
+.itinerary_Table_Styles{
+    width:80%;
+    margin: 0 auto;
+    background-color: #E6E6E6;
+    padding: 0px 0px 80px 0px;
+    margin-bottom: 160px;
+}
+.itinerary_form{
+    width:80%;
+    margin: 0 auto;
+}
+.itinerary_Table_Styles>.itinerary_form>input{
+    width: 40%;
+    margin: 0px 0 12px 0;
+    display: inline-flex;
+    padding: 5px;
+    background: white;
+}
+.itinerary_Table_Styles>.itinerary_form>div>textarea{
+    padding: 5px;
+    width: 50%;
+    display: inline-flex;
+    background: white;
+}
+.itinerary_Table_Styles>.itinerary_form>select{
+    width: 43%;
+    margin: 0px 0 12px 0;
+    display: inline-flex;
+    padding: 5px;
+    background: white;
+}    
+.itinerary_Table_Styles>.itinerary_form>label{
+    text-align: right;
+    width:30%;
+    display: inline-flex;
+    margin-right: 10px;
+}
+.itinerary_Table_Styles>.itinerary_form>div>label{
+    text-align: right;
+    width:30%;
+    display: inline-flex;
+    margin-right: 10px;
+}
+
 .Submit_Button{
     border: none;
     background-color: #017EEC;
@@ -501,4 +546,33 @@ th.scheduleTableTime{
     width:25%;
     display: inline-flex;
     margin-right: 10px;
+}
+.scheduleItem>td{
+    padding: 10px;
+}
+.scheduleItem>td>textarea{
+    padding: 5px;
+    width:100%;
+    height: 150px;
+}
+.scheduleAddButton{
+    border: none;
+    padding: 10px 20px;
+    background-color: #2BDC76;
+}
+.scheduleAddButton:hover{
+    background-color: #17BF5E;
+    cursor: pointer;
+    color: white
+}
+.scheduleSubmitButton{
+    border: none;
+    padding: 10px 40px;
+    background-color: black;
+    color: white
+}
+.scheduleSubmitButton:hover{
+    background-color: #0A5CD2;
+    cursor: pointer;
+    color: white
 }
