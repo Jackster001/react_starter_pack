@@ -22,7 +22,8 @@ class AlarmTable extends React.Component {
                     this.props.alarms.map(function(alarm, i){  
                     let timeObject = Object.assign({},alarm.timestamp);
                     let date= new Date(timeObject.seconds*1000)
-                    let timestamp= date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: "2-digit"})          
+                    let timestamp= date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: "2-digit"})   
+                    console.log(alarm.timestamp)       
                         return(
                         <AlarmRow key={i}
                         id={alarm.id} 

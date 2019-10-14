@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
     groups: [{}],
+    groupRecieving: false,
     groupAdding: false,
     selectedGroup: {},
     selectGroupChanged: false,
@@ -7,10 +8,13 @@ const INITIAL_STATE = {
     groupModalSelectProcess: false
     
 };
-function groupReducer(state = INITIAL_STATE, action) {
+function groupReducer(state = INITIAL_STATE, action){
     switch (action.type) {
       case 'GROUPS_GET': {
-        return {...state, groups: action.payload};
+        return {...state, groups: action.payload, groupRecieving: true};
+      }
+      case 'GROUP_GETTING':{
+        return{...state, groupRecieving: false}
       }
       case 'GROUP_ADD': {
         return {...state, groups: [action.payload,...state.groups], groupAdding: true};

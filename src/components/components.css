@@ -576,3 +576,12 @@ th.scheduleTableTime{
     cursor: pointer;
     color: white
 }
+.scheduleDescription{
+    border: 1px solid grey;
+    resize: none;
+    height: auto;
+    border-radius: 5px;
+}
+.removeButton{
+    
+}

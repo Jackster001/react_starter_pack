@@ -49,6 +49,11 @@ const getAlarms = () =>{
          })
     }
 }
+const gettingAlarms = () =>{
+    return{
+        type:"GETTING_ALARMS"
+    }
+}
 const addAlarm = (newAlarm)=>{
     return(dispatch)=>{
         db.collection("alarms").add({
@@ -100,4 +105,4 @@ const alarmChanged=()=>{
         type: "ALARM_CHANGED"
     }
 }
-export {getAlarms, addAlarm, alarmAdded, deleteAlarm, selectAlarm, selectAlarmChanging, editAlarm, alarmChanged}
+export {getAlarms,gettingAlarms, addAlarm, alarmAdded, deleteAlarm, selectAlarm, selectAlarmChanging, editAlarm, alarmChanged}

@@ -37,6 +37,7 @@ class GroupTable extends React.Component {
                   groupPin={group.pin}
                   groupLogo={group.groupLogo}
                   subgroup={subgroup}
+                  group={group.startDate}
                   avaliableTourGuides={avaliableTourGuides}
                   avaliableLeadChaperones={avaliableLeadChaperones}
                   />)

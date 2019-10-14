@@ -76,6 +76,11 @@ const getGroups = () =>{
          })
     }
 }
+const gettingGroups = () =>{
+    return{
+        type: "GROUP_GETTING"
+    }
+}
 const addGroup = (group)=>{
     return (dispatch)=>{
         storageRef.ref('groupLogos').child(group.GroupLogo.name)
@@ -85,7 +90,10 @@ const addGroup = (group)=>{
                 db.collection("groups").add({
                     name: group.GroupName,
                     pin: group.GroupPin,
-                    groupLogo:url
+                    groupLogo:url,
+                    startDate: group.startDate,
+                    endDate: group.endDate,
+                    subGroups: {}
                 }).then(function(){
                     console.log(url);
                     let newGroup={...group, groupLogo:url}
@@ -162,4 +170,4 @@ const groupChanged=()=>{
         type: "GROUP_CHANGED"
     }
 }
-export {getGroups, addGroup, groupAdded, deleteGroup, selectGroup, selectGroupChanging, editGroup, groupChanged, selectGroupForModal, groupModalSelecting}
+export {getGroups,gettingGroups, addGroup, groupAdded, deleteGroup, selectGroup, selectGroupChanging, editGroup, groupChanged, selectGroupForModal, groupModalSelecting}

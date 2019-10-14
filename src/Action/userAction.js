@@ -61,6 +61,11 @@ const getUsers = () =>{
          })
     }
 }
+const gettingUsers = () =>{
+    return {
+        type: "GETTINGUSERS"
+    }
+}
 const addUser = (user)=>{
     return(dispatch)=>{
             storageRef.ref("user.png").getDownloadURL().then(url=>{
@@ -132,4 +137,4 @@ const setUser = (user) =>{
         });
     } 
 }
-export {getUsers, addUser, deleteUser, getSingleUser, setUser, userAddedChanged, resetChanged, userResetChanged, finishedDeletingUser};
+export {getUsers, gettingUsers, addUser, deleteUser, getSingleUser, setUser, userAddedChanged, resetChanged, userResetChanged, finishedDeletingUser};

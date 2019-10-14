@@ -9,6 +9,7 @@ const selectItinerary= (id, index)=>{
         docRef.get().then(function(doc){
         if(doc.exists){
             let itinerary=doc.data();
+            console.log(itinerary)
             head= itinerary
             let selectItinerary= itinerary.dailyData[index];
             itineraryData=selectItinerary

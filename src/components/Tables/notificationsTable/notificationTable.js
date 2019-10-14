@@ -2,7 +2,7 @@ import React from 'react';
 import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import NotificationRow from "./notificationRow"
+import NotificationRow from "./notificationRow";
 class NotificationTable extends React.Component {
     constructor(props){
         super(props);

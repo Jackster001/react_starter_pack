@@ -20,12 +20,10 @@ class ActivityTable extends React.Component {
       return (
          <div className="schedule">
             <table className="scheduleTable table-dark" border="1" cellSpacing="0">
-             <thead className="TableHead">
-               <tr>
+               <tr className="TableHead">
                 <th className="scheduleTableTime">Time</th>
                 <th>Activity</th>
                </tr>
-             </thead>
             <tbody>
                 {this.state.activities.map(activity=>{
                     let timeObject = Object.assign({},activity.time);
@@ -34,7 +32,7 @@ class ActivityTable extends React.Component {
                     return (
                       <ActivityRow
                         time= {timestamp}
-                        activity= {activity.description}
+                        activity= {activity.description} 
                       />
                     )
               })}

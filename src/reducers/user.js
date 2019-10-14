@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   users: [{}],
+  gettingUsers: false,
   selected: {},
   loading: false,
   changed: false,
