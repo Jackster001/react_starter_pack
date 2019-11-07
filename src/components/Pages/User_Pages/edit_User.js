@@ -12,7 +12,7 @@ class User_Edit extends React.Component {
          user: this.props.selected,
          id: this.props.selected.id,
          dateCreated: this.props.selected.dateCreated,
-         GroupName: this.props.selected.GroupName,
+         groupName: this.props.selected.groupName,
          Group_Pin: this.props.selected.groupPin,
          userType: this.props.selected.userType,
          Username: this.props.selected.userName,
@@ -43,12 +43,12 @@ class User_Edit extends React.Component {
    }
    onChangeGroupName(event){
       let avaliableTourGuides=this.props.users.filter(user=>{
-         return user.userType === 'Tour Guide' && user.GroupName === event.target.value
+         return user.userType === 'Tour Guide' && user.groupName === event.target.value
       })
       let avaliableLeadChaperones=this.props.users.filter(user=>{
-         return user.userType === 'Lead Chaperone' && user.GroupName === event.target.value
+         return user.userType === 'Lead Chaperone' && user.groupName === event.target.value
       })
-      this.setState({...this.state, Group_Name: event.target.value, avaliableTourGuides: avaliableTourGuides, avaliableLeadChaperones: avaliableLeadChaperones})  
+      this.setState({...this.state, groupName: event.target.value, avaliableTourGuides: avaliableTourGuides, avaliableLeadChaperones: avaliableLeadChaperones})  
    }
    componentDidUpdate(){
    if(this.props.userChanged){
@@ -141,7 +141,7 @@ class User_Edit extends React.Component {
       let updatedUser = {
          id: this.state.user.id,
          dateCreated: this.state.dateCreated,
-         GroupName: this.state.GroupName,
+         groupName: this.state.groupName,
          groupPin: this.state.Group_Pin,
          userType: this.state.userType,
          userName: this.state.Username,
@@ -191,7 +191,7 @@ class User_Edit extends React.Component {
                      <option value="Director">Director</option>
                      <option value="Tour Guide">Tour Guide</option>
                      <option value="Lead Chaperone">Lead Chaperone</option>
-                     <option value="Parent">Parent</option>
+                     <option value="Guest">Guest</option>
                   </select><br/><br/>
                   <label htmlFor="name"><b>Username: </b></label>
                   <input type="text" name="name" onChange={this.onChangeUsername.bind(this)} defaultValue={this.props.selected.userName} required/><br/><br/>

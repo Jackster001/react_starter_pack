@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     selectItinerariesChanged: false,
     itinerariesChanging: false,
     itineraryHead:{}
-};
+}; 
 function itineraryReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
       case 'ITINERARIES_GET': {
@@ -28,7 +28,7 @@ function itineraryReducer(state = INITIAL_STATE, action) {
         return {...state, selectItineraryChanged: false}
       }
       case 'EDIT_ITINERARY': {
-        const index= state.itineraries.findIndex(contact => {return contact.id == state.selectedItinerary.id})
+        const index= state.itineraries.findIndex(itinerary => {return itinerary.id == state.selectedItinerary.id})
         const newItinerarySet = state.itineraries;
         newItinerarySet[index]= action.payload;
         return {...state, itineraries: newItinerarySet, itineraryChanging:true};

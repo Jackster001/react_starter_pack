@@ -75,7 +75,7 @@ const addUser = (user)=>{
                     db.collection("users").doc(response.user.uid).set({
                         id:response.user.uid,
                         dateCreated: user.dateCreated,
-                        GroupName: user.GroupName,
+                        groupName: user.groupName,
                         groupPin: user.groupPin,
                         userType: user.userType,
                         userName: user.userName,

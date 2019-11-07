@@ -105,6 +105,12 @@ const addGroup = (group)=>{
             }).catch(error => {
                 console.log({ error });
             })
+        }).then(()=>{
+            db.collection("itineraries").add({
+                groupName: group.GroupName,
+                groupPin: group.GroupPin,
+                dailyData:[]
+            })
         }).catch(error => {
             console.log({ error });
     })}

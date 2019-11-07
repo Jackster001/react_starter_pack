@@ -17,7 +17,7 @@ class UserTable extends React.Component {
   }
   onChangeGroupName (event){
     let filteredUsers= this.props.users.filter(user=>{
-      return user.GroupName === event.target.value
+      return user.groupName === event.target.value
     })
     this.setState({userList: filteredUsers, targetList: filteredUsers})
   }
@@ -98,7 +98,7 @@ class UserTable extends React.Component {
                 return(<UserRow key={i}
                   id={user.id} 
                   Group_Type={user.userType}
-                  Group_Name={user.GroupName}
+                  Group_Name={user.groupName}
                   firstName={user.firstName}
                   lastName={user.lastName}
                   phoneNumber={user.phoneNumber}

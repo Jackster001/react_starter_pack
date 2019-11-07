@@ -4,17 +4,31 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
 import ActivityRow from "./activityRow"
+import { thisExpression } from '@babel/types';
 class ActivityTable extends React.Component {
     constructor(props){
         super(props)
         this.state={
             activities: this.props.activities,
             id: this.props.id,
-            index: this.props.index
+            index: this.props.index,
+            length: this.props.length
         }
     }
     componentDidMount(){
-      console.log(this.state.index)
+      console.log(this.props.activities)
+    }
+    itineraryTable(){
+      var list=[]
+      for(let i=0; i<this.state.length;i++){
+        let activity=this.state.activities[i]
+        console.log(activity)
+        let timeObject = Object.assign({},activity.time);
+        let date= new Date(timeObject.seconds*1000)
+        let timestamp= date.toLocaleTimeString('en-US', {hour: '2-digit', minute: "2-digit"})
+        list.push(<ActivityRow time={timestamp} activity={activity.description}/>)
+      }
+      return list
     }
     render() {
       return (
@@ -25,17 +39,9 @@ class ActivityTable extends React.Component {
                 <th>Activity</th>
                </tr>
             <tbody>
-                {this.state.activities.map(activity=>{
-                    let timeObject = Object.assign({},activity.time);
-                    let date= new Date(timeObject.seconds*1000)
-                    let timestamp= date.toLocaleTimeString('en-US', {hour: '2-digit', minute: "2-digit"})
-                    return (
-                      <ActivityRow
-                        time= {timestamp}
-                        activity= {activity.description} 
-                      />
-                    )
-              })}
+              {
+                this.itineraryTable()
+              }
             </tbody>
             </table>
          </div>

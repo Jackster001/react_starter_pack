@@ -23,9 +23,6 @@ class ItineraryRow extends React.PureComponent{
             assignedLeadChaperone:{}
         }
     }
-    componentDidMount(){
-
-    }
     componentDidUpdate(){
         if(this.props.selectItineraryChanged){
             this.props.selectItineraryChanging()
@@ -44,7 +41,7 @@ class ItineraryRow extends React.PureComponent{
             <tr>
                 <td><center><h2><b>{this.props.groupName}</b></h2></center></td>
                 <td>{this.props.date}</td>
-                <td className="scheduleBox">{<ActivityTable activities={this.props.activities} id={this.props.id} index={this.props.index}/>}
+                <td className="scheduleBox">{<ActivityTable activities={this.props.activities} id={this.props.id} index={this.props.index} length={this.props.length}/>}
                 </td>
                 <td>
                 <center><button className="edit_button" onClick={()=>this.selected(this.props.id, this.props.index)}>Edit</button><br/></center>

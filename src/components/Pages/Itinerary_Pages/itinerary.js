@@ -16,7 +16,11 @@ class Itinerary extends React.Component {
       <div className="App">
          <br/>
          <div>
-            <center><h1>Itinerary Management</h1></center>
+            <center>
+               <h1>Itinerary Management</h1>
+               <input type="date"/>
+               <button>Add New Itinerary</button>
+            </center>
             <center><ItineraryTable/></center>
          </div>
       </div>

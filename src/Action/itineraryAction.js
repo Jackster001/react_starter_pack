@@ -62,10 +62,13 @@ const addItinerary = (itinerary)=>{
         });
     }
 }
-const itineraryAdded=()=>{
+const itineraryAdded =()=>{
     return {
         type: 'ITINERARY_ADDED'
     }
+}
+const addItineraryDay =()=>{
+    
 }
 const deleteItinerary = (id) =>{
     db.collection("itineraries").doc(id).delete().then(function(){
@@ -78,9 +81,12 @@ const deleteItinerary = (id) =>{
         id: id
     }
 }
-const editItinerary = (itinerary) =>{
+const editItinerary = (itinerary, index) =>{
     return(dispatch)=>{
-        db.collection("itineraries").doc(itinerary.id).set(itinerary).then(function() {
+        // let docRef=db.collection("itineraries").doc(itinerary.id)
+        // docRef.get()
+        // console.log(docRef)
+        db.collection("itineraries").doc(itinerary.id).update({dailyData:itinerary.dailyData}).then(function() {
             dispatch({
                 type:"EDIT_ITINERARY",
                 payload: itinerary

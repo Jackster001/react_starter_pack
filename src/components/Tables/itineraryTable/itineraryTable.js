@@ -15,6 +15,9 @@ class ItineraryTable extends React.Component {
         }
         
     }
+    componentDidMount(){
+      console.log(this.props.itineraries)
+    }
     onChangeGroupName (event){
       const selectedGroup = this.props.groups.find(group =>{
         return group.name == event.target.value
@@ -25,12 +28,20 @@ class ItineraryTable extends React.Component {
         return itinerary.groupName == groupName && itinerary.groupPin == groupPin
       })
       let days= []
-      days= selectedItinerary.dailyData.map( day =>{
+      let id=''
+      if(selectedItinerary){
+        days = selectedItinerary.dailyData.map( day =>{
         let obj=Object.assign({}, day)
         return obj
-      })
-      let id= selectedItinerary.id;
-      
+        })
+        id= selectedItinerary.id;
+      }
+      else{
+        let dailyData=[]
+        days = dailyData
+      }
+
+      console.log(selectedItinerary)
       return this.setState({...this.state, dailyData: days, selectedItinerary: selectedItinerary, id: id})
     }
     render() {
@@ -57,6 +68,7 @@ class ItineraryTable extends React.Component {
             <tbody>
               {this.state.dailyData.map((day, i)=>{
                 let timeObject = Object.assign({},day.date);
+                console.log(day.activities)
                 let date= new Date(timeObject.seconds*1000);
                 let timestamp= date.toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
                 return <ItineraryRow 
@@ -65,27 +77,9 @@ class ItineraryTable extends React.Component {
                   id= {this.state.id}
                   date= {timestamp}
                   activities ={day.activities}
+                  length={day.length}
                 />
               })}
-              {/* {
-                this.props.groups.map((group, i)=>{
-                let subgroup= Object.assign([], group.subGroups)
-                let avaliableTourGuides= this.props.users.filter((user)=>{
-                  return (user.userType === "Tour Guide" && user.groupPin === group.pin)
-                })
-                let avaliableLeadChaperones = this.props.users.filter((user)=>{
-                  return (user.userType === "Lead Chaperone" && user.groupPin === group.pin)
-                })
-                return(<GroupRow key={i}
-                  id={group.id} 
-                  groupName={group.name}
-                  groupPin={group.pin}
-                  groupLogo={group.groupLogo}
-                  subgroup={subgroup}
-                  avaliableTourGuides={avaliableTourGuides}
-                  avaliableLeadChaperones={avaliableLeadChaperones}
-                  />)
-                })} */}
               </tbody>
             </table>
          </div>

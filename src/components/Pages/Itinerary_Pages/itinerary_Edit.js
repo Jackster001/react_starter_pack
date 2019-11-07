@@ -10,23 +10,30 @@ class ItineraryEdit extends React.Component{
         this.state={
             id:this.props.itineraryHead.id,
             groupName: this.props.itineraryHead.groupName,
-            schedule:[...this.props.selectedItinerary.activities],
+            schedule:[],
             date: this.props.selectedItinerary.date,
-            newScheduleSet:[]
+            newScheduleSet:[],
+            length: this.props.selectedItinerary.length
         }
     }
     componentDidMount(){
         let date= new Date(this.state.date.seconds*1000)
-        // let timestamp= date.toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
         this.setState({date:date})
-        let tempSchedule= this.state.schedule;
-        console.log(tempSchedule)
-        for(let i=0; i< tempSchedule.length; i++){
-            let time = new Date (tempSchedule[i].time.seconds*1000)
+        let tempSchedule= this.props.selectedItinerary.activities;
+        let tempArr=[]
+        for(let i=0; i< this.state.length; i++){
+            let time=tempSchedule[i].time
             tempSchedule[i].time=time
+            tempArr.push(tempSchedule[i])
         }
-        this.setState({schedule: tempSchedule})
-
+        console.log(tempArr)
+        this.setState({schedule: tempArr})
+    }
+    componentDidUpdate(){
+        if(this.props.itineraryChanging){
+            this.props.itineraryChanged();
+            this.props.history.push('/itineraries');
+        }
     }
     onChangeDescription(event, key){
         let newDescription = this.state.schedule
@@ -47,18 +54,65 @@ class ItineraryEdit extends React.Component{
     addSchedule(){
         let description = "";
         let scheduleSet= this.state.schedule;
-        scheduleSet.push({time:"",description});
-        this.setState({schedule: scheduleSet});
+        let date= new Date();
+        // scheduleSet[this.state.length.toString()] = {description,time:date}
+        scheduleSet.push({description,time:date})
+        let length=this.state.length + 1;
+        this.setState({schedule: scheduleSet, length: length});
     }
     removeSchedule(key){
         let newScheduleSet = this.state.schedule;
-        newScheduleSet.splice(key, 1);
+        // delete newScheduleSet[key];
+        newScheduleSet.splice(key,1)
         console.log(newScheduleSet)
-        // this.setState({...this.state,schedule: newScheduleSet})
+        this.setState({...this.state,schedule: newScheduleSet})
     }
+
     submit(){
-        let date= new Date(this.state.schedule[0].time.seconds*1000)
-        console.log(date)
+        let schedules= this.state.schedule;
+        let date = this.state.date;
+        let month = date.getMonth();
+        let day = date.getDate();
+        let year= date.getFullYear();
+        let scheduleObject={}
+        let length=0;
+        for(let i=0; i<schedules.length;i++){
+            if(schedules[i].time.seconds==undefined){
+                schedules[i].time.setMonth(month)
+                schedules[i].time.setDate(day)
+                schedules[i].time.setFullYear(year)
+                let timestamp=schedules[i].time.getTime()/1000
+                schedules[i].time={seconds:timestamp, nanoseconds: 0}
+                scheduleObject[i]= schedules[i]
+            }
+            else{
+                scheduleObject[i]= schedules[i]
+            }
+            length++;
+        }
+        let selectGroupItinerary=this.props.itineraryHead;
+        let index=null;
+        for(let i=0; i< selectGroupItinerary.dailyData.length; i++)
+        {
+            let tempDate;
+            if(schedules[i] ==undefined || schedules[i].time==undefined){
+                tempDate=new Date(selectGroupItinerary.dailyData[i].date.seconds*1000);
+            }
+            else{
+                tempDate=new Date(selectGroupItinerary.dailyData[i].date.seconds*1000)
+            }
+            
+            let tempYear=tempDate.getFullYear();
+            let tempDay=tempDate.getDate();
+            let tempMonth= tempDate.getMonth();
+            if(year==tempYear && day==tempDay && tempMonth == month){
+                index=i;
+                break;
+            }
+        }
+        selectGroupItinerary.dailyData[index].activities=scheduleObject
+        selectGroupItinerary.dailyData[index].length=length
+        this.props.editItinerary(selectGroupItinerary)
     }
     render(){
         return(
@@ -79,6 +133,7 @@ class ItineraryEdit extends React.Component{
                                 <th>Remove</th>
                             </tr>
                             <tbody>
+                                {/* {this.activityList()} */}
                                 {this.state.schedule.map((scheduleItem, key)=>{
                                     let timeObject = Object.assign({},scheduleItem.time);
                                     let time=scheduleItem.time;
@@ -86,7 +141,7 @@ class ItineraryEdit extends React.Component{
                                         time = new Date(timeObject.seconds*1000);
                                     }
                                     let timestampTime = ""
-                                    if(scheduleItem.time != null){
+                                    if(scheduleItem.time != null && time){
                                         timestampTime=time.toLocaleTimeString('en-US', {hour: '2-digit', minute: "2-digit"});
                                     }
                                     return (
@@ -94,7 +149,7 @@ class ItineraryEdit extends React.Component{
                                             <td><p>{timestampTime ? timestampTime: ""}</p><input type="time" className="currentTime" onChange={(time)=> {
                                                 if(time.target.value)this.onChangeTime(time.target.value, key)}
                                             }/></td>
-                                            <td><textarea class="scheduleDescription" key={key} defaultValue={this.state.schedule[key].description} onChange={(e)=>this.onChangeDescription(e,key)}/></td>
+                                            <td><textarea className="scheduleDescription" key={key} defaultValue={this.state.schedule[key].description} onChange={(e)=>this.onChangeDescription(e,key)}/></td>
                                             <td><div className="removeButton" onClick={()=>this.removeSchedule(key)}>Remove</div></td>
                                         </tr>
                                     )
@@ -112,7 +167,9 @@ class ItineraryEdit extends React.Component{
 }
 const mapStateToProps = state => ({
     selectedItinerary : state.itineraryState.selectedItinerary,
-    itineraryHead: state.itineraryState.itineraryHead
+    itineraries: state.itineraryState.itineraries,
+    itineraryHead: state.itineraryState.itineraryHead,
+    itineraryChanging: state.itineraryState.itineraryChanging
 });
 const condition = authUser => !!authUser;
 export default compose(
