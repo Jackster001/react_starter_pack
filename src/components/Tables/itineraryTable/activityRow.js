@@ -2,10 +2,7 @@ import React from 'react';
 import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-// import {deleteGroup, selectGroup, selectGroupChanging, selectGroupForModal, groupChanged, editGroup, getGroups} from '../../../Action/groupAction'
 import withAuthorization from '../../Session/withAuthorization';
-// import {GroupModal} from './group_modal';
-// import {UserList} from './group_userList'
 
 class ActivityRow extends React.PureComponent{
     constructor(props){
@@ -40,10 +37,6 @@ class ActivityRow extends React.PureComponent{
 }
 
 const mapStateToProps = state => ({
-    // groups: state.groupState.groups,
-    // selectedGroup: state.groupState.selectedGroup,
-    // selectGroupChanged: state.groupState.selectGroupChanged,
-    // groupChanging: state.groupState.groupChanging
 });
 const condition = authUser => !!authUser;
 export default compose(

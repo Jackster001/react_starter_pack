@@ -596,3 +596,18 @@ th.scheduleTableTime{
     cursor: pointer;
     background-color: red;
 }
+.itineraryButton{
+    float: left;
+    border: none;
+    background-color: #272626;
+    color: white;
+    padding: 10px 15px;
+}
+.itineraryButton:hover{
+    background-color: #464545;
+    cursor: pointer;
+}
+.dateInput{
+    padding: 0;
+    float: right
+}

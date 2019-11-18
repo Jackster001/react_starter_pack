@@ -44,7 +44,6 @@ class SignUpFormBase extends Component {
         error,
       } = this.state;
     return (
-    //   <form onSubmit={this.onSubmit}>
     <div>
           <input
           name="username"
@@ -70,7 +69,7 @@ class SignUpFormBase extends Component {
         <button type="submit" onClick={this.onSubmit}>Sign Up</button>
 
         {error && <p>{error.message}</p>}
-      {/* </form> */}</div>
+     </div>
     );
   }
 }

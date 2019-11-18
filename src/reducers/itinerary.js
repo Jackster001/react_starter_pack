@@ -4,7 +4,7 @@ const INITIAL_STATE = {
     itineraryAdding: false,
     selectedItinerary: {},
     selectItinerariesChanged: false,
-    itinerariesChanging: false,
+    itineraryChanging: false,
     itineraryHead:{}
 }; 
 function itineraryReducer(state = INITIAL_STATE, action) {
@@ -32,6 +32,12 @@ function itineraryReducer(state = INITIAL_STATE, action) {
         const newItinerarySet = state.itineraries;
         newItinerarySet[index]= action.payload;
         return {...state, itineraries: newItinerarySet, itineraryChanging:true};
+      }
+      case "EDIT_ITINERARY_SCHEDULE":{
+        const index= state.itineraries.findIndex(itinerary=>{ return itinerary.id == action.id})
+        const newItinerarySet = state.itineraries;
+        newItinerarySet[index] = action.payload;
+        return {...state, itineraries: newItinerarySet, itineraryChanging:true}
       }
       case 'ITINERARY_CHANGED':{
         return{...state, itineraryChanging:false}

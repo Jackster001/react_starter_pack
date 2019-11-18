@@ -179,7 +179,7 @@ class User_Edit extends React.Component {
                <center><h2>Edit User Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <select name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
-                    <option disabled selected defaultValue>{this.state.GroupName}</option>
+                    <option disabled selected defaultValue>{this.state.groupName}</option>
                         {this.props.groups.map(function(group){
                             return (<option value={group.name}>{group.name}</option>)
                         })}

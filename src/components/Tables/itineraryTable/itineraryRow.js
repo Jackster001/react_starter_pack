@@ -34,7 +34,7 @@ class ItineraryRow extends React.PureComponent{
     }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");
-        // this.props.deleteGroup(id);
+        
     }
     render(){
         return(

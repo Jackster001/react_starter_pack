@@ -7,9 +7,18 @@ import { compose } from 'recompose';
 import {getGroups} from '../../../Action/groupAction';
 import {getItineraries} from '../../../Action/itineraryAction';
 class Itinerary extends React.Component {
+   constructor(props){
+      super(props)
+      this.state={
+         date: new Date()
+      }
+   }
    componentDidMount(){
       this.props.getGroups();
       this.props.getItineraries();
+   }
+   onSubmit(){
+      
    }
    render() {
       return (
@@ -18,8 +27,6 @@ class Itinerary extends React.Component {
          <div>
             <center>
                <h1>Itinerary Management</h1>
-               <input type="date"/>
-               <button>Add New Itinerary</button>
             </center>
             <center><ItineraryTable/></center>
          </div>

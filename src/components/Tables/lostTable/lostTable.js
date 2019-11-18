@@ -30,7 +30,7 @@ class LostTable extends React.Component {
                         <LostRow key={i}
                             id={lostNotification.id} 
                             groupPin={lostNotification.groupPin}
-                            groupName={lostNotification.user.GroupName}
+                            groupName={lostNotification.user.groupName}
                             firstName={lostNotification.user.firstName}
                             lastName={lostNotification.user.lastName}
                             phoneNumber={lostNotification.user.phoneNumber}

@@ -1,4 +1,5 @@
 import {db, storageRef} from "../components/Firebase";
+import itineraryRow from "../components/Tables/itineraryTable/itineraryRow";
 
 const selectItinerary= (id, index)=>{
     let itineraryData={}
@@ -9,10 +10,10 @@ const selectItinerary= (id, index)=>{
         docRef.get().then(function(doc){
         if(doc.exists){
             let itinerary=doc.data();
-            console.log(itinerary)
             head= itinerary
             let selectItinerary= itinerary.dailyData[index];
             itineraryData=selectItinerary
+            console.log(itineraryData)
         } else{
             console.log("Something went wrong!")
         }
@@ -37,7 +38,7 @@ const getItineraries = () =>{
         db.collection("itineraries").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
             let itinerary = doc.data();
-            itinerary= {id:doc.id,...itinerary}
+            itinerary= {id:doc.id ,...itinerary}
             data=[...data, itinerary]
             })           
             dispatch({
@@ -67,25 +68,30 @@ const itineraryAdded =()=>{
         type: 'ITINERARY_ADDED'
     }
 }
-const addItineraryDay =()=>{
-    
+const addItineraryDay =(newDailyData, id)=>{
+    return(dispatch)=>{
+        db.collection("itineraries").doc(id).update({dailyData: newDailyData}).then(function(){
+            dispatch({
+                type:"EDIT_ITINERARY_SCHEDULE",
+                payload: newDailyData,
+                id: id
+            })
+        })
+    }
 }
-const deleteItinerary = (id) =>{
-    db.collection("itineraries").doc(id).delete().then(function(){
-        console.log("Group successfully deleted!");
-    }).catch(function(error) {
-        console.error("Error removing document: ", error);
-    });
-    return{
-        type: "ITINERARY_DELETE",
-        id: id
+const deleteItinerary = (newDailyData, id) =>{
+    return(dispatch)=>{
+        db.collection("itineraries").doc(id).update({dailyData: newDailyData}).then(function(){
+            dispatch({
+                type:"EDIT_ITINERARY_SCHEDULE",
+                payload: newDailyData,
+                id: id
+            })
+        })
     }
 }
 const editItinerary = (itinerary, index) =>{
     return(dispatch)=>{
-        // let docRef=db.collection("itineraries").doc(itinerary.id)
-        // docRef.get()
-        // console.log(docRef)
         db.collection("itineraries").doc(itinerary.id).update({dailyData:itinerary.dailyData}).then(function() {
             dispatch({
                 type:"EDIT_ITINERARY",
@@ -102,4 +108,4 @@ const itineraryChanged=()=>{
         type: "ITINERARY_CHANGED"
     }
 }
-export {getItineraries, addItinerary, itineraryAdded, deleteItinerary, selectItinerary, selectItineraryChanging, editItinerary, itineraryChanged}
+export {getItineraries, addItinerary, itineraryAdded, deleteItinerary, selectItinerary, selectItineraryChanging, editItinerary, itineraryChanged, addItineraryDay}
