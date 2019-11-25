@@ -20,32 +20,12 @@ class ItineraryTable extends React.Component {
     componentDidUpdate(){
       if(this.props.itineraryChanging){
         this.props.itineraryChanged();
-        alert("added schedule")
         window.location.reload();
       }
     }
-    testing(){
-      let currentItinerary= this.state.selectedItinerary;
-      let selectedItinerary = this.props.itineraries.find(itinerary =>{
-        return itinerary.groupName == currentItinerary.groupName && itinerary.groupPin == currentItinerary.groupPin
-      })
-      let days= []
-      let id=''
-      if(selectedItinerary){
-        days = selectedItinerary.dailyData.map( day =>{
-        let obj=Object.assign({}, day)
-        return obj
-        })
-        id= selectedItinerary.id;
-      }
-      else{
-        let dailyData = []
-        days = dailyData
-      }
-      console.log(selectedItinerary)
-    }
     onChangeDate(event){
       let utcDate= new Date(event.target.value)
+      utcDate.setMonth(utcDate.getMonth())
       utcDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000)
       this.setState({...this.state,date: utcDate, dateSelected: true})
     }
@@ -127,13 +107,9 @@ class ItineraryTable extends React.Component {
       }
       this.props.addItineraryDay(arrDailyData, id)
     }
-    onDeleteSchedule(){
-      
-    }
     render() {
       return (
          <div className="basicTable">
-           {/* <button onClick={()=>this.testing()}>click here!</button> */}
             <div className="filterBox">
                 <select id="group_name" name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
                 <option disabled selected defaultValue>Group</option>
@@ -164,6 +140,7 @@ class ItineraryTable extends React.Component {
                   groupName= {this.state.selectedItinerary.groupName}
                   id= {this.state.id}
                   date= {timestamp}
+                  scheduleDate={date}
                   activities ={day.activities}
                   length={day.length}
                 />

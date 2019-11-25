@@ -39,6 +39,7 @@ const getAlarms = () =>{
                 return  a.timestamp.seconds - b.timestamp.seconds
             }).reverse();
             })           
+            console.log(data)
             dispatch({
                 type: "ALARMS_GET",
                 payload: data
@@ -49,7 +50,7 @@ const getAlarms = () =>{
          })
     }
 }
-const gettingAlarms = () =>{
+const recievingAlarms = () =>{
     return{
         type:"GETTING_ALARMS"
     }
@@ -105,4 +106,4 @@ const alarmChanged=()=>{
         type: "ALARM_CHANGED"
     }
 }
-export {getAlarms,gettingAlarms, addAlarm, alarmAdded, deleteAlarm, selectAlarm, selectAlarmChanging, editAlarm, alarmChanged}
+export {getAlarms,recievingAlarms, addAlarm, alarmAdded, deleteAlarm, selectAlarm, selectAlarmChanging, editAlarm, alarmChanged}

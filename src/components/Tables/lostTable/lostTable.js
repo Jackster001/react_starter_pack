@@ -4,6 +4,12 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import LostRow from "./lostRow"
 class LostTable extends React.Component {
+    constructor(props){
+        super(props)
+        this.state={
+            lostNotifications: this.props.lostNotifications
+        }
+    }
     render() {
         return (
             <div className="basicTable">
@@ -19,9 +25,9 @@ class LostTable extends React.Component {
                 </tr>
                 </thead>
                 <tbody>
-                    {/* {console.log(this.props.lostNotifications)} */}
                 { 
-                    this.props.lostNotifications.map((lostNotification, i)=>{  
+                    this.state.lostNotifications.map((lostNotification, i)=>{  
+                    console.log(lostNotification)
                     let emergencyContact= Object.assign({}, lostNotification.user.emergencyContact)
                     let timeObject = Object.assign({},lostNotification.timestamp);
                     let date= new Date(timeObject.seconds*1000)
@@ -44,7 +50,7 @@ class LostTable extends React.Component {
                             relationship={emergencyContact.relationship}
                             emergencyContactNumber={emergencyContact.number}
                         />)
-                        })}
+                })}
                 </tbody>
                 </table>
             </div>

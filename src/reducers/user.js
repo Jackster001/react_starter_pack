@@ -13,7 +13,10 @@ const INITIAL_STATE = {
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'USERS_GET': {
-      return {...state, users: action.payload};
+      return {...state, users: action.payload, gettingUsers: true};
+    }
+    case 'GETTING_USERS': {
+      return {...state, gettingUsers: false}
     }
     case 'USERS_SELECT': {
       let newSelected=(action.payload);

@@ -21,7 +21,6 @@ class SignUpFormBase extends Component {
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-          console.log("clicked");
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
       })

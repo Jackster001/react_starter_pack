@@ -99,7 +99,6 @@ class ItineraryEdit extends React.Component{
             else{
                 tempDate=new Date(selectGroupItinerary.dailyData[i].date.seconds*1000)
             }
-            
             let tempYear=tempDate.getFullYear();
             let tempDay=tempDate.getDate();
             let tempMonth= tempDate.getMonth();
@@ -110,7 +109,7 @@ class ItineraryEdit extends React.Component{
         }
         selectGroupItinerary.dailyData[index].activities=scheduleObject
         selectGroupItinerary.dailyData[index].length=length
-        this.props.editItinerary(selectGroupItinerary)
+        this.props.editItinerary(selectGroupItinerary, this.props.selectedItinerary.id)
     }
     render(){
         return(

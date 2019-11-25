@@ -12,7 +12,7 @@ const selectItinerary= (id, index)=>{
             let itinerary=doc.data();
             head= itinerary
             let selectItinerary= itinerary.dailyData[index];
-            itineraryData=selectItinerary
+            itineraryData={...selectItinerary, id}
             console.log(itineraryData)
         } else{
             console.log("Something went wrong!")
@@ -90,9 +90,9 @@ const deleteItinerary = (newDailyData, id) =>{
         })
     }
 }
-const editItinerary = (itinerary, index) =>{
+const editItinerary = (itinerary, id) =>{
     return(dispatch)=>{
-        db.collection("itineraries").doc(itinerary.id).update({dailyData:itinerary.dailyData}).then(function() {
+        db.collection("itineraries").doc(id).update({dailyData:itinerary.dailyData}).then(function() {
             dispatch({
                 type:"EDIT_ITINERARY",
                 payload: itinerary

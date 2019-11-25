@@ -3,8 +3,9 @@ import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import UserRow from "./userRow"
-import {userAddedChanged} from '../../../Action'
+import {userAddedChanged, recievingUsers,getUsers} from '../../../Action'
 import {CSVLink } from 'react-csv';
+import {DeleteModal} from './delete_modal'
 class UserTable extends React.Component {
   constructor(props){
     super(props);
@@ -12,20 +13,23 @@ class UserTable extends React.Component {
       userList: this.props.users,
       targetList: this.props.users,
       csvFormat:[{}],
-      show: false
+      show: false,
+      groupName: "",
+      userType: ""
+      
     }
   }
   onChangeGroupName (event){
     let filteredUsers= this.props.users.filter(user=>{
       return user.groupName === event.target.value
     })
-    this.setState({userList: filteredUsers, targetList: filteredUsers})
+    this.setState({userList: filteredUsers, targetList: filteredUsers, groupName: event.target.value})
   }
   onChangeUserType (event){
     let filteredUsers= this.state.userList.filter(user=>{
       return user.userType === event.target.value
     })
-    this.setState({targetList: filteredUsers})
+    this.setState({targetList: filteredUsers, userType:event.target.value})
   }
   resetUserList(){
     this.setState({userList: this.props.users, targetList: this.props.users})
@@ -51,8 +55,16 @@ class UserTable extends React.Component {
       }
     })
     this.setState({csvFormat: csvFormat})
+  }
+  deleteSelectAccounts(){
 
   }
+  showModal = () => {
+    this.setState({...this.state, show: true})
+  };
+  hideModal = () => {
+    this.setState({...this.state, show: false})
+  };
   render() {
       return (
           <div className="basicTable">
@@ -73,10 +85,13 @@ class UserTable extends React.Component {
               })}
             </select>
             <button className="resetFilterButton" onClick={()=>this.resetUserList()}>Reset</button>
-            <button className="deleteSelection" >Delete Select Accounts</button>
+            <button className="deleteSelection" onClick={()=>this.showModal()}>Delete Select Accounts</button>
             <CSVLink id="csv" data={this.state.csvFormat} onClick={()=>this.downloadCSV(this.state.targetList)}><button className="downloadCSV">Download CSV</button></CSVLink>
             <br/><br/>
             </div>
+            <DeleteModal show={this.state.show} handleClose={()=>this.hideModal()}>
+              Are you sure you want to delete all {this.state.userType}s
+            </DeleteModal>
             <table className="table1 table-dark" border="1" cellSpacing="0">
              <thead className="TableHead">
                <tr>
@@ -121,12 +136,13 @@ class UserTable extends React.Component {
 const mapStateToProps = state => ({
   users: state.userState.users,
   userAdded: state.userState.userAdded,
-  groups: state.groupState.groups
+  groups: state.groupState.groups,
+  gettingUsers: state.userState.gettingUsers
 });
  
 export default compose(
    connect(
      mapStateToProps,
-     {userAddedChanged}
+     {userAddedChanged, recievingUsers, getUsers}
    ),
 )(UserTable);

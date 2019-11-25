@@ -1,10 +1,14 @@
 const INITIAL_STATE = {
-    lostNotifications: [{}]
+    lostNotifications: [{}],
+    gettingNotifications: false
 };
 function lostReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
       case 'LOST_GET': {
-        return {...state, lostNotifications: action.payload};
+        return {...state, lostNotifications: action.payload , gettingNotifications: true};
+      }
+      case 'GETTING_NOTIFICATIONS':{
+        return {...state, gettingNotifications: false}
       }
       case "LOST_DELETE": {
         const newlostNotifications = Object.assign([],{...state.lostNotifications});
