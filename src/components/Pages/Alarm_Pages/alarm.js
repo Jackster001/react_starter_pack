@@ -7,7 +7,7 @@ import { Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import {getGroups} from '../../../Action/groupAction'
-import {getAlarms, gettingAlarms} from '../../../Action/alarmAction'
+import {getAlarms, recievingAlarms} from '../../../Action/alarmAction'
 class Alarm extends React.Component {
    constructor(props){
       super(props);
@@ -19,9 +19,9 @@ class Alarm extends React.Component {
       this.props.getAlarms();
       this.props.getGroups();
    }
-   componentDidMount(){
+   componentDidUpdate(){
       if(this.props.gettingAlarms){
-         this.props.gettingAlarms();
+         this.props.recievingAlarms();
          this.setState({...this.state, deploy: true})
       }
    }
@@ -47,11 +47,11 @@ class Alarm extends React.Component {
 const condition = authUser => !!authUser;
 const mapStateToProps = state => ({
    groups: state.groupState.groups,
-   gettingAlarms: state.alarmState.gettingAlarms
+   gettingAlarms: state.alarmState.gettingAlarms 
 });
 export default compose(
    connect(
       mapStateToProps,
-     {getGroups, getAlarms, gettingAlarms}
+     {getGroups, getAlarms, recievingAlarms}
    ),withAuthorization(condition)
 )(Alarm);

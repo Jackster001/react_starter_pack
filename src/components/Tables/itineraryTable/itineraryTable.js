@@ -4,26 +4,37 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
 import ItineraryRow from "./itineraryRow";
+import {getItineraries, addItineraryDay, itineraryChanged, selectItinerary} from '../../../Action/itineraryAction';
 class ItineraryTable extends React.Component {
     constructor(props){
         super(props)
         this.state={
           selectedItinerary: {},
           dailyData:[],
-          id: ""
-          
+          id: "",
+          date: new Date(),
+          dateSelected: false,
+          groupSelected: false
         }
-        
     }
-    componentDidMount(){
-      console.log(this.props.itineraries)
+    componentDidUpdate(){
+      if(this.props.itineraryChanging){
+        this.props.itineraryChanged();
+        window.location.reload();
+      }
+    }
+    onChangeDate(event){
+      let utcDate= new Date(event.target.value)
+      utcDate.setMonth(utcDate.getMonth())
+      utcDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000)
+      this.setState({...this.state,date: utcDate, dateSelected: true})
     }
     onChangeGroupName (event){
       const selectedGroup = this.props.groups.find(group =>{
         return group.name == event.target.value
       })
-      const groupName= selectedGroup.name;
-      const groupPin= selectedGroup.pin;
+      const groupName = selectedGroup.name;
+      const groupPin = selectedGroup.pin;
       let selectedItinerary = this.props.itineraries.find(itinerary =>{
         return itinerary.groupName == groupName && itinerary.groupPin == groupPin
       })
@@ -37,12 +48,64 @@ class ItineraryTable extends React.Component {
         id= selectedItinerary.id;
       }
       else{
-        let dailyData=[]
+        let dailyData = []
         days = dailyData
       }
-
-      console.log(selectedItinerary)
-      return this.setState({...this.state, dailyData: days, selectedItinerary: selectedItinerary, id: id})
+      this.setState({...this.state, dailyData: days, selectedItinerary: selectedItinerary, id: id, groupSelected:true})
+    }
+    onAddSchedule(){
+      if(!this.state.dateSelected || !this.state.groupSelected){
+        return alert("Please select group and date")
+      }
+      let date = this.state.date;
+      let month = date.getMonth()+1;
+      let day= date.getDate();
+      let year =date.getFullYear();
+      let setDate=month+"/"+day+"/"+year
+      let dailyData= this.state.selectedItinerary.dailyData
+      for(let i=0; i < dailyData.length; i++){
+        let compareDate= new Date(dailyData[i].date.seconds*1000)
+        let compareMonth = compareDate.getMonth()+1;
+        let compareDay= compareDate.getDate();
+        let compareYear =compareDate.getFullYear();
+        let compareSetDate = compareMonth+"/"+compareDay+"/"+compareYear
+        if(setDate === compareSetDate){
+          return alert("Schedule for date has already been set. Choose a different date!")
+        }
+      }
+      let id = this.state.id
+      let arrDailyData=[]
+      for(let i=0; i<dailyData.length;i++){
+        arrDailyData.push(dailyData[i])
+      }     
+      for(let i=0; i<dailyData.length;i++){
+        if(date-new Date(dailyData[i].date.seconds*1000)<0){
+          let day= {
+            activities:{},
+            date: date,
+            length:0
+          }
+          arrDailyData.splice(i,0,day);
+          i=dailyData.length
+        }
+        if(i==dailyData.length-1){
+          let day= {
+            activities:{},
+            date: date,
+            length:0
+          }
+          arrDailyData.push(day);
+        }
+      }   
+      if(arrDailyData.length<1){
+        let day= {
+          activities:{},
+          date: date,
+          length:0
+        }
+        arrDailyData.push(day)
+      }
+      this.props.addItineraryDay(arrDailyData, id)
     }
     render() {
       return (
@@ -50,10 +113,12 @@ class ItineraryTable extends React.Component {
             <div className="filterBox">
                 <select id="group_name" name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
                 <option disabled selected defaultValue>Group</option>
-                    {this.props.groups.map(function(group){
-                        return (<option value={group.name}>{group.name}</option>)
+                    {this.props.groups.map(function(group,i){
+                        return (<option value={group.name} key={i}>{group.name}</option>)
                 })}
                 </select>
+                <input className="dateInput" type="date" onChange={this.onChangeDate.bind(this)}/>
+                <button className="itineraryButton" onClick={()=>this.onAddSchedule()}>Add New Schedule</button>
             </div>
             <br/><br/>
             <table className="table1 table-dark" border="1" cellSpacing="0">
@@ -68,7 +133,6 @@ class ItineraryTable extends React.Component {
             <tbody>
               {this.state.dailyData.map((day, i)=>{
                 let timeObject = Object.assign({},day.date);
-                console.log(day.activities)
                 let date= new Date(timeObject.seconds*1000);
                 let timestamp= date.toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
                 return <ItineraryRow 
@@ -76,6 +140,7 @@ class ItineraryTable extends React.Component {
                   groupName= {this.state.selectedItinerary.groupName}
                   id= {this.state.id}
                   date= {timestamp}
+                  scheduleDate={date}
                   activities ={day.activities}
                   length={day.length}
                 />
@@ -91,12 +156,13 @@ const condition = authUser => !!authUser;
 
 const mapStateToProps = state => ({
   groups: state.groupState.groups,
-  itineraries: state.itineraryState.itineraries
+  itineraries: state.itineraryState.itineraries,
+  itineraryChanging: state.itineraryState.itineraryChanging
 });
  
 export default compose(
    connect(
      mapStateToProps,
-     {}
+     {getItineraries, addItineraryDay, itineraryChanged}
    ),withAuthorization(condition)
 )(ItineraryTable);

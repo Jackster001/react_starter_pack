@@ -49,7 +49,7 @@ const getAlarms = () =>{
          })
     }
 }
-const gettingAlarms = () =>{
+const recievingAlarms = () =>{
     return{
         type:"GETTING_ALARMS"
     }
@@ -105,4 +105,4 @@ const alarmChanged=()=>{
         type: "ALARM_CHANGED"
     }
 }
-export {getAlarms,gettingAlarms, addAlarm, alarmAdded, deleteAlarm, selectAlarm, selectAlarmChanging, editAlarm, alarmChanged}
+export {getAlarms,recievingAlarms, addAlarm, alarmAdded, deleteAlarm, selectAlarm, selectAlarmChanging, editAlarm, alarmChanged}

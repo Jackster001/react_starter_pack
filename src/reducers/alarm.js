@@ -9,10 +9,10 @@ const INITIAL_STATE = {
 function alarmReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
       case 'ALARMS_GET': {
-        return {...state, alarms: action.payload};
+        return {...state, alarms: action.payload, gettingAlarms:true};
       }
       case 'GETTING_ALARMS':{
-        return {...state, gettingAlarms: true}
+        return {...state, gettingAlarms: false}
       }
       case 'ALARM_ADD': {
         return {...state, alarms: [action.payload,...state.alarms], alarmAdding: true};
@@ -21,7 +21,6 @@ function alarmReducer(state = INITIAL_STATE, action) {
         return {...state, alarmAdding: false}
       }
       case 'ALARM_SELECT': {
-        console.log(action.payload)
         return {...state, selectedAlarm: action.payload, selectAlarmChanged: true};
       }
       case 'ALARM_SELECT_CHANGED':{

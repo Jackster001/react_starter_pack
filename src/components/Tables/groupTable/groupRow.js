@@ -12,18 +12,18 @@ class GroupRow extends React.PureComponent{
         super(props);
         this.state={
             selected : {}, 
-            show:false,
-            listShow:false,
+            show: false,
+            listShow: false,
             showList: "",
-            tourGuides:[],
-            leadChaperones:[],
+            tourGuides: [],
+            leadChaperones: [],
             radioSelected: "",
-            targetList:[],
-            avaliableTourGuides:[],
-            avaliableLeadChaperones:[],
-            assignedTourGuide:{},
-            assignedLeadChaperone:{}, 
-            selectedGroupLength:0,
+            targetList: [],
+            avaliableTourGuides: [],
+            avaliableLeadChaperones: [],
+            assignedTourGuide: {},
+            assignedLeadChaperone: {}, 
+            selectedGroupLength: 0,
             condition: false
         }
     }
@@ -171,7 +171,7 @@ class GroupRow extends React.PureComponent{
                     <GroupModal show={this.state.show} handleClose={()=>this.hideModal()}>
                         <div className="modalContent">
                             <div>
-                                <center><h2>Assign Tour Guides and Chaperones to</h2><h1>{this.props.groupName} <strong>(Bus {this.props.selectedGroup.length ? this.props.selectedGroup.length + 1: 1})</strong></h1></center><br/>
+                                <center><h2>Assign Tour Guides and Chaperones to</h2><h1>{this.props.groupName}</h1></center><br/>
                             </div>
                                 <div className="assignemntSection">
                                     <div>

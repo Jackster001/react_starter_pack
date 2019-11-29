@@ -22,6 +22,11 @@ const getLostNotifications = () =>{
          })
     }
 }
+const recievingNotifications = () =>{
+    return {
+        type: "GETTING_NOTIFICATIONS"
+    }
+}
 const deleteLostNotifications = (id) =>{
     db.collection("lostUsers").doc(id).delete().then(function(){
         console.log("I am lost Notification successfully deleted!");
@@ -34,4 +39,4 @@ const deleteLostNotifications = (id) =>{
     }
 }
 
-export {getLostNotifications, deleteLostNotifications}
+export {getLostNotifications, deleteLostNotifications, recievingNotifications}

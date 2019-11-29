@@ -55,14 +55,12 @@ class ItineraryEdit extends React.Component{
         let description = "";
         let scheduleSet= this.state.schedule;
         let date= new Date();
-        // scheduleSet[this.state.length.toString()] = {description,time:date}
         scheduleSet.push({description,time:date})
         let length=this.state.length + 1;
         this.setState({schedule: scheduleSet, length: length});
     }
     removeSchedule(key){
         let newScheduleSet = this.state.schedule;
-        // delete newScheduleSet[key];
         newScheduleSet.splice(key,1)
         console.log(newScheduleSet)
         this.setState({...this.state,schedule: newScheduleSet})
@@ -101,7 +99,6 @@ class ItineraryEdit extends React.Component{
             else{
                 tempDate=new Date(selectGroupItinerary.dailyData[i].date.seconds*1000)
             }
-            
             let tempYear=tempDate.getFullYear();
             let tempDay=tempDate.getDate();
             let tempMonth= tempDate.getMonth();
@@ -112,7 +109,7 @@ class ItineraryEdit extends React.Component{
         }
         selectGroupItinerary.dailyData[index].activities=scheduleObject
         selectGroupItinerary.dailyData[index].length=length
-        this.props.editItinerary(selectGroupItinerary)
+        this.props.editItinerary(selectGroupItinerary, this.props.selectedItinerary.id)
     }
     render(){
         return(

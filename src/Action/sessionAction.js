@@ -1,6 +1,8 @@
 import {auth, db} from "../components/Firebase"
 import * as ROUTES from '../constants/routes'
 import {withRouter} from 'react-router-dom'
+import {persistor} from '../reduxConfig'
+import { persistCombineReducers } from "redux-persist"
 const setUserAuth = () =>{
     return {
         type: "AUTH_USER_SET",
@@ -17,7 +19,7 @@ const getAdminInputs = () =>{
     return (dispatch) => {
         db.collection("admin").doc("adminLogin").get().then(doc=>{
             if(doc.exists){
-                console.log("Document data:", doc.data());
+                console.log("Signed In");
             }
             else {
                 console.log("No such document!");
@@ -45,10 +47,14 @@ const login = (email, password) =>{
 const signOut = () =>{
     return (dispatch) =>{
         auth.signOut().then(() =>{
-            dispatch({
+            persistor.purge().then(()=>{
+                console.log("purge")
+                dispatch({
                 type: "OFF_AUTH_USER_SET",
                 payload: false
             })
+            })
+            
          }).catch(error =>{
              console.log(error);
         })

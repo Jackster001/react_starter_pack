@@ -61,9 +61,9 @@ const getUsers = () =>{
          })
     }
 }
-const gettingUsers = () =>{
+const recievingUsers = () =>{
     return {
-        type: "GETTINGUSERS"
+        type: "GETTING_USERS"
     }
 }
 const addUser = (user)=>{
@@ -137,4 +137,4 @@ const setUser = (user) =>{
         });
     } 
 }
-export {getUsers, gettingUsers, addUser, deleteUser, getSingleUser, setUser, userAddedChanged, resetChanged, userResetChanged, finishedDeletingUser};
+export {getUsers, recievingUsers, addUser, deleteUser, getSingleUser, setUser, userAddedChanged, resetChanged, userResetChanged, finishedDeletingUser};

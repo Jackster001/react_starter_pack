@@ -5,7 +5,7 @@ import 'firebase/firestore';
 import { compose } from 'recompose';
 import 'firebase/auth';
 import UserTable from "../../Tables/userTable/userTable";
-import {getUsers, gettingUsers} from '../../../Action';
+import {getUsers, recievingUsers} from '../../../Action';
 import {getGroups} from '../../../Action/groupAction';
 import {connect} from "react-redux";
 import { Link} from 'react-router-dom';
@@ -23,9 +23,15 @@ class Users extends React.Component {
       this.props.getUsers();
       this.props.getGroups();
    }
-   componentDidMount(){
+   componentDidUpdate(){
       if(this.props.gettingUsers){
-         
+         this.props.recievingUsers();
+         this.setState({...this.state, deploy: true})
+      }
+   }
+   showUserTable(){
+      if(this.state.deploy){
+         return <UserTable/>
       }
    }
    render() {
@@ -38,7 +44,7 @@ class Users extends React.Component {
                   <div>
                   <Link to={ROUTES.USER_ADD}><button className="addNew">Add New User</button></Link>
                   </div><br/>
-                  <UserTable/>
+                  {this.showUserTable()}
                </div>
             </div>
          </div>
@@ -54,6 +60,6 @@ const mapStateToProps = state => ({
 export default compose(
    withAuthorization(condition), 
    connect(mapStateToProps, 
-   {getUsers, getGroups, gettingUsers})
+   {getUsers, getGroups, recievingUsers})
 )(Users);
 

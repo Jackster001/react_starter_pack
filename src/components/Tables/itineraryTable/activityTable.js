@@ -15,14 +15,10 @@ class ActivityTable extends React.Component {
             length: this.props.length
         }
     }
-    componentDidMount(){
-      console.log(this.props.activities)
-    }
     itineraryTable(){
       var list=[]
       for(let i=0; i<this.state.length;i++){
         let activity=this.state.activities[i]
-        console.log(activity)
         let timeObject = Object.assign({},activity.time);
         let date= new Date(timeObject.seconds*1000)
         let timestamp= date.toLocaleTimeString('en-US', {hour: '2-digit', minute: "2-digit"})
@@ -34,10 +30,12 @@ class ActivityTable extends React.Component {
       return (
          <div className="schedule">
             <table className="scheduleTable table-dark" border="1" cellSpacing="0">
-               <tr className="TableHead">
-                <th className="scheduleTableTime">Time</th>
-                <th>Activity</th>
-               </tr>
+               <thead className="TableHead">
+                  <tr>
+                    <th className="scheduleTableTime">Time</th>
+                    <th>Activity</th>
+                  </tr>
+               </thead>
             <tbody>
               {
                 this.itineraryTable()

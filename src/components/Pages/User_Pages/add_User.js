@@ -16,8 +16,8 @@ class Add_User extends React.Component {
             lastName: "",
             Password: "",
             userPhoneNumber: "",
-            tourGuideFirstName: "",
-            leadChaperoneFirstName: "",
+            tourGuide: {},
+            leadChaperone: {},
             profilePicture: "",
             name:"",
             number: "",
@@ -74,12 +74,12 @@ class Add_User extends React.Component {
    }
    onChangeTourGuide(event){
       return (
-         this.setState({...this.state, tourGuideFirstName: event.target.value})
+         this.setState({...this.state, tourGuide: JSON.parse(event.target.value)})
       )
    }
    onChangeChaperone(event){
       return (
-         this.setState({...this.state, leadChaperoneFirstName: event.target.value})
+         this.setState({...this.state, leadChaperone: JSON.parse(event.target.value)})
       )
    }
    onChangeFullName(event){
@@ -115,19 +115,11 @@ class Add_User extends React.Component {
          password: this.state.Password,
          phoneNumber:this.state.userPhoneNumber,
          profilePicture: "",
-         tourGuide: {
-            firstName:this.state.tourGuideFirstName,
-            lastName: "",
-            id:""
-         },
-         leadChaperone: {
-            firstName: this.state.leadChaperoneFirstName,
-            lastName: "",
-            id: ""
-         },
+         tourGuide: this.state.tourGuide,
+         leadChaperone: this.state.leadChaperone,
          emergencyContact:{
             name: this.state.name,
-            number: this.state.number,
+            phoneNumber: this.state.number,
             relationship: this.state.relationship
          }
       }
@@ -155,7 +147,8 @@ class Add_User extends React.Component {
                      <option value="Director">Director</option>
                      <option value="Tour Guide">Tour Guide</option>
                      <option value="Lead Chaperone">Lead Chaperone</option>
-                     <option value="Guest">Guest</option>
+                     <option value="Lead Chaperone">Chaperone</option>
+                     <option value="Guest">Non-Traveling Guest</option>
                   </select><br/><br/>
                   <label htmlFor="name"><b>Username: </b></label>
                   <input type="text" name="name" onChange={this.onChangeUsername.bind(this)} required/><br/><br/>
@@ -169,16 +162,26 @@ class Add_User extends React.Component {
                   <input type="text" name="name" onChange={this.onChangePassword.bind(this)} required/><br/><br/>
                   <label htmlFor="guide"><b>Tour Guide: </b></label>
                   <select name="guide" onChange={this.onChangeTourGuide.bind(this)} required>
-                    <option disabled selected defaultValue> -- select an option -- </option>
+                  <option disabled selected defaultValue> -- select an option -- </option>
                         {this.state.avaliableTourGuides.map(function(user, key){
-                            return (<option key={key} value={user.firstName}>{user.firstName}{" "}{user.lastName}</option>)
+                           let tourGuide={
+                              firstName: user.firstName,
+                              lastName: user.lastName,
+                              id: user.id
+                           }
+                           return (<option key={key} value={JSON.stringify(tourGuide)}>{`${user.firstName} ${user.lastName}`}</option>)
                         })}
                   </select><br/><br/>
                   <label htmlFor="chaperone"><b>Chaperone: </b></label>
                   <select name="guide" onChange={this.onChangeChaperone.bind(this)} required>
                     <option disabled selected defaultValue> -- select an option -- </option>
                         {this.state.avaliableLeadChaperones.map(function(user, key){
-                            return (<option key={key} value={user.firstName}>{user.firstName}{" "}{user.lastName}</option>)
+                           let leadChaperone={
+                              firstName: user.firstName,
+                              lastName: user.lastName,
+                              id: user.id
+                           }
+                           return (<option key={key} value={JSON.stringify(leadChaperone)}>{`${user.firstName} ${user.lastName}`}</option>)
                         })}
                   </select><br/><br/>
                   <center><h2>Emergency Contact Information</h2></center><br/>

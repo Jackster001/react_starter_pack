@@ -31,6 +31,8 @@ class User_Edit extends React.Component {
          }
       }
    componentDidMount(){
+      console.log(this.props.selected)
+      console.log(this.props.selected.tourGuide)
       let groupPin= this.state.Group_Pin;
 
       let avaliableTourGuides=this.props.users.filter(user=>{
@@ -51,11 +53,10 @@ class User_Edit extends React.Component {
       this.setState({...this.state, groupName: event.target.value, avaliableTourGuides: avaliableTourGuides, avaliableLeadChaperones: avaliableLeadChaperones})  
    }
    componentDidUpdate(){
-   if(this.props.userChanged){
+      if(this.props.userChanged){
          this.props.userResetChanged()
          this.props.history.push(ROUTES.USERS);
       }
-      
   }
    onChangeUserType(event){
       return (
@@ -88,29 +89,13 @@ class User_Edit extends React.Component {
       )
    }
    onChangeTourGuide(event){
-      let tourGuide = this.state.avaliableTourGuides.find(guide=>{
-         return guide.id === event.target.value
-      })
-      tourGuide ={
-         firstName: tourGuide.firstName,
-         lastName: tourGuide.lastName,
-         id: tourGuide.id
-      }
       return (
-         this.setState({...this.state, tourGuide: tourGuide})
+         this.setState({...this.state, tourGuide:JSON.parse(event.target.value)})
       )
    }
    onChangeChaperone(event){
-      let leadChaperone = this.state.avaliableLeadChaperones.find(chap=>{
-         return chap.id === event.target.value
-      })
-      leadChaperone ={
-         firstName: leadChaperone.firstName,
-         lastName: leadChaperone.lastName,
-         id: leadChaperone.id
-      }
       return (
-         this.setState({...this.state, leadChaperone: leadChaperone})
+         this.setState({...this.state, leadChaperone: JSON.parse(event.target.value)})
       )
    }
    onChangeFullName(event){
@@ -149,16 +134,8 @@ class User_Edit extends React.Component {
          lastName: this.state.lastName,
          phoneNumber: this.state.userPhoneNumber,
          password: this.state.Password,
-         tourGuide: {
-            firstName: this.state.tourGuide.firstName,
-            lastName: this.state.tourGuide.lastName,
-            id: this.state.tourGuide.id
-         },
-         leadChaperone: {
-            firstName: this.state.leadChaperone.firstName,
-            lastName: this.state.leadChaperone.lastName,
-            id: this.state.leadChaperone.id
-         },
+         tourGuide:  this.state.tourGuide,
+         leadChaperone: this.state.leadChaperone,
          profilePicture: this.state.profilePicture,
          emergencyContact:{
             name: this.state.name,
@@ -179,7 +156,7 @@ class User_Edit extends React.Component {
                <center><h2>Edit User Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <select name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
-                    <option disabled selected defaultValue>{this.state.GroupName}</option>
+                    <option disabled selected defaultValue>{this.state.groupName}</option>
                         {this.props.groups.map(function(group){
                             return (<option value={group.name}>{group.name}</option>)
                         })}
@@ -205,16 +182,26 @@ class User_Edit extends React.Component {
                   <input type="text" name="name" onChange={this.onChangePassword.bind(this)} defaultValue={this.props.selected.password} required></input><br/><br/>
                   <label htmlFor="guide"><b>Tour Guide: </b></label> 
                   <select name="guide" onChange={this.onChangeTourGuide.bind(this)} required>
-                    <option disabled selected defaultValue> {this.props.selected.tourGuide.firstName} {this.props.selected.tourGuide.lastName}</option>
+                  <option disabled selected defaultValue> -- select an option -- </option>
                         {this.state.avaliableTourGuides.map(function(user, key){
-                            return (<option key={key} value={user.id}>{user.firstName}{" "}{user.lastName}</option>)
+                           let tourGuide={
+                              firstName: user.firstName,
+                              lastName: user.lastName,
+                              id: user.id
+                           }
+                           return (<option key={key} value={JSON.stringify(tourGuide)}>{`${user.firstName} ${user.lastName}`}</option>)
                         })}
                   </select><br/><br/>
-                  <label htmlFor="chaperone"><b>Chaperone: </b></label>
+                  <label htmlFor="chaperone"><b>Lead Chaperone: </b></label>
                   <select name="guide" onChange={this.onChangeChaperone.bind(this)} required>
-                    <option disabled selected defaultValue> {this.props.selected.leadChaperone.firstName} {this.props.selected.leadChaperone.lastName}</option>
+                    <option disabled selected defaultValue> -- select an option -- </option>
                         {this.state.avaliableLeadChaperones.map(function(user, key){
-                            return (<option key={key} value={user.id}>{user.firstName}{" "}{user.lastName}</option>)
+                           let leadChaperone={
+                              firstName: user.firstName,
+                              lastName: user.lastName,
+                              id: user.id
+                           }
+                           return (<option key={key} value={JSON.stringify(leadChaperone)}>{`${user.firstName} ${user.lastName}`}</option>)
                         })}
                   </select><br/><br/>
                   <hr/><br/>

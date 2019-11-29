@@ -68,8 +68,6 @@ class Add_Group extends React.Component {
           startDate: date1,
           endDate: date2
       }
-      // console.log(newGroup)
-      // this.props.addGroupLogo(newGroup)
       this.props.addGroup(newGroup);
    } 
    render() {
@@ -78,7 +76,6 @@ class Add_Group extends React.Component {
             <br/><br/><br/><br/>
             <div className="add_Table_Styles">
             <div className="addFormHeading"><h1>Group Management</h1></div>
-            {console.log()}
                <form className="add_form">
                   <center><h2>Group Information</h2></center><br/>
                   <label htmlFor="group_name"><b>Group Name: </b></label>
