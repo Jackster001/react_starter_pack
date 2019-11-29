@@ -4,7 +4,6 @@ import { file } from "@babel/types";
 const selectGroup= (id)=>{
     let groupData={}
     let stringId=''+id+'';
-    console.log("selectgroup called")
     return (dispatch)=>{
         let docRef=db.collection("groups").doc(stringId)
         docRef.get().then(function(doc){
@@ -62,7 +61,6 @@ const getGroups = () =>{
         db.collection("groups").get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
             let group = doc.data();
-            // let GroupLogoUrl= storageRef.child('groupLogos/'+ group.groupLogoName).getDownloadURL()
             group= {id:doc.id,...group}
             data=[...data, group]
             })           
@@ -95,7 +93,6 @@ const addGroup = (group)=>{
                     endDate: group.endDate,
                     subGroups: {}
                 }).then(function(){
-                    console.log(url);
                     let newGroup={...group, groupLogo:url}
                         dispatch({type: 'GROUP_ADD',
                         payload: newGroup})
@@ -144,7 +141,6 @@ const editGroup = (group, logoChanged) =>{
                     groupLogo:url
                 }).then(function(){
                     let newGroup={...group, groupLogo:url}
-                    console.log(newGroup)
                     dispatch({type: 'EDIT_GROUP',
                     payload: newGroup})
                 }).catch(error => {

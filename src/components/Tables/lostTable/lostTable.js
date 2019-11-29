@@ -27,7 +27,6 @@ class LostTable extends React.Component {
                 <tbody>
                 { 
                     this.state.lostNotifications.map((lostNotification, i)=>{  
-                    console.log(lostNotification)
                     let emergencyContact= Object.assign({}, lostNotification.user.emergencyContact)
                     let timeObject = Object.assign({},lostNotification.timestamp);
                     let date= new Date(timeObject.seconds*1000)

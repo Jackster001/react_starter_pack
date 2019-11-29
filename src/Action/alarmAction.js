@@ -39,7 +39,6 @@ const getAlarms = () =>{
                 return  a.timestamp.seconds - b.timestamp.seconds
             }).reverse();
             })           
-            console.log(data)
             dispatch({
                 type: "ALARMS_GET",
                 payload: data
