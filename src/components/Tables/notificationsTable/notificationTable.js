@@ -29,7 +29,7 @@ class NotificationTable extends React.Component {
                                 <NotificationRow
                                 key={i}
                                 id={notification.id}
-                                groupName={notification.sender.groupName}
+                                groupPin={notification.groupPin}
                                 userType={notification.sender.userType}
                                 firstName={notification.sender.firstName}
                                 lastName={notification.sender.lastName}

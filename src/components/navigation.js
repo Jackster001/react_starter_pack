@@ -30,9 +30,9 @@ const Navigation = ({ authUser }) => (
                 <li>
                 <Link className="links" to={ROUTES.ALARMS}>Alarm</Link>
                 </li>
-                <li>
+                {/* <li>
                 <Link className="links" to={ROUTES.LOST}>I am Lost</Link>
-                </li>
+                </li> */}
                 <li>
                 <Link className="links" to={ROUTES.CONTACT}>Contact Info</Link>
                 </li>

@@ -69,10 +69,6 @@ class GroupRow extends React.PureComponent{
             window.location.reload();
             this.hideModal();
         }
-        // if(this.props.groupModalSelectProcess){
-        //     this.props.groupModalSelecting();
-        //     this.setState({...this.state, show:true});
-        // }
     }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");

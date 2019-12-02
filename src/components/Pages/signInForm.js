@@ -1,7 +1,7 @@
 import React from 'react';
 import '../components.css';
 import {withRouter} from 'react-router-dom'
-import logo from '../images/SBNYC-logo.jpg'
+import logo from '../images/TMA_logo.png'
 import * as ROUTES from '../../constants/routes'
 import 'firebase/auth';
 import {login, getAdminInputs} from "../../Action"

@@ -23,8 +23,8 @@ class About extends React.Component {
          this.props.aboutReceived();
          this.setState({About: this.props.about.About,
          facebook: this.props.about.facebook,
-         website: this.props.about.instagram,
-         twitter: this.props.about.twitter
+         twitter: this.props.about.twitter,
+         instagram: this.props.about.instagram
       })
       }
       if(this.props.aboutChanging){

@@ -4,13 +4,14 @@ import * as firebase from "firebase/app";
 import 'firebase/database';
 import 'firebase/storage'; 
 const config = {
-    apiKey: "AIzaSyAj4kECq6S36sL_YV5q3dZEr51RSXYcQEs",
-    authDomain: "sbnyc-76467.firebaseapp.com",
-    databaseURL: "https://sbnyc-76467.firebaseio.com",
-    projectId: "sbnyc-76467",
-    storageBucket: "sbnyc-76467.appspot.com",
-    messagingSenderId: "784736091593",
-    appId: "1:784736091593:web:97b3ebc931102b13"
+  apiKey: "AIzaSyA_qezPiFgYiJm99TS3GXS0XMfjM-qpf1w",
+  authDomain: "tour-management-app.firebaseapp.com",
+  databaseURL: "https://tour-management-app.firebaseio.com",
+  projectId: "tour-management-app",
+  storageBucket: "tour-management-app.appspot.com",
+  messagingSenderId: "377919959654",
+  appId: "1:377919959654:web:fd60a66386352b221d73a7",
+  measurementId: "G-N3P7WJRXFW"
   };
 const firebaseApp = firebase.initializeApp(config);
 

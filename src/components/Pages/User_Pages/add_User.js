@@ -3,12 +3,15 @@ import '../../components.css';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withAuthorization } from '../../Session';
-import {addUser, getUsers, userAddedChanged} from '../../../Action'
+import {addUser, getUsers, userAddedChanged, recievingUsers} from '../../../Action'
+import {getGroups, gettingGroups} from '../../../Action/groupAction';
 import * as firebase from "firebase";
 class Add_User extends React.Component {
    constructor(props){
       super(props);
       this.state={
+            groups:[],
+            users:[],
             Group_Name: "",
             userType: "",
             Username: "",
@@ -26,13 +29,27 @@ class Add_User extends React.Component {
             avaliableLeadChaperones: []
          }
    }
+   componentDidMount(){
+      this.props.getUsers();
+      this.props.getGroups();
+   }
    componentDidUpdate(){
+      if(this.props.gettingUsers){
+         this.props.recievingUsers()
+         this.setState({...this.state, users: this.props.users})
+      }
       if(this.props.userAdded){
-         this.props.userAddedChanged()
-            this.props.getUsers();
-            this.props.history.push('/users')    
+         this.props.userAddedChanged();
+         this.props.getUsers();
+         
+         this.props.history.push('/users');
+      }
+      if(this.props.groupRecieving){
+         this.props.gettingGroups()
+         this.setState({...this.state, groups: this.props.groups })
       }
    }
+
    onChangeGroupName(event){
       let avaliableTourGuides=this.props.users.filter(user=>{
          return user.userType === 'Tour Guide' && user.groupName === event.target.value
@@ -136,7 +153,7 @@ class Add_User extends React.Component {
                   <label htmlFor="group_name"><b>Group Name: </b></label>
                   <select name="group_name" onChange={this.onChangeGroupName.bind(this)} required>
                     <option disabled selected defaultValue> -- select an option -- </option>
-                        {this.props.groups.map(function(group){
+                        {this.state.groups.map(function(group){
                             return (<option value={group.name}>{group.name}</option>)
                         })}
                   </select><br/><br/>
@@ -200,12 +217,14 @@ class Add_User extends React.Component {
 const mapStateToProps = state => ({
    users: state.userState.users,
    userAdded: state.userState.userAdded,
-   groups: state.groupState.groups
+   gettingUsers: state.userState.gettingUsers,
+   groups: state.groupState.groups,
+   groupRecieving: state.groupState.groupRecieving
  });
 const condition = authUser => !!authUser;
 export default compose(
    connect(
      mapStateToProps,
-     {addUser, userAddedChanged, getUsers}
+     {addUser, userAddedChanged, getUsers, gettingGroups, getGroups, recievingUsers}
    ),withAuthorization(condition)
 )(Add_User);

@@ -91,7 +91,7 @@ const addGroup = (group)=>{
                     groupLogo:url,
                     startDate: group.startDate,
                     endDate: group.endDate,
-                    subGroups: {}
+                    subGroups: []
                 }).then(function(){
                     let newGroup={...group, groupLogo:url}
                         dispatch({type: 'GROUP_ADD',

@@ -56,9 +56,6 @@ class UserTable extends React.Component {
     })
     this.setState({csvFormat: csvFormat})
   }
-  deleteSelectAccounts(){
-
-  }
   showModal = () => {
     this.setState({...this.state, show: true})
   };
@@ -85,13 +82,9 @@ class UserTable extends React.Component {
               })}
             </select>
             <button className="resetFilterButton" onClick={()=>this.resetUserList()}>Reset</button>
-            <button className="deleteSelection" onClick={()=>this.showModal()}>Delete Select Accounts</button>
             <CSVLink id="csv" data={this.state.csvFormat} onClick={()=>this.downloadCSV(this.state.targetList)}><button className="downloadCSV">Download CSV</button></CSVLink>
             <br/><br/>
             </div>
-            <DeleteModal show={this.state.show} handleClose={()=>this.hideModal()}>
-              Are you sure you want to delete all {this.state.userType}s
-            </DeleteModal>
             <table className="table1 table-dark" border="1" cellSpacing="0">
              <thead className="TableHead">
                <tr>
@@ -118,7 +111,7 @@ class UserTable extends React.Component {
                   lastName={user.lastName}
                   phoneNumber={user.phoneNumber}
                   emergencyName={data.name}
-                  emergencyNumber={data.number}
+                  emergencyNumber={data.phoneNumber}
                   emergencyRelationship={data.relationship}
                   tourGuideFirstName={tourGuide.firstName}
                   tourGuideLastName={tourGuide.lastName}

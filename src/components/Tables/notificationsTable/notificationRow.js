@@ -9,10 +9,13 @@ class NotificationRow extends React.PureComponent{
     constructor(props){
         super(props);
         this.state={
-            groupName: "",
+            groupName: this.props.groupName,
             groupPin: this.props.groupPin,
             selected : {}
         }
+    }
+    componentDidMount(){
+        console.log(this.props.groupPin)
     }
     handleDelete(id){
         alert("User with id:"+this.props.id+" has been deleted from the database");
@@ -21,7 +24,7 @@ class NotificationRow extends React.PureComponent{
     render(){
         return(
             <tr>
-                <td><center>{this.props.groupName}</center></td>
+                <td><center>{this.state.groupPin}</center></td>
                 <td><center>{this.props.userType}{": "}{this.props.firstName}{" "}{this.props.lastName}</center></td>
                 <td><center>{this.props.notification}</center></td>
                 <td><center>{this.props.notificationTimeStamp}</center></td>                

@@ -1,6 +1,6 @@
 /* Header */
 .header{
-    background-color: black;
+    background-color: #2D6297;
     height: 100px;
     padding-top: 10px;
 }
@@ -65,7 +65,7 @@ body {
 .nav{
     width: 100%;
     margin: 0 auto;
-    background-color: #7D7D7D;
+    background-color: #282828;
     height: 55px;
 }
 .navMid{
