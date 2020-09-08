@@ -42,7 +42,7 @@ class Edit_Alarm extends React.Component {
       let valueDate=""+tempDate[2]+"-"+tempDate[0]+"-"+tempDate[1]+"";
       let valueTime= timestampTime.split(" ");
       this.setState({date: valueDate});
-      // this.setState({time: timestampTime});
+      
       let dayTime = valueTime[1];
       var hr =""
       let setTime=valueTime[0];

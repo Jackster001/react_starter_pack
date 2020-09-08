@@ -3,13 +3,19 @@
     background-color: #2D6297;
     height: 100px;
     padding-top: 10px;
+    z-index: 100
 }
-.header > h1{
+.header >center> h1{
     color:white;
 }
 html{
-    position: relative;
     min-height: 100%;
+    width: 100%;
+    height: 100%;
+}
+#root{
+    width: 100%;
+    height: 100%;
 }
 
 /* Footer */
@@ -17,29 +23,48 @@ html{
     background-color: black;
     padding: 5px 0px; 
     position: absolute; 
-    bottom: 0;
+    /* bottom: 0; */
     width: 100%;
 }
-.footer > p{
-    color: grey;
+.footer >center> p{
+    color: #f5f5f5;
 }
 body {
     font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+}
+.App{
+    width: 100%;
+    height: 100%;
+    
+}
 
+.AppContainer{
+    width: 100%;
+    height: 100%;
 }
 /* login page */
 .login{
     border-radius: 10px;
     width: 400px;
     padding: 50px 0px;
-    background-color: #D4D3D3;
+    background-color: rgba(255,255,255,0.5);
     margin-top: -20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .login>center>input{
+    padding: 10px 7px;
     width: 60%;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid grey;
+    font-size: 14px;
+    border: 2px solid #f5f5f5;
+
 }
 .signIn{
     border: none;
@@ -52,14 +77,33 @@ body {
 .loginPage{
     width: 100%;
     display: flex;
-    margin-top: 200px;
-    margin-bottom: 300px;
+    /* margin-top: 200px;
+    margin-bottom: 300px; */
 }
-.loginPos{
-    margin: 0 auto;
-    display: flex;
-    margin-top: 0 auto;
+.loginBackground{
+    /* background: url("../components/images/nyc-background.jpg"); */
+    /* background-size: cover;
+    width: 100%;
+    height: 100%; */
+
 }
+.loginBackground::before {    
+    content: "";
+    background-image: url('../components/images/nyc-background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    position: absolute;
+    top: 110px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.75;
+    width: 100%;
+    height: 100%;
+}
+
+
 
 /* navigation */
 .nav{

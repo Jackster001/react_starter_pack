@@ -118,10 +118,9 @@ class App extends Component {
   }
   render(){
   return (
-    <div className="App">
-      <Header />
+    <div className="AppContainer">
+      <Header/>
           <Router>
-            <div>
               <Navigation authUser={this.state.authUser}/>
               <Route exact path={ROUTES.LANDING} component={Login} />
               <Route path={ROUTES.LOGIN} component={Login} />
@@ -145,7 +144,6 @@ class App extends Component {
               <Route path={ROUTES.CONTACT_EDIT} component={Edit_Contact} />
               <Route path={ROUTES.ABOUT} component={About} />
               <Route path={ROUTES.SETTINGS} component={Settings} />
-            </div>
           </Router>
         <Footer/>
     </div>

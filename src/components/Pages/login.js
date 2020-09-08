@@ -5,7 +5,7 @@ import 'firebase/auth';
 import SignInForm from "./signInForm"
 
  const Login = () => (
-   <div>
+   <div className="AppContainer">
       <SignInForm/>
    </div>
 );

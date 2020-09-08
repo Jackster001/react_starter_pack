@@ -43,24 +43,22 @@ class SignInFormBase extends React.Component {
        } = this.state;
        const isInvalid = password === '' || email === '';
        return (
-       <div className="App">
-          <div className="loginPage">
-             <div className="loginPos">
-             <div><img src={logo} height="250px" width="650px"/></div>
+          <div className="loginBackground">
+            <div className="loginPos">
+             {/* <div><img src={logo} height="250px" width="250px"/></div> */}
              <div className="login">
                 <center>
                 <h2 onClick={this.random}>Admin Login</h2>
-                   <input type="text" name="email" value={email} onChange = {this.onChange} placeholder="Email"/>
+                   <input className="inputStyle" type="text" name="email" value={email} onChange = {this.onChange} placeholder="Email"/>
                    <br/><br/>
-                   <input type="text" name="password" value={password} onChange = {this.onChange} placeholder="Password"/>
+                   <input className="inputStyle" type="text" name="password" value={password} onChange = {this.onChange} placeholder="Password"/>
                    <br/><br/>
                    <button className="signIn" disabled={isInvalid} onClick={this.onSubmit} type="submit">Sign In</button>
                    {error && <p>{error.message}</p>}
                 </center>
              </div>
+            </div>
           </div>
-          </div>
-       </div>
        );
     }
 }
