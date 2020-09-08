@@ -25,7 +25,6 @@ class UserRow extends React.PureComponent{
         this.props.deleteUser(id);
     }
     selected(id){
-        console.log(id)
         this.props.getSingleUser(id);
     }
     render(){

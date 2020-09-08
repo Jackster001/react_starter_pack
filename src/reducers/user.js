@@ -48,11 +48,8 @@ function userReducer(state = INITIAL_STATE, action) {
     }
     case "USER_DELETE": {
       const newUsers = Object.assign([],{...state.users});
-      console.log(newUsers)
       const index= state.users.findIndex(user => {return user.id == action.id})
       newUsers.splice(index, 1)
-      console.log(index);
-      console.log(newUsers)
       return {...state, users: newUsers, userDeleting: true};
     }
     case "FINISHED_DELETING": {

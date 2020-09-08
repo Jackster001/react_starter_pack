@@ -106,7 +106,7 @@ const addUser = (user)=>{
 }
 const deleteUser = (id) =>{
     db.collection("users").doc(id).delete().then(function(){
-        console.log("Student successfully deleted!");
+        console.log("User successfully deleted!");
     }).catch(function(error) {
         console.error("Error removing document: ", error);
     });
